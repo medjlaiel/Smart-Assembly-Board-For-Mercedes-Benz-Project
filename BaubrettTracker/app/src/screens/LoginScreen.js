@@ -82,7 +82,8 @@ export default function LoginScreen({ navigation }) {
        const result = await signInUser(email, password);
 
        if (result.success) {
-         Alert.alert(t('common.success'), result.message, [
+         const welcomeMessage = `${t('auth.welcome')} ${result.user.fullName}`;
+         Alert.alert(welcomeMessage, '', [
            {
              text: t('common.ok'),
              onPress: () => navigation.replace('Home'),

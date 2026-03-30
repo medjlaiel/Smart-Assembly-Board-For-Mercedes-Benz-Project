@@ -79,7 +79,7 @@ export async function signUp(email, password, fullName) {
 
     return {
       success: true,
-      message: i18n.t('common.success'),
+      message: i18n.t('auth.accountCreated'),
       user: { id: newUser.id, email: newUser.email, fullName: newUser.fullName }
     };
   } catch (error) {

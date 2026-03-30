@@ -61,6 +61,8 @@
   "auth": {
     "invalidCredentials": "Invalid email or password",
     "signUpError": "An error occurred during sign up. Please try again.",
-    "signInError": "An error occurred during login. Please try again."
+    "signInError": "An error occurred during login. Please try again.",
+    "accountCreated": "Account created successfully",
+    "welcome": "Welcome"
   }
 }
