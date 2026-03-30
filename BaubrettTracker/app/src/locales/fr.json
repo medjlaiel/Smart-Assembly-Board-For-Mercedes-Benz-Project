@@ -57,5 +57,10 @@
     "error": "Erreur",
     "ok": "OK",
     "cancel": "Annuler"
+  },
+  "auth": {
+    "invalidCredentials": "Email ou mot de passe invalide",
+    "signUpError": "Une erreur s'est produite lors de l'inscription. Veuillez réessayer.",
+    "signInError": "Une erreur s'est produite lors de la connexion. Veuillez réessayer."
   }
 }

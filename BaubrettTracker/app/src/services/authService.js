@@ -86,7 +86,7 @@ export async function signUp(email, password, fullName) {
     console.error('Sign up error:', error);
     return {
       success: false,
-      message: i18n.t('common.error')
+      message: i18n.t('auth.signUpError')
     };
   }
 }
@@ -107,7 +107,7 @@ export async function signIn(email, password) {
     if (!user) {
       return {
         success: false,
-        message: i18n.t('common.error') // Using generic error for invalid credentials
+        message: i18n.t('auth.invalidCredentials')
       };
     }
 
@@ -120,7 +120,7 @@ export async function signIn(email, password) {
     console.error('Sign in error:', error);
     return {
       success: false,
-      message: i18n.t('common.error')
+      message: i18n.t('auth.signInError')
     };
   }
 }

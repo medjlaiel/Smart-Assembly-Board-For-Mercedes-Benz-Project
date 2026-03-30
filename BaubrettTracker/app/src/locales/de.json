@@ -57,5 +57,10 @@
     "error": "Fehler",
     "ok": "OK",
     "cancel": "Abbrechen"
+  },
+  "auth": {
+    "invalidCredentials": "Ungültige E-Mail oder Passwort",
+    "signUpError": "Ein Fehler ist während der Registrierung aufgetreten. Bitte versuchen Sie es erneut.",
+    "signInError": "Ein Fehler ist während der Anmeldung aufgetreten. Bitte versuchen Sie es erneut."
   }
 }
