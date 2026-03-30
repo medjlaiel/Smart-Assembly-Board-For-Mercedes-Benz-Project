@@ -64,5 +64,101 @@
     "signInError": "Ein Fehler ist während der Anmeldung aufgetreten. Bitte versuchen Sie es erneut.",
     "accountCreated": "Konto erfolgreich erstellt",
     "welcome": "Willkommen"
+  },
+  "home": {
+    "title": "Baubrett Tracker",
+    "subtitle": "QR-Codes scannen, um Baubrett-Standorte zu speichern oder abzurufen",
+    "actions": "AKTIONEN",
+    "saveBaubrett": {
+      "title": "Baubrett speichern",
+      "subtitle": "Baubrett + Zone scannen → Standort aufzeichnen"
+    },
+    "consultBaubrett": {
+      "title": "Baubrett abfragen",
+      "subtitle": "Baubrett scannen → SOM, Zubehör, FP-NO anzeigen"
+    },
+    "records": "DATENSÄTZE",
+    "history": {
+      "title": "Standortverlauf",
+      "subtitle": "Alle gespeicherten Einträge anzeigen und exportieren"
+    },
+    "logout": "Abmelden"
+  },
+  "saveScanBaubrett": {
+    "title": "Baubrett scannen",
+    "subtitle": "Scannen Sie den Baubrett-QR-Code, um zu beginnen",
+    "instructions": "Positionieren Sie den QR-Code im Rahmen",
+    "unknownTitle": "Unbekannter Baubrett",
+    "unknownMessage": "\"{{value}}\" wurde nicht in der Datenbank gefunden.\n\nStellen Sie sicher, dass Sie einen gültigen Baubrett-QR-Code scannen.",
+    "stepLabel": "Schritt 1 von 3 — Scannen Sie den Baubrett-QR-Code"
+  },
+  "saveScanZone": {
+    "title": "Zone scannen",
+    "subtitle": "Scannen Sie den Zone-QR-Code",
+    "instructions": "Positionieren Sie den Zone-QR-Code im Rahmen",
+    "wrongQRTitle": "Falscher QR-Code",
+    "wrongQRMessage": "Das sieht wie ein Baubrett-QR-Code aus, kein Zone-QR-Code.\n\nBitte scannen Sie stattdessen einen Zone-QR-Code.",
+    "unknownTitle": "Unbekannte Zone",
+    "unknownMessage": "\"{{value}}\" ist kein erkannter Zonen-Code.\n\nGültige Codes sind: ZONE_A, UFB01, EAP1, etc.",
+    "stepLabel": "Schritt 2 von 3 — Scannen Sie den Zone-QR-Code",
+    "infoHint": "Scannen Sie nun den Zone-QR-Code"
+  },
+  "saveConfirm": {
+    "title": "Bestätigen & Speichern",
+    "baubrett": "Baubrett",
+    "zone": "Zone",
+    "location": "Standort",
+    "save": "Speichern",
+    "cancel": "Abbrechen",
+    "stepLabel": "Schritt 3 von 3 — Bestätigen & Speichern",
+    "cardHeader": "Eintrag zum Aufzeichnen",
+    "date": "Datum",
+    "time": "Uhrzeit",
+    "hint": "Dieser Eintrag wird in baubrett_tracking.xlsx auf Ihrem Gerät gespeichert.",
+    "saveButton": "Bestätigen & Speichern",
+    "rescan": "Zone erneut scannen",
+    "backHome": "Zurück zur Startseite",
+    "scanAnother": "Weiteren Baubrett scannen",
+    "savedTitle": "Erfolgreich gespeichert!",
+    "savedSub": "Baubrett {{bbNb}} wurde in {{zoneLabel}} aufgezeichnet.",
+    "saveFailed": "Speichern fehlgeschlagen",
+    "saveFailedMessage": "Konnte nicht in die Tracking-Datei schreiben. Bitte versuchen Sie es erneut."
+  },
+  "consultScan": {
+    "title": "Baubrett scannen",
+    "subtitle": "Scannen Sie, um Baubrett-Details abzurufen",
+    "instructions": "Positionieren Sie den QR-Code im Rahmen",
+    "bannerText": "Scannen Sie einen Baubrett, um dessen Details anzuzeigen",
+    "notFoundTitle": "Nicht gefunden",
+    "notFoundMessage": "Baubrett \"{{value}}\" wurde nicht in der Datenbank gefunden.\n\nStellen Sie sicher, dass Sie einen gültigen Baubrett-QR-Code gescannt haben."
+  },
+  "consultResult": {
+    "title": "Baubrett-Details",
+    "som": "SOM",
+    "accessories": "Zubehör",
+    "fpNo": "FP-NO",
+    "noData": "Keine Daten für diesen Baubrett verfügbar"
+  },
+  "history": {
+    "title": "Standortverlauf",
+    "subtitle": "Alle gespeicherten Einträge anzeigen und exportieren",
+    "empty": "Noch keine Einträge gespeichert",
+    "export": "Nach Excel exportieren",
+    "delete": "Eintrag löschen",
+    "confirmDelete": "Möchten Sie diesen Eintrag wirklich löschen?",
+    "date": "Datum",
+    "baubrett": "Baubrett",
+    "zone": "Zone",
+    "emptyTitle": "Keine Einträge gefunden",
+    "emptyTextNoSearch": "Speichern Sie einen Baubrett, um die Standortverfolgung zu starten.",
+    "emptyTextWithSearch": "Keine Standortaufzeichnungen für \"{{query}}\" gefunden",
+    "clearFilter": "Alle Einträge anzeigen",
+    "searchPlaceholder": "Baubrett-Nummer suchen…",
+    "headerAllEntries": "Alle Einträge",
+    "headerFiltered": "BB {{bb}}",
+    "recordCount": "{{count}} Eintrag",
+    "recordCount_plural": "{{count}} Einträge",
+    "exportFailed": "Export fehlgeschlagen",
+    "exportFailedMessage": "Datei konnte nicht exportiert werden."
   }
 }

@@ -13,10 +13,12 @@ import {
   Alert,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { useTranslation } from 'react-i18next';
 import { saveTrackingEntry } from '../services/trackingService';
 import { COLORS, RADIUS, SHADOW } from '../assets/theme';
 
 export default function SaveConfirmScreen({ route, navigation }) {
+  const { t } = useTranslation();
   const { bbNb, zone, zoneLabel } = route.params;
   const [saving, setSaving] = useState(false);
   const [saved, setSaved] = useState(false);
@@ -33,7 +35,7 @@ export default function SaveConfirmScreen({ route, navigation }) {
     if (success) {
       setSaved(true);
     } else {
-      Alert.alert('Save Failed', 'Could not write to the tracking file. Please try again.');
+      Alert.alert(t('saveConfirm.saveFailed'), t('saveConfirm.saveFailedMessage'));
     }
   };
 
@@ -45,10 +47,9 @@ export default function SaveConfirmScreen({ route, navigation }) {
           <View style={styles.successIcon}>
             <Text style={styles.successEmoji}>✅</Text>
           </View>
-          <Text style={styles.successTitle}>Saved Successfully!</Text>
+          <Text style={styles.successTitle}>{t('saveConfirm.savedTitle')}</Text>
           <Text style={styles.successSub}>
-            Baubrett <Text style={styles.bold}>{bbNb}</Text> has been recorded in{' '}
-            <Text style={styles.bold}>{zoneLabel}</Text>.
+            {t('saveConfirm.savedSub', { bbNb, zoneLabel })}
           </Text>
 
           {/* Action buttons */}
@@ -56,21 +57,21 @@ export default function SaveConfirmScreen({ route, navigation }) {
             style={[styles.btn, styles.btnPrimary]}
             onPress={() => navigation.navigate('SaveScanBaubrett')}
           >
-            <Text style={styles.btnPrimaryText}>Scan Another Baubrett</Text>
+            <Text style={styles.btnPrimaryText}>{t('saveConfirm.scanAnother')}</Text>
           </TouchableOpacity>
 
           <TouchableOpacity
             style={[styles.btn, styles.btnGhost]}
             onPress={() => navigation.navigate('Home')}
           >
-            <Text style={styles.btnGhostText}>Back to Home</Text>
+            <Text style={styles.btnGhostText}>{t('saveConfirm.backHome')}</Text>
           </TouchableOpacity>
 
           <TouchableOpacity
             style={[styles.btn, styles.btnGhost]}
             onPress={() => navigation.navigate('History')}
           >
-            <Text style={styles.btnGhostText}>View History</Text>
+            <Text style={styles.btnGhostText}>{t('history.title')}</Text>
           </TouchableOpacity>
         </View>
       </SafeAreaView>
@@ -90,20 +91,19 @@ export default function SaveConfirmScreen({ route, navigation }) {
           <View style={styles.stepDivider} />
           <View style={[styles.step, styles.stepActive]} />
         </View>
-        <Text style={styles.stepLabel}>Step 3 of 3 — Confirm &amp; Save</Text>
+        <Text style={styles.stepLabel}>{t('saveConfirm.stepLabel')}</Text>
 
         <View style={styles.card}>
-          <Text style={styles.cardHeader}>Entry to Record</Text>
+          <Text style={styles.cardHeader}>{t('saveConfirm.cardHeader')}</Text>
 
-          <Row label="📦 Baubrett" value={bbNb} />
-          <Row label="📍 Zone" value={zoneLabel} />
-          <Row label="📅 Date" value={dateStr} />
-          <Row label="🕐 Time" value={timeStr} />
+          <Row label={`📦 ${t('saveConfirm.baubrett')}`} value={bbNb} />
+          <Row label={`📍 ${t('saveConfirm.zone')}`} value={zoneLabel} />
+          <Row label={`📅 ${t('saveConfirm.date')}`} value={dateStr} />
+          <Row label={`🕐 ${t('saveConfirm.time')}`} value={timeStr} />
         </View>
 
         <Text style={styles.hint}>
-          This entry will be saved to{' '}
-          <Text style={styles.mono}>baubrett_tracking.xlsx</Text> on your device.
+          {t('saveConfirm.hint')}
         </Text>
 
         <TouchableOpacity
@@ -114,7 +114,7 @@ export default function SaveConfirmScreen({ route, navigation }) {
           {saving ? (
             <ActivityIndicator color={COLORS.white} />
           ) : (
-            <Text style={styles.btnPrimaryText}>💾  Confirm &amp; Save</Text>
+            <Text style={styles.btnPrimaryText}>💾  {t('saveConfirm.saveButton')}</Text>
           )}
         </TouchableOpacity>
 
@@ -123,7 +123,7 @@ export default function SaveConfirmScreen({ route, navigation }) {
           onPress={() => navigation.goBack()}
           disabled={saving}
         >
-          <Text style={styles.btnGhostText}>← Re-scan Zone</Text>
+          <Text style={styles.btnGhostText}>← {t('saveConfirm.rescan')}</Text>
         </TouchableOpacity>
 
       </View>

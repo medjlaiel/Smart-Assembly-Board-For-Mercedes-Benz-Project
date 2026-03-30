@@ -14,6 +14,7 @@ import {
   ScrollView,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { useTranslation } from 'react-i18next';
 import { COLORS, RADIUS, SHADOW, FONT_SIZES } from '../assets/theme';
 
 // ── Action card component ──────────────────────────────────────
@@ -37,6 +38,7 @@ function ActionCard({ emoji, title, subtitle, color, onPress }) {
 }
 
 export default function HomeScreen({ navigation }) {
+  const { t } = useTranslation();
   return (
     <SafeAreaView style={styles.safe}>
       <ScrollView contentContainerStyle={styles.container}>
@@ -44,41 +46,41 @@ export default function HomeScreen({ navigation }) {
         {/* ── Hero banner ─────────────────────────────────── */}
         <View style={[styles.hero, SHADOW.medium]}>
           <Text style={styles.heroEmoji}>📦</Text>
-          <Text style={styles.heroTitle}>Baubrett Tracker</Text>
+          <Text style={styles.heroTitle}>{t('home.title')}</Text>
           <Text style={styles.heroSub}>
-            Scan QR codes to save or consult Baubrett locations
+            {t('home.subtitle')}
           </Text>
         </View>
 
         {/* ── Section label ───────────────────────────────── */}
-        <Text style={styles.sectionLabel}>ACTIONS</Text>
+        <Text style={styles.sectionLabel}>{t('home.actions')}</Text>
 
         {/* ── Primary action cards ─────────────────────────── */}
         <ActionCard
           emoji="💾"
-          title="Save a Baubrett"
-          subtitle="Scan Baubrett + Zone → record location"
+          title={t('home.saveBaubrett.title')}
+          subtitle={t('home.saveBaubrett.subtitle')}
           color={COLORS.primary}
           onPress={() => navigation.navigate('SaveScanBaubrett')}
         />
 
         <ActionCard
           emoji="🔍"
-          title="Consult a Baubrett"
-          subtitle="Scan Baubrett → view SOM, accessories, FP-NO"
+          title={t('home.consultBaubrett.title')}
+          subtitle={t('home.consultBaubrett.subtitle')}
           color={COLORS.primary}
           onPress={() => navigation.navigate('ConsultScan')}
         />
 
         {/* ── Divider ─────────────────────────────────────── */}
         <View style={styles.divider} />
-        <Text style={styles.sectionLabel}>RECORDS</Text>
+        <Text style={styles.sectionLabel}>{t('home.records')}</Text>
 
         {/* ── History card ─────────────────────────────────── */}
         <ActionCard
           emoji="📋"
-          title="Location History"
-          subtitle="View and export all saved entries"
+          title={t('home.history.title')}
+          subtitle={t('home.history.subtitle')}
           color={COLORS.success}
           onPress={() => navigation.navigate('History')}
         />
@@ -90,7 +92,7 @@ export default function HomeScreen({ navigation }) {
           activeOpacity={0.8}
         >
           <Text style={styles.logoutIcon}>🚪</Text>
-          <Text style={styles.logoutText}>Log Out</Text>
+          <Text style={styles.logoutText}>{t('home.logout')}</Text>
         </TouchableOpacity>
 
       </ScrollView>

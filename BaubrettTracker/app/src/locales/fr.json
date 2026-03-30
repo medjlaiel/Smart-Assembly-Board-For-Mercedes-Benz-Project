@@ -64,5 +64,101 @@
     "signInError": "Une erreur s'est produite lors de la connexion. Veuillez réessayer.",
     "accountCreated": "Compte créé avec succès",
     "welcome": "Bienvenue"
+  },
+  "home": {
+    "title": "Baubrett Tracker",
+    "subtitle": "Scannez des codes QR pour enregistrer ou consulter des emplacements Baubrett",
+    "actions": "ACTIONS",
+    "saveBaubrett": {
+      "title": "Enregistrer un Baubrett",
+      "subtitle": "Scanner Baubrett + Zone → enregistrer l'emplacement"
+    },
+    "consultBaubrett": {
+      "title": "Consulter un Baubrett",
+      "subtitle": "Scanner Baubrett → voir SOM, accessoires, FP-NO"
+    },
+    "records": "ENREGISTREMENTS",
+    "history": {
+      "title": "Historique des emplacements",
+      "subtitle": "Voir et exporter toutes les entrées"
+    },
+    "logout": "Déconnexion"
+  },
+  "saveScanBaubrett": {
+    "title": "Scanner Baubrett",
+    "subtitle": "Scannez le code QR du Baubrett pour commencer",
+    "instructions": "Placez le code QR dans le cadre",
+    "unknownTitle": "Baubrett inconnu",
+    "unknownMessage": "\"{{value}}\" n'a pas été trouvé dans la base de données.\n\nAssurez-vous de scanner un code QR Baubrett valide.",
+    "stepLabel": "Étape 1 sur 3 — Scannez le code QR du Baubrett"
+  },
+  "saveScanZone": {
+    "title": "Scanner Zone",
+    "subtitle": "Scannez le code QR de la Zone",
+    "instructions": "Placez le code QR de la zone dans le cadre",
+    "wrongQRTitle": "Mauvais QR Code",
+    "wrongQRMessage": "Cela ressemble à un code QR Baubrett, pas à un code QR Zone.\n\nVeuillez scanner un code QR Zone à la place.",
+    "unknownTitle": "Zone inconnue",
+    "unknownMessage": "\"{{value}}\" n'est pas un code zone reconnu.\n\nLes codes valides incluent : ZONE_A, UFB01, EAP1, etc.",
+    "stepLabel": "Étape 2 sur 3 — Scannez le code QR de la Zone",
+    "infoHint": "Maintenant, scannez le code QR de la zone"
+  },
+  "saveConfirm": {
+    "title": "Confirmer & Enregistrer",
+    "baubrett": "Baubrett",
+    "zone": "Zone",
+    "location": "Emplacement",
+    "save": "Enregistrer",
+    "cancel": "Annuler",
+    "stepLabel": "Étape 3 sur 3 — Confirmer & Enregistrer",
+    "cardHeader": "Entrée à enregistrer",
+    "date": "Date",
+    "time": "Heure",
+    "hint": "Cette entrée sera enregistrée dans baubrett_tracking.xlsx sur votre appareil.",
+    "saveButton": "Confirmer & Enregistrer",
+    "rescan": "Ré-scanner la Zone",
+    "backHome": "Retour à l'accueil",
+    "scanAnother": "Scanner un autre Baubrett",
+    "savedTitle": "Enregistré avec succès!",
+    "savedSub": "Baubrett {{bbNb}} a été enregistré dans {{zoneLabel}}.",
+    "saveFailed": "Échec de l'enregistrement",
+    "saveFailedMessage": "Impossible d'écrire dans le fichier de suivi. Veuillez réessayer."
+  },
+  "consultScan": {
+    "title": "Scanner Baubrett",
+    "subtitle": "Scannez pour consulter les détails du Baubrett",
+    "instructions": "Placez le code QR dans le cadre",
+    "bannerText": "Scannez un Baubrett pour voir ses détails",
+    "notFoundTitle": "Non trouvé",
+    "notFoundMessage": "Baubrett \"{{value}}\" n'a pas été trouvé dans la base de données.\n\nAssurez-vous d'avoir scanné un code QR Baubrett valide."
+  },
+  "consultResult": {
+    "title": "Détails du Baubrett",
+    "som": "SOM",
+    "accessories": "Accessoires",
+    "fpNo": "FP-NO",
+    "noData": "Aucune donnée disponible pour ce Baubrett"
+  },
+  "history": {
+    "title": "Historique des emplacements",
+    "subtitle": "Voir et exporter toutes les entrées",
+    "empty": "Aucune entrée enregistrée",
+    "export": "Exporter vers Excel",
+    "delete": "Supprimer l'entrée",
+    "confirmDelete": "Êtes-vous sûr de vouloir supprimer cette entrée?",
+    "date": "Date",
+    "baubrett": "Baubrett",
+    "zone": "Zone",
+    "emptyTitle": "Aucune entrée trouvée",
+    "emptyTextNoSearch": "Enregistrez un Baubrett pour commencer le suivi des emplacements.",
+    "emptyTextWithSearch": "Aucun enregistrement d'emplacement trouvé pour \"{{query}}\"",
+    "clearFilter": "Afficher toutes les entrées",
+    "searchPlaceholder": "Rechercher un numéro de Baubrett…",
+    "headerAllEntries": "Toutes les entrées",
+    "headerFiltered": "BB {{bb}}",
+    "recordCount": "{{count}} entrée",
+    "recordCount_plural": "{{count}} entrées",
+    "exportFailed": "Échec de l'exportation",
+    "exportFailedMessage": "Impossible d'exporter le fichier."
   }
 }

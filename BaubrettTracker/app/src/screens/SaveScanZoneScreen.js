@@ -5,11 +5,13 @@
  */
 import React, { useState } from 'react';
 import { View, Text, StyleSheet, Alert } from 'react-native';
+import { useTranslation } from 'react-i18next';
 import QRScannerView from '../components/QRScannerView';
 import { getZoneByKey } from '../data/zones';
 import { COLORS } from '../assets/theme';
 
 export default function SaveScanZoneScreen({ route, navigation }) {
+  const { t } = useTranslation();
   const { bbNb } = route.params;
   const [processing, setProcessing] = useState(false);
 
@@ -22,9 +24,9 @@ export default function SaveScanZoneScreen({ route, navigation }) {
     // Reject scanning the same Baubrett QR by mistake
     if (/^\d{9}$/.test(trimmed)) {
       Alert.alert(
-        'Wrong QR Code',
-        'That looks like a Baubrett QR code, not a Zone QR code.\n\nPlease scan a Zone QR code instead.',
-        [{ text: 'Try Again', onPress: () => setProcessing(false) }]
+        t('saveScanZone.wrongQRTitle'),
+        t('saveScanZone.wrongQRMessage'),
+        [{ text: t('common.ok'), onPress: () => setProcessing(false) }]
       );
       return;
     }
@@ -33,9 +35,9 @@ export default function SaveScanZoneScreen({ route, navigation }) {
     const zone = getZoneByKey(trimmed);
     if (!zone) {
       Alert.alert(
-        'Unknown Zone',
-        `"${trimmed}" is not a recognised zone code.\n\nValid codes include: ZONE_A, UFB01, EAP1, etc.`,
-        [{ text: 'Try Again', onPress: () => setProcessing(false) }]
+        t('saveScanZone.unknownTitle'),
+        t('saveScanZone.unknownMessage', { value: trimmed }),
+        [{ text: t('common.ok'), onPress: () => setProcessing(false) }]
       );
       return;
     }
@@ -55,17 +57,19 @@ export default function SaveScanZoneScreen({ route, navigation }) {
         <View style={styles.stepDivider} />
         <View style={styles.step} />
       </View>
-      <Text style={styles.stepLabel}>Step 2 of 3 — Scan the Zone QR code</Text>
+      <Text style={styles.stepLabel}>{t('saveScanZone.stepLabel')}</Text>
 
       {/* Show which Baubrett is already scanned */}
       <View style={styles.infoBanner}>
-        <Text style={styles.infoText}>✅ Baubrett: <Text style={styles.bold}>{bbNb}</Text></Text>
-        <Text style={styles.infoHint}>Now scan the zone QR code</Text>
+        <Text style={styles.infoText}>
+          ✅ {t('saveConfirm.baubrett')}: <Text style={styles.bold}>{bbNb}</Text>
+        </Text>
+        <Text style={styles.infoHint}>{t('saveScanZone.infoHint')}</Text>
       </View>
 
       <QRScannerView
         onScan={handleScan}
-        hint="Point the camera at the Zone QR code"
+        hint={t('saveScanZone.instructions')}
       />
     </View>
   );

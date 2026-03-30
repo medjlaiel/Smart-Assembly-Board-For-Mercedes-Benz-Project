@@ -20,10 +20,12 @@ import {
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useFocusEffect } from '@react-navigation/native';
+import { useTranslation } from 'react-i18next';
 import { loadTrackingRecords, exportTrackingFile } from '../services/trackingService';
 import { COLORS, RADIUS, SHADOW } from '../assets/theme';
 
 export default function HistoryScreen({ route }) {
+  const { t } = useTranslation();
   const filterBB = route?.params?.filterBB || null;
   const [allRecords, setAllRecords] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -77,7 +79,7 @@ export default function HistoryScreen({ route }) {
     try {
       await exportTrackingFile();
     } catch (err) {
-      Alert.alert('Export Failed', err.message || 'Could not export the file.');
+      Alert.alert(t('history.exportFailed'), err.message || t('history.exportFailedMessage'));
     } finally {
       setExporting(false);
     }
@@ -103,15 +105,15 @@ export default function HistoryScreen({ route }) {
   const renderEmpty = () => (
     <View style={styles.emptyContainer}>
       <Text style={styles.emptyEmoji}>📋</Text>
-      <Text style={styles.emptyTitle}>No entries found</Text>
+      <Text style={styles.emptyTitle}>{t('history.emptyTitle')}</Text>
       <Text style={styles.emptyText}>
         {searchQuery.trim()
-          ? `No location records found for "${searchQuery.trim()}"`
-          : 'Save a Baubrett to start tracking locations.'}
+          ? t('history.emptyTextWithSearch', { query: searchQuery.trim() })
+          : t('history.emptyTextNoSearch')}
       </Text>
       {searchQuery.trim() ? (
         <TouchableOpacity style={styles.clearFilterBtn} onPress={handleClearSearch}>
-          <Text style={styles.clearFilterText}>Show All Entries</Text>
+          <Text style={styles.clearFilterText}>{t('history.clearFilter')}</Text>
         </TouchableOpacity>
       ) : null}
     </View>
@@ -146,7 +148,7 @@ export default function HistoryScreen({ route }) {
           <Text style={styles.searchIcon}>🔍</Text>
           <TextInput
             style={styles.searchInput}
-            placeholder="Search Baubrett number…"
+            placeholder={t('history.searchPlaceholder')}
             placeholderTextColor={COLORS.text3}
             value={searchQuery}
             onChangeText={(text) => {
@@ -187,10 +189,10 @@ export default function HistoryScreen({ route }) {
       <View style={styles.headerBar}>
         <View>
           <Text style={styles.headerTitle}>
-            {searchQuery.trim() ? `BB ${searchQuery.trim()}` : 'All Entries'}
+            {searchQuery.trim() ? t('history.headerFiltered', { bb: searchQuery.trim() }) : t('history.headerAllEntries')}
           </Text>
           <Text style={styles.headerSub}>
-            {loading ? '…' : `${records.length} record${records.length !== 1 ? 's' : ''}`}
+            {loading ? '…' : t('history.recordCount', { count: records.length })}
           </Text>
         </View>
         <TouchableOpacity
@@ -201,7 +203,7 @@ export default function HistoryScreen({ route }) {
           {exporting ? (
             <ActivityIndicator color={COLORS.white} size="small" />
           ) : (
-            <Text style={styles.exportText}>⬆ Export</Text>
+            <Text style={styles.exportText}>⬆ {t('history.export')}</Text>
           )}
         </TouchableOpacity>
       </View>

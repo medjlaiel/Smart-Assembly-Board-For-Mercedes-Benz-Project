@@ -16,10 +16,12 @@ import {
   ActivityIndicator,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { useTranslation } from 'react-i18next';
 import { getHistoryForBaubrett } from '../services/trackingService';
 import { COLORS, RADIUS, SHADOW } from '../assets/theme';
 
 export default function ConsultResultScreen({ route, navigation }) {
+  const { t } = useTranslation();
   const { record } = route.params;
   const [lastLocation, setLastLocation] = useState(null);
   const [loadingHistory, setLoadingHistory] = useState(true);
@@ -52,24 +54,24 @@ export default function ConsultResultScreen({ route, navigation }) {
 
         {/* ── Last location ─────────────────────────────── */}
         <View style={[styles.section, SHADOW.small]}>
-          <Text style={styles.sectionTitle}>📍 Last Known Location</Text>
+          <Text style={styles.sectionTitle}>📍 {t('consultResult.lastLocation')}</Text>
           {loadingHistory ? (
             <ActivityIndicator color={COLORS.primary} style={{ marginTop: 10 }} />
           ) : lastLocation ? (
             <View style={styles.locationRow}>
               <Chip label={lastLocation.Zone} color={COLORS.primary} />
               <Text style={styles.locationMeta}>
-                {lastLocation.Date} at {lastLocation.Time}
+                {lastLocation.Date} {t('consultResult.at')} {lastLocation.Time}
               </Text>
             </View>
           ) : (
-            <Text style={styles.noData}>No location recorded yet</Text>
+            <Text style={styles.noData}>{t('consultResult.noLocation')}</Text>
           )}
         </View>
 
         {/* ── FP-NO ─────────────────────────────────────── */}
         <View style={[styles.section, SHADOW.small]}>
-          <Text style={styles.sectionTitle}>🔢 FP-NO</Text>
+          <Text style={styles.sectionTitle}>🔢 {t('consultResult.fpNo')}</Text>
           {record.FP_NO && record.FP_NO.length > 0 ? (
             record.FP_NO.map((fp, i) => (
               <View key={i} style={styles.listItem}>
@@ -78,14 +80,14 @@ export default function ConsultResultScreen({ route, navigation }) {
               </View>
             ))
           ) : (
-            <Text style={styles.noData}>No FP-NO data</Text>
+            <Text style={styles.noData}>{t('consultResult.noFPNO')}</Text>
           )}
         </View>
 
         {/* ── Accessories ───────────────────────────────── */}
         <View style={[styles.section, SHADOW.small]}>
           <Text style={styles.sectionTitle}>
-            🔧 Accessories
+            🔧 {t('consultResult.accessories')}
             <Text style={styles.countBadge}>
               {record.Accessories ? ` (${record.Accessories.length})` : ''}
             </Text>
@@ -98,7 +100,7 @@ export default function ConsultResultScreen({ route, navigation }) {
               </View>
             ))
           ) : (
-            <Text style={styles.noData}>No accessories listed</Text>
+            <Text style={styles.noData}>{t('consultResult.noAccessories')}</Text>
           )}
         </View>
 
@@ -109,14 +111,14 @@ export default function ConsultResultScreen({ route, navigation }) {
             navigation.navigate('History', { filterBB: record.BB_Nb })
           }
         >
-          <Text style={styles.btnSecondaryText}>📋 View Full History</Text>
+          <Text style={styles.btnSecondaryText}>📋 {t('consultResult.viewHistory')}</Text>
         </TouchableOpacity>
 
         <TouchableOpacity
           style={[styles.btn, styles.btnGhost]}
           onPress={() => navigation.navigate('ConsultScan')}
         >
-          <Text style={styles.btnGhostText}>← Scan Another</Text>
+          <Text style={styles.btnGhostText}>← {t('consultResult.scanAnother')}</Text>
         </TouchableOpacity>
 
       </ScrollView>

@@ -5,11 +5,13 @@
  */
 import React, { useState } from 'react';
 import { View, Text, StyleSheet, Alert } from 'react-native';
+import { useTranslation } from 'react-i18next';
 import QRScannerView from '../components/QRScannerView';
 import { getBaubrettByNumber } from '../services/databaseService';
 import { COLORS } from '../assets/theme';
 
 export default function SaveScanBaubrettScreen({ navigation }) {
+  const { t } = useTranslation();
   const [processing, setProcessing] = useState(false);
 
   const handleScan = (data) => {
@@ -22,9 +24,9 @@ export default function SaveScanBaubrettScreen({ navigation }) {
     const record = getBaubrettByNumber(trimmed);
     if (!record) {
       Alert.alert(
-        'Unknown Baubrett',
-        `"${trimmed}" was not found in the database.\n\nMake sure you are scanning a valid Baubrett QR code.`,
-        [{ text: 'Try Again', onPress: () => setProcessing(false) }]
+        t('saveScanBaubrett.unknownTitle'),
+        t('saveScanBaubrett.unknownMessage', { value: trimmed }),
+        [{ text: t('common.ok'), onPress: () => setProcessing(false) }]
       );
       return;
     }
@@ -44,11 +46,11 @@ export default function SaveScanBaubrettScreen({ navigation }) {
         <View style={styles.stepDivider} />
         <View style={styles.step} />
       </View>
-      <Text style={styles.stepLabel}>Step 1 of 3 — Scan the Baubrett QR code</Text>
+      <Text style={styles.stepLabel}>{t('saveScanBaubrett.stepLabel')}</Text>
 
       <QRScannerView
         onScan={handleScan}
-        hint="Point the camera at the Baubrett QR code"
+        hint={t('saveScanBaubrett.instructions')}
       />
     </View>
   );

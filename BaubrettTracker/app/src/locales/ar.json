@@ -64,5 +64,101 @@
     "signInError": "حدث خطأ أثناء تسجيل الدخول. يرجى المحاولة مرة أخرى.",
     "accountCreated": "تم إنشاء الحساب بنجاح",
     "welcome": "مرحباً"
+  },
+  "home": {
+    "title": "Baubrett Tracker",
+    "subtitle": "امسح أكواد QR لحفظ أو استشارة مواقع Baubrett",
+    "actions": "الإجراءات",
+    "saveBaubrett": {
+      "title": "حفظ Baubrett",
+      "subtitle": "مسح Baubrett + المنطقة → تسجيل الموقع"
+    },
+    "consultBaubrett": {
+      "title": "استشارة Baubrett",
+      "subtitle": "مسح Baubrett → عرض SOM، الملحقات، FP-NO"
+    },
+    "records": "السجلات",
+    "history": {
+      "title": "سجل المواقع",
+      "subtitle": "عرض وتصدير جميع الإدخالات"
+    },
+    "logout": "تسجيل الخروج"
+  },
+  "saveScanBaubrett": {
+    "title": "مسح Baubrett",
+    "subtitle": "امسح رمز QR الخاص بـ Baubrett للبدء",
+    "instructions": "ضع رمز QR داخل الإطار",
+    "unknownTitle": "Baubrett غير معروف",
+    "unknownMessage": "\"{{value}}\" لم يتم العثور عليه في قاعدة البيانات.\n\nتأكد من أنك تقوم بمسح رمز QR Baubrett صالح.",
+    "stepLabel": "الخطوة 1 من 3 — امسح رمز QR الخاص بـ Baubrett"
+  },
+  "saveScanZone": {
+    "title": "مسح المنطقة",
+    "subtitle": "امسح رمز QR الخاص بالمنطقة",
+    "instructions": "ضع رمز QR الخاص بالمنطقة داخل الإطار",
+    "wrongQRTitle": "رمز QR خاطئ",
+    "wrongQRMessage": "يبدو أن هذا رمز QR لـ Baubrett، وليس رمز QR للمنطقة.\n\nيرجى مسح رمز QR للمنطقة بدلاً من ذلك.",
+    "unknownTitle": "منطقة غير معروفة",
+    "unknownMessage": "\"{{value}}\" ليس رمز منطقة معترفًا به.\n\nالأكواد الصالحة تشمل: ZONE_A, UFB01, EAP1، إلخ.",
+    "stepLabel": "الخطوة 2 من 3 — امسح رمز QR الخاص بالمنطقة",
+    "infoHint": "الآن امسح رمز QR الخاص بالمنطقة"
+  },
+  "saveConfirm": {
+    "title": "تأكيد وحفظ",
+    "baubrett": "Baubrett",
+    "zone": "المنطقة",
+    "location": "الموقع",
+    "save": "حفظ",
+    "cancel": "إلغاء",
+    "stepLabel": "الخطوة 3 من 3 — تأكيد وحفظ",
+    "cardHeader": "الإدخال للتسجيل",
+    "date": "التاريخ",
+    "time": "الوقت",
+    "hint": "سيتم حفظ هذا الإدخال في baubrett_tracking.xlsx على جهازك.",
+    "saveButton": "تأكيد وحفظ",
+    "rescan": "إعادة مسح المنطقة",
+    "backHome": "العودة إلى الصفحة الرئيسية",
+    "scanAnother": "مسح Baubrett آخر",
+    "savedTitle": "تم الحفظ بنجاح!",
+    "savedSub": "تم تسجيل Baubrett {{bbNb}} في {{zoneLabel}}.",
+    "saveFailed": "فشل الحفظ",
+    "saveFailedMessage": "تعذر الكتابة في ملف التتبع. يرجى المحاولة مرة أخرى."
+  },
+  "consultScan": {
+    "title": "مسح Baubrett",
+    "subtitle": "امسح للاستعلام عن تفاصيل Baubrett",
+    "instructions": "ضع رمز QR داخل الإطار",
+    "bannerText": "امسح Baubrett لعرض تفاصيله",
+    "notFoundTitle": "غير موجود",
+    "notFoundMessage": "Baubrett \"{{value}}\" لم يتم العثور عليه في قاعدة البيانات.\n\nتأكد من أنك قمت بمسح رمز QR Baubrett صالح."
+  },
+  "consultResult": {
+    "title": "تفاصيل Baubrett",
+    "som": "SOM",
+    "accessories": "الملحقات",
+    "fpNo": "FP-NO",
+    "noData": "لا توجد بيانات متاحة لهذا Baubrett"
+  },
+  "history": {
+    "title": "سجل المواقع",
+    "subtitle": "عرض وتصدير جميع الإدخالات",
+    "empty": "لا توجد إدخالات محفوظة",
+    "export": "تصدير إلى Excel",
+    "delete": "حذف الإدخال",
+    "confirmDelete": "هل أنت متأكد من حذف هذا الإدخال؟",
+    "date": "التاريخ",
+    "baubrett": "Baubrett",
+    "zone": "المنطقة",
+    "emptyTitle": "لا توجد مدخلات",
+    "emptyTextNoSearch": "احفظ Baubrett لبدء تتبع المواقع.",
+    "emptyTextWithSearch": "لم يتم العثور على سجلات مواقع لـ \"{{query}}\"",
+    "clearFilter": "عرض جميع المدخلات",
+    "searchPlaceholder": "البحث عن رقم Baubrett…",
+    "headerAllEntries": "جميع المدخلات",
+    "headerFiltered": "BB {{bb}}",
+    "recordCount": "{{count}} مدخلة",
+    "recordCount_plural": "{{count}} مدخلة",
+    "exportFailed": "فشل التصدير",
+    "exportFailedMessage": "تعذر تصدير الملف."
   }
 }

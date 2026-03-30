@@ -5,11 +5,13 @@
  */
 import React, { useState } from 'react';
 import { View, Text, StyleSheet, Alert } from 'react-native';
+import { useTranslation } from 'react-i18next';
 import QRScannerView from '../components/QRScannerView';
 import { getBaubrettByNumber } from '../services/databaseService';
 import { COLORS } from '../assets/theme';
 
 export default function ConsultScanScreen({ navigation }) {
+  const { t } = useTranslation();
   const [processing, setProcessing] = useState(false);
 
   const handleScan = (data) => {
@@ -21,9 +23,9 @@ export default function ConsultScanScreen({ navigation }) {
 
     if (!record) {
       Alert.alert(
-        'Not Found',
-        `Baubrett "${trimmed}" was not found in the database.\n\nEnsure you scanned a valid Baubrett QR code.`,
-        [{ text: 'Try Again', onPress: () => setProcessing(false) }]
+        t('consultScan.notFoundTitle'),
+        t('consultScan.notFoundMessage', { value: trimmed }),
+        [{ text: t('common.ok'), onPress: () => setProcessing(false) }]
       );
       return;
     }
@@ -35,11 +37,11 @@ export default function ConsultScanScreen({ navigation }) {
   return (
     <View style={styles.wrapper}>
       <View style={styles.topBanner}>
-        <Text style={styles.bannerText}>🔍  Scan a Baubrett to view its details</Text>
+        <Text style={styles.bannerText}>🔍  {t('consultScan.bannerText')}</Text>
       </View>
       <QRScannerView
         onScan={handleScan}
-        hint="Point the camera at the Baubrett QR code"
+        hint={t('consultScan.instructions')}
       />
     </View>
   );
