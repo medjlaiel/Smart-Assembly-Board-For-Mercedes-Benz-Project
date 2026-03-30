@@ -130,7 +130,7 @@ export default function SignUpScreen({ navigation }) {
         Alert.alert('Success', result.message, [
           {
             text: 'OK',
-            onPress: () => navigation.replace('Home'),
+            onPress: () => navigation.navigate('Login'),
           },
         ]);
       } else {
