@@ -171,9 +171,6 @@ export default function LoginScreen({ navigation }) {
           </TouchableOpacity>
          </View>
 
-         {/* Language Selector - Middle Bottom */}
-         <LanguageSelector />
-
           {/* Footer */}
          <View style={styles.footer}>
            <Text style={styles.footerText}>{t('login.noAccount')}</Text>
@@ -181,6 +178,9 @@ export default function LoginScreen({ navigation }) {
              <Text style={styles.footerLink}>{t('login.signUpLink')}</Text>
            </TouchableOpacity>
          </View>
+
+         {/* Language Selector - Bottom */}
+         <LanguageSelector />
       </ScrollView>
     </KeyboardAvoidingView>
   );
