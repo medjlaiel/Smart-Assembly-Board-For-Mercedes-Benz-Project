@@ -16,6 +16,7 @@ import {
 } from 'react-native';
 import { COLORS, FONT_SIZES, RADIUS, SHADOW } from '../assets/theme';
 import AuthInput from '../components/AuthInput';
+import { signIn as signInUser } from '../services/authService';
 
 // Simple logo placeholder component
 const LogoPlaceholder = () => (
@@ -70,18 +71,29 @@ export default function LoginScreen({ navigation }) {
   };
 
    const handleSignIn = async () => {
-    if (!validateForm()) return;
+     if (!validateForm()) return;
 
-    setIsLoading(true);
+     setIsLoading(true);
 
-    // Simulate API call
-    setTimeout(() => {
-      setIsLoading(false);
-      Alert.alert('Success', 'Login successful! (Demo mode)');
-      // Navigate to home screen
-      navigation.replace('Home');
-    }, 1500);
-  };
+     try {
+       const result = await signInUser(email, password);
+
+       if (result.success) {
+         Alert.alert('Success', result.message, [
+           {
+             text: 'OK',
+             onPress: () => navigation.replace('Home'),
+           },
+         ]);
+       } else {
+         Alert.alert('Login Failed', result.message);
+         setIsLoading(false);
+       }
+     } catch (error) {
+       setIsLoading(false);
+       Alert.alert('Error', 'An unexpected error occurred. Please try again.');
+     }
+   };
 
   const handleForgotPassword = () => {
     Alert.alert('Forgot Password', 'Password reset functionality would go here');

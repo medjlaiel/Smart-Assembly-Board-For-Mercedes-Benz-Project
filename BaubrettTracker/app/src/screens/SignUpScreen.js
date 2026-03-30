@@ -13,12 +13,12 @@ import {
   Platform,
   Alert,
   ActivityIndicator,
-  CheckBox,
 } from 'react-native';
 import { COLORS, FONT_SIZES, RADIUS, SHADOW } from '../assets/theme';
 import AuthInput from '../components/AuthInput';
 import SocialButton from '../components/SocialButton';
 import PasswordStrengthBar from '../components/PasswordStrengthBar';
+import { signUp as signUpUser } from '../services/authService';
 
 /**
  * Email validation regex
@@ -123,13 +123,25 @@ export default function SignUpScreen({ navigation }) {
 
     setIsLoading(true);
 
-    // Simulate API call
-    setTimeout(() => {
+    try {
+      const result = await signUpUser(email, password, fullName);
+
+      if (result.success) {
+        Alert.alert('Success', result.message, [
+          {
+            text: 'OK',
+            onPress: () => navigation.replace('Home'),
+          },
+        ]);
+      } else {
+        // Show error message (including duplicate username warning)
+        Alert.alert('Sign Up Failed', result.message);
+        setIsLoading(false);
+      }
+    } catch (error) {
       setIsLoading(false);
-      Alert.alert('Success', 'Account created successfully! (Demo mode)');
-      // Navigate to home screen
-      navigation.replace('Home');
-    }, 1500);
+      Alert.alert('Error', 'An unexpected error occurred. Please try again.');
+    }
   };
 
   const handleSocialLogin = (provider) => {
@@ -231,19 +243,27 @@ export default function SignUpScreen({ navigation }) {
           />
 
           {/* Terms checkbox */}
-          <View style={styles.termsContainer}>
-            <CheckBox
-              value={agreeToTerms}
-              onValueChange={setAgreeToTerms}
-              tintColors={{ true: COLORS.primary, false: COLORS.border }}
-            />
+          <TouchableOpacity
+            style={styles.customCheckboxContainer}
+            onPress={() => setAgreeToTerms(!agreeToTerms)}
+            activeOpacity={0.7}
+          >
+            <View style={[
+              styles.customCheckbox,
+              agreeToTerms && styles.customCheckboxChecked,
+              { borderColor: agreeToTerms ? COLORS.primary : COLORS.border }
+            ]}>
+              {agreeToTerms && (
+                <Text style={styles.checkmark}>✓</Text>
+              )}
+            </View>
             <Text style={styles.termsText}>
               I agree to the{' '}
               <Text style={styles.termsLink}>Terms of Service</Text>
               {' '}and{' '}
               <Text style={styles.termsLink}>Privacy Policy</Text>
             </Text>
-          </View>
+          </TouchableOpacity>
           {termsError ? (
             <Text style={styles.termsError}>{termsError}</Text>
           ) : null}
@@ -351,17 +371,35 @@ const styles = StyleSheet.create({
   form: {
     marginBottom: 16,
   },
-  termsContainer: {
+  customCheckboxContainer: {
     flexDirection: 'row',
     alignItems: 'flex-start',
     marginTop: 8,
     marginBottom: 8,
   },
+  customCheckbox: {
+    width: 24,
+    height: 24,
+    borderRadius: 4,
+    borderWidth: 2,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginRight: 12,
+    marginTop: 2,
+  },
+  customCheckboxChecked: {
+    backgroundColor: COLORS.primary,
+  },
+  checkmark: {
+    color: COLORS.white,
+    fontSize: 16,
+    fontWeight: 'bold',
+    lineHeight: 20,
+  },
   termsText: {
     fontSize: 13,
     color: COLORS.text2,
     flex: 1,
-    marginLeft: 8,
     lineHeight: 18,
   },
   termsLink: {
@@ -372,7 +410,7 @@ const styles = StyleSheet.create({
     fontSize: 12,
     color: COLORS.error,
     marginTop: 4,
-    marginLeft: 32,
+    marginLeft: 0,
   },
   checkIconContainer: {
     width: 20,

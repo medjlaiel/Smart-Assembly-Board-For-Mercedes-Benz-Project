@@ -9,6 +9,7 @@
   },
   "dependencies": {
     "@expo/vector-icons": "15.0.3",
+    "@react-native-async-storage/async-storage": "^2.1.2",
     "@react-navigation/native": "6.1.17",
     "@react-navigation/stack": "6.3.29",
     "babel-preset-expo": "~54.0.10",
