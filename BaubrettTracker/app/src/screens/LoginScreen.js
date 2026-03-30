@@ -14,8 +14,10 @@ import {
   Alert,
   ActivityIndicator,
 } from 'react-native';
+import { useTranslation } from 'react-i18next';
 import { COLORS, FONT_SIZES, RADIUS, SHADOW } from '../assets/theme';
 import AuthInput from '../components/AuthInput';
+import LanguageSelector from '../components/LanguageSelector';
 import { signIn as signInUser } from '../services/authService';
 
 // Simple logo placeholder component
@@ -36,6 +38,7 @@ const isValidEmail = (email) => {
 };
 
 export default function LoginScreen({ navigation }) {
+  const { t } = useTranslation();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [emailError, setEmailError] = useState('');
@@ -47,10 +50,10 @@ export default function LoginScreen({ navigation }) {
 
     // Email validation
     if (!email.trim()) {
-      setEmailError('Email is required');
+      setEmailError(t('signup.errors.emailRequired'));
       valid = false;
     } else if (!isValidEmail(email)) {
-      setEmailError('Please enter a valid email address');
+      setEmailError(t('signup.errors.emailInvalid'));
       valid = false;
     } else {
       setEmailError('');
@@ -58,10 +61,10 @@ export default function LoginScreen({ navigation }) {
 
     // Password validation
     if (!password) {
-      setPasswordError('Password is required');
+      setPasswordError(t('signup.errors.passwordRequired'));
       valid = false;
     } else if (password.length < 8) {
-      setPasswordError('Password must be at least 8 characters');
+      setPasswordError(t('signup.errors.passwordTooShort'));
       valid = false;
     } else {
       setPasswordError('');
@@ -79,19 +82,19 @@ export default function LoginScreen({ navigation }) {
        const result = await signInUser(email, password);
 
        if (result.success) {
-         Alert.alert('Success', result.message, [
+         Alert.alert(t('common.success'), result.message, [
            {
-             text: 'OK',
+             text: t('common.ok'),
              onPress: () => navigation.replace('Home'),
            },
          ]);
        } else {
-         Alert.alert('Login Failed', result.message);
+         Alert.alert(t('common.error'), result.message);
          setIsLoading(false);
        }
      } catch (error) {
        setIsLoading(false);
-       Alert.alert('Error', 'An unexpected error occurred. Please try again.');
+       Alert.alert(t('common.error'), t('common.error'));
      }
    };
 
@@ -116,20 +119,20 @@ export default function LoginScreen({ navigation }) {
 
         {/* Header */}
         <View style={styles.header}>
-          <Text style={styles.title}>Welcome back</Text>
-          <Text style={styles.subtitle}>login to your account</Text>
+          <Text style={styles.title}>{t('login.title')}</Text>
+          <Text style={styles.subtitle}>{t('login.subtitle')}</Text>
         </View>
 
         {/* Form */}
         <View style={styles.form}>
           <AuthInput
-            label="Email"
+            label={t('login.email')}
             iconName="mail-outline"
             iconType="ionic"
             value={email}
             onChangeText={setEmail}
             error={emailError}
-            placeholder="Enter your email"
+            placeholder={t('login.emailPlaceholder')}
             keyboardType="email-address"
             autoCapitalize="none"
             autoComplete="email"
@@ -137,13 +140,13 @@ export default function LoginScreen({ navigation }) {
           />
 
           <AuthInput
-            label="Password"
+            label={t('login.password')}
             iconName="lock-closed"
             iconType="ionic"
             value={password}
             onChangeText={setPassword}
             error={passwordError}
-            placeholder="Enter your password"
+            placeholder={t('login.passwordPlaceholder')}
             secureTextEntry={false} // We handle toggle internally via showSecureToggle
             showSecureToggle={true}
             autoComplete="current-password"
@@ -151,7 +154,7 @@ export default function LoginScreen({ navigation }) {
           />
 
           <TouchableOpacity onPress={handleForgotPassword} style={styles.forgotPasswordButton}>
-            <Text style={styles.forgotPasswordText}>Forgot password?</Text>
+            <Text style={styles.forgotPasswordText}>{t('login.forgotPassword')}</Text>
           </TouchableOpacity>
 
           <TouchableOpacity
@@ -163,18 +166,21 @@ export default function LoginScreen({ navigation }) {
             {isLoading ? (
               <ActivityIndicator color={COLORS.white} />
             ) : (
-              <Text style={styles.primaryButtonText}>Login</Text>
+              <Text style={styles.primaryButtonText}>{t('login.loginButton')}</Text>
             )}
           </TouchableOpacity>
          </View>
 
-         {/* Footer */}
-        <View style={styles.footer}>
-          <Text style={styles.footerText}>Don't have an account? </Text>
-          <TouchableOpacity onPress={() => navigation.navigate('SignUp')}>
-            <Text style={styles.footerLink}>Sign up</Text>
-          </TouchableOpacity>
-        </View>
+         {/* Language Selector - Middle Bottom */}
+         <LanguageSelector />
+
+          {/* Footer */}
+         <View style={styles.footer}>
+           <Text style={styles.footerText}>{t('login.noAccount')}</Text>
+           <TouchableOpacity onPress={() => navigation.navigate('SignUp')}>
+             <Text style={styles.footerLink}>{t('login.signUpLink')}</Text>
+           </TouchableOpacity>
+         </View>
       </ScrollView>
     </KeyboardAvoidingView>
   );

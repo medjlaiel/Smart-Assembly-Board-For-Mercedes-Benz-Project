@@ -1,0 +1,61 @@
+{
+  "app": {
+    "name": "Baubrett Tracker"
+  },
+  "login": {
+    "title": "مرحباً بعودتك",
+    "subtitle": "تسجيل الدخول إلى حسابك",
+    "email": "البريد الإلكتروني",
+    "emailPlaceholder": "أدخل بريدك الإلكتروني",
+    "password": "كلمة المرور",
+    "passwordPlaceholder": "أدخل كلمة المرور",
+    "forgotPassword": "نسيت كلمة المرور؟",
+    "loginButton": "تسجيل الدخول",
+    "noAccount": "ليس لديك حساب؟ ",
+    "signUpLink": "إنشاء حساب",
+    "language": "اللغة"
+  },
+  "signup": {
+    "title": "إنشاء حساب",
+    "subtitle": "انضم إلينا اليوم،它是 مجاني",
+    "fullName": "الاسم الكامل",
+    "fullNamePlaceholder": "أدخل اسمك الكامل",
+    "email": "البريد الإلكتروني",
+    "emailPlaceholder": "أدخل بريدك الإلكتروني",
+    "password": "كلمة المرور",
+    "passwordPlaceholder": "إنشاء كلمة مرور",
+    "confirmPassword": "تأكيد كلمة المرور",
+    "confirmPasswordPlaceholder": "تأكيد كلمة المرور",
+    "termsAgree": "أوافق على ",
+    "termsOfService": "شروط الخدمة",
+    "and": " و ",
+    "privacyPolicy": "سياسة الخصوصية",
+    "createAccountButton": "إنشاء حساب",
+    "orSignUpWith": "أو سجل باستخدام",
+    "haveAccount": "هل لديك حساب بالفعل؟ ",
+    "signInLink": "تسجيل الدخول",
+    "errors": {
+      "nameRequired": "الاسم الكامل مطلوب",
+      "nameTooShort": "يجب أن يكون الاسم على الأقل حرفين",
+      "emailRequired": "البريد الإلكتروني مطلوب",
+      "emailInvalid": "يرجى إدخال عنوان بريد إلكتروني صالح",
+      "passwordRequired": "كلمة المرور مطلوبة",
+      "passwordTooShort": "يجب أن تتكون كلمة المرور من 8 أحرف على الأقل",
+      "passwordWeak": "يرجى إنشاء كلمة مرور أقوى",
+      "confirmPasswordRequired": "يرجى تأكيد كلمة المرور",
+      "passwordsDoNotMatch": "كلمات المرور غير متطابقة",
+      "termsRequired": "يجب الموافقة على الشروط",
+      "usernameExists": "اسم المستخدم مستخدم بالفعل، يرجى تجربة آخر."
+    }
+  },
+  "home": {
+    "title": "Baubrett Tracker",
+    "welcome": "مرحباً"
+  },
+  "common": {
+    "success": "نجاح",
+    "error": "خطأ",
+    "ok": "موافق",
+    "cancel": "إلغاء"
+  }
+}

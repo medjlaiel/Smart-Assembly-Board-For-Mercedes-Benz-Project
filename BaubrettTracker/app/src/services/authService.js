@@ -4,6 +4,7 @@
  * Uses AsyncStorage for persistent storage.
  */
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import i18n from '../i18n';
 
 const USERS_KEY = 'baubrett_tracker_users';
 
@@ -58,7 +59,7 @@ export async function signUp(email, password, fullName) {
     if (exists) {
       return {
         success: false,
-        message: 'The username is already used, please try another one.'
+        message: i18n.t('signup.errors.usernameExists')
       };
     }
 
@@ -78,14 +79,14 @@ export async function signUp(email, password, fullName) {
 
     return {
       success: true,
-      message: 'Account created successfully',
+      message: i18n.t('common.success'),
       user: { id: newUser.id, email: newUser.email, fullName: newUser.fullName }
     };
   } catch (error) {
     console.error('Sign up error:', error);
     return {
       success: false,
-      message: 'An error occurred during sign up. Please try again.'
+      message: i18n.t('common.error')
     };
   }
 }
@@ -106,20 +107,20 @@ export async function signIn(email, password) {
     if (!user) {
       return {
         success: false,
-        message: 'Invalid email or password'
+        message: i18n.t('common.error') // Using generic error for invalid credentials
       };
     }
 
     return {
       success: true,
-      message: 'Login successful',
+      message: i18n.t('common.success'),
       user: { id: user.id, email: user.email, fullName: user.fullName }
     };
   } catch (error) {
     console.error('Sign in error:', error);
     return {
       success: false,
-      message: 'An error occurred during login. Please try again.'
+      message: i18n.t('common.error')
     };
   }
 }

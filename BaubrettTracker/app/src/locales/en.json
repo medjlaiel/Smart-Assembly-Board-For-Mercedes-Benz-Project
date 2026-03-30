@@ -1,0 +1,61 @@
+{
+  "app": {
+    "name": "Baubrett Tracker"
+  },
+  "login": {
+    "title": "Welcome back",
+    "subtitle": "login to your account",
+    "email": "Email",
+    "emailPlaceholder": "Enter your email",
+    "password": "Password",
+    "passwordPlaceholder": "Enter your password",
+    "forgotPassword": "Forgot password?",
+    "loginButton": "Login",
+    "noAccount": "Don't have an account? ",
+    "signUpLink": "Sign up",
+    "language": "Language"
+  },
+  "signup": {
+    "title": "Create account",
+    "subtitle": "Join us today, it's free",
+    "fullName": "Full Name",
+    "fullNamePlaceholder": "Enter your full name",
+    "email": "Email",
+    "emailPlaceholder": "Enter your email",
+    "password": "Password",
+    "passwordPlaceholder": "Create a password",
+    "confirmPassword": "Confirm Password",
+    "confirmPasswordPlaceholder": "Confirm your password",
+    "termsAgree": "I agree to the ",
+    "termsOfService": "Terms of Service",
+    "and": " and ",
+    "privacyPolicy": "Privacy Policy",
+    "createAccountButton": "Create account",
+    "orSignUpWith": "or sign up with",
+    "haveAccount": "Already have an account? ",
+    "signInLink": "Sign in",
+    "errors": {
+      "nameRequired": "Full name is required",
+      "nameTooShort": "Name must be at least 2 characters",
+      "emailRequired": "Email is required",
+      "emailInvalid": "Please enter a valid email address",
+      "passwordRequired": "Password is required",
+      "passwordTooShort": "Password must be at least 8 characters",
+      "passwordWeak": "Please create a stronger password",
+      "confirmPasswordRequired": "Please confirm your password",
+      "passwordsDoNotMatch": "Passwords do not match",
+      "termsRequired": "You must agree to the terms",
+      "usernameExists": "The username is already used, please try another one."
+    }
+  },
+  "home": {
+    "title": "Baubrett Tracker",
+    "welcome": "Welcome"
+  },
+  "common": {
+    "success": "Success",
+    "error": "Error",
+    "ok": "OK",
+    "cancel": "Cancel"
+  }
+}

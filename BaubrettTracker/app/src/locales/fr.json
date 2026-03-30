@@ -1,0 +1,61 @@
+{
+  "app": {
+    "name": "Baubrett Tracker"
+  },
+  "login": {
+    "title": "Bon retour",
+    "subtitle": "connectez-vous à votre compte",
+    "email": "Email",
+    "emailPlaceholder": "Entrez votre email",
+    "password": "Mot de passe",
+    "passwordPlaceholder": "Entrez votre mot de passe",
+    "forgotPassword": "Mot de passe oublié?",
+    "loginButton": "Connexion",
+    "noAccount": "Vous n'avez pas de compte? ",
+    "signUpLink": "S'inscrire",
+    "language": "Langue"
+  },
+  "signup": {
+    "title": "Créer un compte",
+    "subtitle": "Rejoignez-nous aujourd'hui, c'est gratuit",
+    "fullName": "Nom complet",
+    "fullNamePlaceholder": "Entrez votre nom complet",
+    "email": "Email",
+    "emailPlaceholder": "Entrez votre email",
+    "password": "Mot de passe",
+    "passwordPlaceholder": "Créez un mot de passe",
+    "confirmPassword": "Confirmer le mot de passe",
+    "confirmPasswordPlaceholder": "Confirmez votre mot de passe",
+    "termsAgree": "J'accepte les ",
+    "termsOfService": "Conditions d'utilisation",
+    "and": " et la ",
+    "privacyPolicy": "Politique de confidentialité",
+    "createAccountButton": "Créer un compte",
+    "orSignUpWith": "ou inscrivez-vous avec",
+    "haveAccount": "Vous avez déjà un compte? ",
+    "signInLink": "Se connecter",
+    "errors": {
+      "nameRequired": "Le nom complet est requis",
+      "nameTooShort": "Le nom doit contenir au moins 2 caractères",
+      "emailRequired": "L'email est requis",
+      "emailInvalid": "Veuillez entrer une adresse email valide",
+      "passwordRequired": "Le mot de passe est requis",
+      "passwordTooShort": "Le mot de passe doit contenir au moins 8 caractères",
+      "passwordWeak": "Veuillez créer un mot de passe plus fort",
+      "confirmPasswordRequired": "Veuillez confirmer votre mot de passe",
+      "passwordsDoNotMatch": "Les mots de passe ne correspondent pas",
+      "termsRequired": "Vous devez accepter les conditions",
+      "usernameExists": "Le nom d'utilisateur est déjà utilisé, veuillez en essayer un autre."
+    }
+  },
+  "home": {
+    "title": "Baubrett Tracker",
+    "welcome": "Bienvenue"
+  },
+  "common": {
+    "success": "Succès",
+    "error": "Erreur",
+    "ok": "OK",
+    "cancel": "Annuler"
+  }
+}

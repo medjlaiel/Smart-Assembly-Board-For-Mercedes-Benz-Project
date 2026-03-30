@@ -14,6 +14,7 @@ import {
   Alert,
   ActivityIndicator,
 } from 'react-native';
+import { useTranslation } from 'react-i18next';
 import { COLORS, FONT_SIZES, RADIUS, SHADOW } from '../assets/theme';
 import AuthInput from '../components/AuthInput';
 import SocialButton from '../components/SocialButton';
@@ -29,6 +30,7 @@ const isValidEmail = (email) => {
 };
 
 export default function SignUpScreen({ navigation }) {
+  const { t } = useTranslation();
   const [fullName, setFullName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -62,10 +64,10 @@ export default function SignUpScreen({ navigation }) {
 
     // Name validation
     if (!fullName.trim()) {
-      setNameError('Full name is required');
+      setNameError(t('signup.errors.nameRequired'));
       valid = false;
     } else if (fullName.trim().length < 2) {
-      setNameError('Name must be at least 2 characters');
+      setNameError(t('signup.errors.nameTooShort'));
       valid = false;
     } else {
       setNameError('');
@@ -73,10 +75,10 @@ export default function SignUpScreen({ navigation }) {
 
     // Email validation
     if (!email.trim()) {
-      setEmailError('Email is required');
+      setEmailError(t('signup.errors.emailRequired'));
       valid = false;
     } else if (!isValidEmail(email)) {
-      setEmailError('Please enter a valid email address');
+      setEmailError(t('signup.errors.emailInvalid'));
       valid = false;
     } else {
       setEmailError('');
@@ -84,13 +86,13 @@ export default function SignUpScreen({ navigation }) {
 
     // Password validation
     if (!password) {
-      setPasswordError('Password is required');
+      setPasswordError(t('signup.errors.passwordRequired'));
       valid = false;
     } else if (password.length < 8) {
-      setPasswordError('Password must be at least 8 characters');
+      setPasswordError(t('signup.errors.passwordTooShort'));
       valid = false;
     } else if (passwordStrength < 2) {
-      setPasswordError('Please create a stronger password');
+      setPasswordError(t('signup.errors.passwordWeak'));
       valid = false;
     } else {
       setPasswordError('');
@@ -98,10 +100,10 @@ export default function SignUpScreen({ navigation }) {
 
     // Confirm password validation
     if (!confirmPassword) {
-      setConfirmPasswordError('Please confirm your password');
+      setConfirmPasswordError(t('signup.errors.confirmPasswordRequired'));
       valid = false;
     } else if (!passwordsMatch) {
-      setConfirmPasswordError('Passwords do not match');
+      setConfirmPasswordError(t('signup.errors.passwordsDoNotMatch'));
       valid = false;
     } else {
       setConfirmPasswordError('');
@@ -109,7 +111,7 @@ export default function SignUpScreen({ navigation }) {
 
     // Terms validation
     if (!agreeToTerms) {
-      setTermsError('You must agree to the terms');
+      setTermsError(t('signup.errors.termsRequired'));
       valid = false;
     } else {
       setTermsError('');
@@ -127,15 +129,15 @@ export default function SignUpScreen({ navigation }) {
       const result = await signUpUser(email, password, fullName);
 
       if (result.success) {
-        Alert.alert('Success', result.message, [
+        Alert.alert(t('common.success'), result.message, [
           {
-            text: 'OK',
+            text: t('common.ok'),
             onPress: () => navigation.navigate('Login'),
           },
         ]);
       } else {
         // Show error message (including duplicate username warning)
-        Alert.alert('Sign Up Failed', result.message);
+        Alert.alert(t('common.error'), result.message);
         setIsLoading(false);
       }
     } catch (error) {
@@ -170,45 +172,45 @@ export default function SignUpScreen({ navigation }) {
           >
             <Text style={styles.backArrow}>←</Text>
           </TouchableOpacity>
-          <Text style={styles.title}>Create account</Text>
-          <Text style={styles.subtitle}>Join us today, it's free</Text>
+          <Text style={styles.title}>{t('signup.title')}</Text>
+          <Text style={styles.subtitle}>{t('signup.subtitle')}</Text>
         </View>
 
         {/* Form */}
         <View style={styles.form}>
           <AuthInput
-            label="Full Name"
+            label={t('signup.fullName')}
             iconName="person-outline"
             iconType="ionic"
             value={fullName}
             onChangeText={setFullName}
             error={nameError}
-            placeholder="Enter your full name"
+            placeholder={t('signup.fullNamePlaceholder')}
             autoCapitalize="words"
             autoComplete="name"
           />
 
           <AuthInput
-            label="Email"
+            label={t('signup.email')}
             iconName="mail-outline"
             iconType="ionic"
             value={email}
             onChangeText={setEmail}
             error={emailError}
-            placeholder="Enter your email"
+            placeholder={t('signup.emailPlaceholder')}
             keyboardType="email-address"
             autoCapitalize="none"
             autoComplete="email"
           />
 
           <AuthInput
-            label="Password"
+            label={t('signup.password')}
             iconName="lock-closed"
             iconType="ionic"
             value={password}
             onChangeText={setPassword}
             error={passwordError}
-            placeholder="Create a password"
+            placeholder={t('signup.passwordPlaceholder')}
             secureTextEntry={false}
             showSecureToggle={true}
             autoComplete="new-password"
@@ -220,13 +222,13 @@ export default function SignUpScreen({ navigation }) {
           )}
 
           <AuthInput
-            label="Confirm Password"
+            label={t('signup.confirmPassword')}
             iconName="lock-closed"
             iconType="ionic"
             value={confirmPassword}
             onChangeText={setConfirmPassword}
             error={confirmPasswordError}
-            placeholder="Confirm your password"
+            placeholder={t('signup.confirmPasswordPlaceholder')}
             secureTextEntry={false}
             showSecureToggle={true}
             rightIcon={
@@ -258,10 +260,10 @@ export default function SignUpScreen({ navigation }) {
               )}
             </View>
             <Text style={styles.termsText}>
-              I agree to the{' '}
-              <Text style={styles.termsLink}>Terms of Service</Text>
-              {' '}and{' '}
-              <Text style={styles.termsLink}>Privacy Policy</Text>
+              {t('signup.termsAgree')}
+              <Text style={styles.termsLink}>{t('signup.termsOfService')}</Text>
+              {t('signup.and')}
+              <Text style={styles.termsLink}>{t('signup.privacyPolicy')}</Text>
             </Text>
           </TouchableOpacity>
           {termsError ? (
@@ -280,7 +282,7 @@ export default function SignUpScreen({ navigation }) {
             {isLoading ? (
               <ActivityIndicator color={COLORS.white} />
             ) : (
-              <Text style={styles.primaryButtonText}>Create account</Text>
+              <Text style={styles.primaryButtonText}>{t('signup.createAccountButton')}</Text>
             )}
           </TouchableOpacity>
         </View>
@@ -288,7 +290,7 @@ export default function SignUpScreen({ navigation }) {
         {/* Divider */}
         <View style={styles.dividerContainer}>
           <View style={styles.dividerLine} />
-          <Text style={styles.dividerText}>or sign up with</Text>
+          <Text style={styles.dividerText}>{t('signup.orSignUpWith')}</Text>
           <View style={styles.dividerLine} />
         </View>
 
@@ -306,9 +308,9 @@ export default function SignUpScreen({ navigation }) {
 
         {/* Footer */}
         <View style={styles.footer}>
-          <Text style={styles.footerText}>Already have an account? </Text>
+          <Text style={styles.footerText}>{t('signup.haveAccount')}</Text>
           <TouchableOpacity onPress={() => navigation.navigate('Login')}>
-            <Text style={styles.footerLink}>Sign in</Text>
+            <Text style={styles.footerLink}>{t('signup.signInLink')}</Text>
           </TouchableOpacity>
         </View>
       </ScrollView>
