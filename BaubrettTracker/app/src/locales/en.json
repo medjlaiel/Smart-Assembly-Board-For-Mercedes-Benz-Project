@@ -33,7 +33,7 @@
     "createAccountButton": "Create account",
     "orSignUpWith": "or sign up with",
     "haveAccount": "Already have an account? ",
-    "signInLink": "Sign in",
+    "signInLink": "Login",
     "errors": {
       "nameRequired": "Full name is required",
       "nameTooShort": "Name must be at least 2 characters",

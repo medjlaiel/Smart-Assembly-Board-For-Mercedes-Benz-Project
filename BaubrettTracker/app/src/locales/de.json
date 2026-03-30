@@ -33,7 +33,7 @@
     "createAccountButton": "Konto erstellen",
     "orSignUpWith": "oder registrieren Sie sich mit",
     "haveAccount": "Sie haben bereits ein Konto? ",
-    "signInLink": "Anmelden",
+    "signInLink": "Login",
     "errors": {
       "nameRequired": "Vollständiger Name ist erforderlich",
       "nameTooShort": "Der Name muss mindestens 2 Zeichen lang sein",

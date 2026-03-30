@@ -33,7 +33,7 @@
     "createAccountButton": "إنشاء حساب",
     "orSignUpWith": "أو سجل باستخدام",
     "haveAccount": "هل لديك حساب بالفعل؟ ",
-    "signInLink": "تسجيل الدخول",
+    "signInLink": "دخول",
     "errors": {
       "nameRequired": "الاسم الكامل مطلوب",
       "nameTooShort": "يجب أن يكون الاسم على الأقل حرفين",

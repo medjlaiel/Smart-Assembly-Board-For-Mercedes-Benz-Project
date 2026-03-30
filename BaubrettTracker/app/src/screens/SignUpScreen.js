@@ -17,7 +17,6 @@ import {
 import { useTranslation } from 'react-i18next';
 import { COLORS, FONT_SIZES, RADIUS, SHADOW } from '../assets/theme';
 import AuthInput from '../components/AuthInput';
-import SocialButton from '../components/SocialButton';
 import PasswordStrengthBar from '../components/PasswordStrengthBar';
 import { signUp as signUpUser } from '../services/authService';
 
@@ -144,10 +143,6 @@ export default function SignUpScreen({ navigation }) {
       setIsLoading(false);
       Alert.alert('Error', 'An unexpected error occurred. Please try again.');
     }
-  };
-
-  const handleSocialLogin = (provider) => {
-    Alert.alert('Social Login', `${provider} login not implemented in demo`);
   };
 
   return (
@@ -285,25 +280,6 @@ export default function SignUpScreen({ navigation }) {
               <Text style={styles.primaryButtonText}>{t('signup.createAccountButton')}</Text>
             )}
           </TouchableOpacity>
-        </View>
-
-        {/* Divider */}
-        <View style={styles.dividerContainer}>
-          <View style={styles.dividerLine} />
-          <Text style={styles.dividerText}>{t('signup.orSignUpWith')}</Text>
-          <View style={styles.dividerLine} />
-        </View>
-
-        {/* Social Login */}
-        <View style={styles.socialContainer}>
-          <SocialButton
-            provider="google"
-            onPress={() => handleSocialLogin('Google')}
-          />
-          <SocialButton
-            provider="apple"
-            onPress={() => handleSocialLogin('Apple')}
-          />
         </View>
 
         {/* Footer */}
