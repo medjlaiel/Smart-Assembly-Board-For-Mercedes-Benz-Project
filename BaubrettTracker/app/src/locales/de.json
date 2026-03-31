@@ -48,10 +48,6 @@
       "usernameExists": "Der Benutzername ist bereits vergeben, bitte versuchen Sie einen anderen."
     }
   },
-  "home": {
-    "title": "Baubrett Tracker",
-    "welcome": "Willkommen"
-  },
   "common": {
     "success": "Erfolg",
     "error": "Fehler",

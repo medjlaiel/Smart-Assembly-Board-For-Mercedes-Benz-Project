@@ -48,10 +48,6 @@
       "usernameExists": "The username is already used, please try another one."
     }
   },
-  "home": {
-    "title": "Baubrett Tracker",
-    "welcome": "Welcome"
-  },
   "common": {
     "success": "Success",
     "error": "Error",
