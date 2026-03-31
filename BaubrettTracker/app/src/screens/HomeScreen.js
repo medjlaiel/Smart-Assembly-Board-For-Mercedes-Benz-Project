@@ -72,6 +72,14 @@ export default function HomeScreen({ navigation }) {
           onPress={() => navigation.navigate('ConsultScan')}
         />
 
+        <ActionCard
+          emoji="🔎"
+          title={t('home.search.title')}
+          subtitle={t('home.search.subtitle')}
+          color={COLORS.primary}
+          onPress={() => navigation.navigate('Search')}
+        />
+
         {/* ── Divider ─────────────────────────────────────── */}
         <View style={styles.divider} />
         <Text style={styles.sectionLabel}>{t('home.records')}</Text>

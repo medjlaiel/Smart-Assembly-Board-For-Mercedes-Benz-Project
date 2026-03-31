@@ -77,6 +77,10 @@
       "title": "Consulter un Baubrett",
       "subtitle": "Scanner Baubrett → voir SOM, accessoires, FP-NO"
     },
+    "search": {
+      "title": "Rechercher dans la base",
+      "subtitle": "Rechercher par SOM, BB_Nb ou FP-NO"
+    },
     "records": "ENREGISTREMENTS",
     "history": {
       "title": "Historique des emplacements",
@@ -163,5 +167,26 @@
     "recordCount_plural": "{{count}} entrées",
     "exportFailed": "Échec de l'exportation",
     "exportFailedMessage": "Impossible d'exporter le fichier."
+  },
+  "search": {
+    "placeholder": "Entrez un SOM, BB_Nb ou FP-NO...",
+    "searchButton": "Rechercher",
+    "searching": "Recherche en cours...",
+    "initialTitle": "Recherche dans la base",
+    "initialMessage": "Entrez un SOM, BB_Nb ou FP-NO pour trouver les enregistrements correspondants dans la base de données.",
+    "emptyTitle": "Entrez un terme de recherche",
+    "emptyMessage": "Veuillez taper un SOM, BB_Nb ou FP-NO pour rechercher.",
+    "noResultsTitle": "Aucun résultat",
+    "noResultsMessage": "Aucun enregistrement correspondant trouvé. Essayez un autre terme.",
+    "resultsCount": "{{count}} résultat trouvé",
+    "resultsCount_plural": "{{count}} résultats trouvés",
+    "matchBB": "Correspondance BB",
+    "matchSOM": "Correspondance SOM",
+    "matchFPNO": "Correspondance FP-NO",
+    "som": "SOM",
+    "baubrett": "Baubrett",
+    "fpNo": "FP-NO",
+    "accessories": "Accessoires",
+    "noAccessories": "Aucun accessoire listé"
   }
 }

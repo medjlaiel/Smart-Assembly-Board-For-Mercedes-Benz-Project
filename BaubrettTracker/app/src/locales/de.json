@@ -77,6 +77,10 @@
       "title": "Baubrett abfragen",
       "subtitle": "Baubrett scannen → SOM, Zubehör, FP-NO anzeigen"
     },
+    "search": {
+      "title": "Datenbank durchsuchen",
+      "subtitle": "Suche nach SOM, BB_Nb oder FP-NO"
+    },
     "records": "DATENSÄTZE",
     "history": {
       "title": "Standortverlauf",
@@ -163,5 +167,26 @@
     "recordCount_plural": "{{count}} Einträge",
     "exportFailed": "Export fehlgeschlagen",
     "exportFailedMessage": "Datei konnte nicht exportiert werden."
+  },
+  "search": {
+    "placeholder": "SOM, BB_Nb oder FP-NO eingeben...",
+    "searchButton": "Suchen",
+    "searching": "Suche läuft...",
+    "initialTitle": "Datenbank durchsuchen",
+    "initialMessage": "Geben Sie ein SOM, BB_Nb oder FP-NO ein, um passende Datensätze in der Datenbank zu finden.",
+    "emptyTitle": "Suchbegriff eingeben",
+    "emptyMessage": "Bitte geben Sie ein SOM, BB_Nb oder FP-NO ein, um zu suchen.",
+    "noResultsTitle": "Keine Ergebnisse",
+    "noResultsMessage": "Keine passenden Datensätze gefunden. Versuchen Sie es mit einem anderen Suchbegriff.",
+    "resultsCount": "{{count}} Ergebnis gefunden",
+    "resultsCount_plural": "{{count}} Ergebnisse gefunden",
+    "matchBB": "BB-Übereinstimmung",
+    "matchSOM": "SOM-Übereinstimmung",
+    "matchFPNO": "FP-NO-Übereinstimmung",
+    "som": "SOM",
+    "baubrett": "Baubrett",
+    "fpNo": "FP-NO",
+    "accessories": "Zubehör",
+    "noAccessories": "Keine Zubehörteile aufgelistet"
   }
 }

@@ -77,6 +77,10 @@
       "title": "استشارة Baubrett",
       "subtitle": "مسح Baubrett → عرض SOM، الملحقات، FP-NO"
     },
+    "search": {
+      "title": "بحث في قاعدة البيانات",
+      "subtitle": "البحث حسب SOM، BB_Nb أو FP-NO"
+    },
     "records": "السجلات",
     "history": {
       "title": "سجل المواقع",
@@ -163,5 +167,26 @@
     "recordCount_plural": "{{count}} مدخلة",
     "exportFailed": "فشل التصدير",
     "exportFailedMessage": "تعذر تصدير الملف."
+  },
+  "search": {
+    "placeholder": "أدخل SOM أو BB_Nb أو FP-NO...",
+    "searchButton": "بحث",
+    "searching": "جاري البحث...",
+    "initialTitle": "بحث في قاعدة البيانات",
+    "initialMessage": "أدخل SOM أو BB_Nb أو FP-NO للعثور على السجلات المطابقة في قاعدة البيانات.",
+    "emptyTitle": "أدخل مصطلح البحث",
+    "emptyMessage": "يرجى كتابة SOM أو BB_Nb أو FP-NO للبحث.",
+    "noResultsTitle": "لا توجد نتائج",
+    "noResultsMessage": "لم يتم العثور على سجلات مطابقة. جرب مصطلح بحث آخر.",
+    "resultsCount": "{{count}} نتيجة تم العثور عليها",
+    "resultsCount_plural": "{{count}} نتائج تم العثور عليها",
+    "matchBB": "مطابقة BB",
+    "matchSOM": "مطابقة SOM",
+    "matchFPNO": "مطابقة FP-NO",
+    "som": "SOM",
+    "baubrett": "Baubrett",
+    "fpNo": "FP-NO",
+    "accessories": "الملحقات",
+    "noAccessories": "لا توجد ملحقات مدرجة"
   }
 }

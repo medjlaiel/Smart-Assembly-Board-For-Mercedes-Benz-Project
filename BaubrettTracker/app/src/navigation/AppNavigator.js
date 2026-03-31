@@ -15,6 +15,7 @@ import SaveConfirmScreen from '../screens/SaveConfirmScreen';
 import ConsultScanScreen from '../screens/ConsultScanScreen';
 import ConsultResultScreen from '../screens/ConsultResultScreen';
 import HistoryScreen from '../screens/HistoryScreen';
+import SearchScreen from '../screens/SearchScreen';
 
 const Stack = createStackNavigator();
 
@@ -69,6 +70,11 @@ export default function AppNavigator() {
         name="ConsultResult"
         component={ConsultResultScreen}
         options={{ title: 'Baubrett Details' }}
+      />
+      <Stack.Screen
+        name="Search"
+        component={SearchScreen}
+        options={{ title: 'Search Database' }}
       />
       <Stack.Screen
         name="History"
