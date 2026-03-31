@@ -19,6 +19,7 @@ import { COLORS, FONT_SIZES, RADIUS, SHADOW } from '../assets/theme';
 import AuthInput from '../components/AuthInput';
 import LanguageSelector from '../components/LanguageSelector';
 import { signIn as signInUser } from '../services/authService';
+import { useAuth } from '../contexts/AuthContext';
 
 // Simple logo placeholder component
 const LogoPlaceholder = () => (
@@ -39,6 +40,7 @@ const isValidEmail = (email) => {
 
 export default function LoginScreen({ navigation }) {
   const { t } = useTranslation();
+  const { login } = useAuth();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [emailError, setEmailError] = useState('');
@@ -75,13 +77,15 @@ export default function LoginScreen({ navigation }) {
 
    const handleSignIn = async () => {
      if (!validateForm()) return;
-
+  
      setIsLoading(true);
-
+  
      try {
        const result = await signInUser(email, password);
-
+  
        if (result.success) {
+         // Set current user in AuthContext
+         login(result.user);
          const welcomeMessage = `${t('auth.welcome')} ${result.user.fullName}`;
          Alert.alert(welcomeMessage, '', [
            {
@@ -97,7 +101,7 @@ export default function LoginScreen({ navigation }) {
        setIsLoading(false);
        Alert.alert(t('common.error'), t('common.error'));
      }
-   };
+    };
 
   const handleForgotPassword = () => {
     Alert.alert('Forgot Password', 'Password reset functionality would go here');

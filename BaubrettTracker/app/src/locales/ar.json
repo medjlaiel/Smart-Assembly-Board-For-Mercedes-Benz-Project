@@ -137,7 +137,10 @@
     "som": "SOM",
     "accessories": "الملحقات",
     "fpNo": "FP-NO",
-    "noData": "لا توجد بيانات متاحة لهذا Baubrett"
+    "noData": "لا توجد بيانات متاحة لهذا Baubrett",
+    "lastLocation": "آخر موقع",
+    "at": "في",
+    "scannedBy": "تم المسح بواسطة"
   },
   "history": {
     "title": "سجل المواقع",

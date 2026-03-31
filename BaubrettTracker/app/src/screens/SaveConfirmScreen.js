@@ -16,9 +16,11 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { useTranslation } from 'react-i18next';
 import { saveTrackingEntry } from '../services/trackingService';
 import { COLORS, RADIUS, SHADOW } from '../assets/theme';
+import { useAuth } from '../contexts/AuthContext';
 
 export default function SaveConfirmScreen({ route, navigation }) {
   const { t } = useTranslation();
+  const { currentUser } = useAuth();
   const { bbNb, zone, zoneLabel } = route.params;
   const [saving, setSaving] = useState(false);
   const [saved, setSaved] = useState(false);
@@ -29,15 +31,17 @@ export default function SaveConfirmScreen({ route, navigation }) {
 
   const handleSave = async () => {
     setSaving(true);
-    const success = await saveTrackingEntry(bbNb, zone);
+    const userName = currentUser?.fullName || '';
+    const userEmail = currentUser?.email || '';
+    const success = await saveTrackingEntry(bbNb, zone, userName, userEmail);
     setSaving(false);
-
+ 
     if (success) {
       setSaved(true);
     } else {
       Alert.alert(t('saveConfirm.saveFailed'), t('saveConfirm.saveFailedMessage'));
     }
-  };
+   };
 
   // ── Success state ────────────────────────────────────────────
   if (saved) {

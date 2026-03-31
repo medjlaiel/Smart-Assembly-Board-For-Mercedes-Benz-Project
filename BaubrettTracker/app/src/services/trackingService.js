@@ -5,7 +5,7 @@
  * The tracking file is stored in the app's document directory so it
  * persists across app restarts and can be shared / exported.
  *
- * Columns: BB_Nb | Zone | Date | Time
+ * Columns: BB_Nb | Zone | Date | Time | UserName | UserEmail
  */
 import * as FileSystem from 'expo-file-system/legacy';
 import * as Sharing from 'expo-sharing';
@@ -43,7 +43,7 @@ export async function loadTrackingRecords() {
  * @param {string} zone   — Zone key (e.g. "ZONE_A", "UFB03")
  * @returns {boolean} true on success
  */
-export async function saveTrackingEntry(bbNb, zone) {
+export async function saveTrackingEntry(bbNb, zone, userName, userEmail) {
   try {
       // Validate inputs
       if (!bbNb || !zone || typeof bbNb !== 'string' || typeof zone !== 'string') {
@@ -60,7 +60,14 @@ export async function saveTrackingEntry(bbNb, zone) {
     const existing = await loadTrackingRecords();
 
     // Append new row
-    const newRow = { BB_Nb: bbNb, Zone: zone, Date: date, Time: time };
+    const newRow = {
+      BB_Nb: bbNb,
+      Zone: zone,
+      Date: date,
+      Time: time,
+      UserName: userName || '',
+      UserEmail: userEmail || ''
+    };
     const allRows = [...existing, newRow];
 
     // Build workbook
@@ -72,12 +79,19 @@ export async function saveTrackingEntry(bbNb, zone) {
       fill: { fgColor: { rgb: '0A5FBF' } },
       alignment: { horizontal: 'center' },
     };
-    ['A1', 'B1', 'C1', 'D1'].forEach((cell) => {
+    ['A1', 'B1', 'C1', 'D1', 'E1', 'F1'].forEach((cell) => {
       if (ws[cell]) ws[cell].s = headerStyle;
     });
 
     // Set column widths
-    ws['!cols'] = [{ wch: 16 }, { wch: 18 }, { wch: 14 }, { wch: 10 }];
+    ws['!cols'] = [
+      { wch: 16 },  // BB_Nb
+      { wch: 18 },  // Zone
+      { wch: 14 },  // Date
+      { wch: 10 },  // Time
+      { wch: 20 },  // UserName
+      { wch: 25 }   // UserEmail
+    ];
 
     const wb = XLSX.utils.book_new();
     XLSX.utils.book_append_sheet(wb, ws, 'Tracking');

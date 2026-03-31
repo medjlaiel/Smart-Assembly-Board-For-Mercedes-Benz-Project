@@ -137,7 +137,10 @@
     "som": "SOM",
     "accessories": "Zubehör",
     "fpNo": "FP-NO",
-    "noData": "Keine Daten für diesen Baubrett verfügbar"
+    "noData": "Keine Daten für diesen Baubrett verfügbar",
+    "lastLocation": "Letzter Standort",
+    "at": "um",
+    "scannedBy": "Gescannt von"
   },
   "history": {
     "title": "Standortverlauf",

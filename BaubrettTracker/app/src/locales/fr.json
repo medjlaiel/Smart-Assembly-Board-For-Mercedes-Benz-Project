@@ -137,7 +137,10 @@
     "som": "SOM",
     "accessories": "Accessoires",
     "fpNo": "FP-NO",
-    "noData": "Aucune donnée disponible pour ce Baubrett"
+    "noData": "Aucune donnée disponible pour ce Baubrett",
+    "lastLocation": "Dernier Emplacement",
+    "at": "à",
+    "scannedBy": "Scanné par"
   },
   "history": {
     "title": "Historique des emplacements",

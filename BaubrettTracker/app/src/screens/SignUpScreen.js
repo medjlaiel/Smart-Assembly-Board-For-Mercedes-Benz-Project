@@ -19,6 +19,7 @@ import { COLORS, FONT_SIZES, RADIUS, SHADOW } from '../assets/theme';
 import AuthInput from '../components/AuthInput';
 import PasswordStrengthBar from '../components/PasswordStrengthBar';
 import { signUp as signUpUser } from '../services/authService';
+import { useAuth } from '../contexts/AuthContext';
 
 /**
  * Email validation regex
@@ -30,6 +31,7 @@ const isValidEmail = (email) => {
 
 export default function SignUpScreen({ navigation }) {
   const { t } = useTranslation();
+  const { signup } = useAuth();
   const [fullName, setFullName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -121,17 +123,19 @@ export default function SignUpScreen({ navigation }) {
 
   const handleCreateAccount = async () => {
     if (!validateForm()) return;
-
+ 
     setIsLoading(true);
-
+ 
     try {
       const result = await signUpUser(email, password, fullName);
-
+ 
       if (result.success) {
+        // Set current user in AuthContext
+        signup(result.user);
         Alert.alert(t('common.success'), result.message, [
           {
             text: t('common.ok'),
-            onPress: () => navigation.navigate('Login'),
+            onPress: () => navigation.replace('Home'),
           },
         ]);
       } else {
@@ -143,7 +147,7 @@ export default function SignUpScreen({ navigation }) {
       setIsLoading(false);
       Alert.alert('Error', 'An unexpected error occurred. Please try again.');
     }
-  };
+   };
 
   return (
     <KeyboardAvoidingView

@@ -58,11 +58,22 @@ export default function ConsultResultScreen({ route, navigation }) {
           {loadingHistory ? (
             <ActivityIndicator color={COLORS.primary} style={{ marginTop: 10 }} />
           ) : lastLocation ? (
-            <View style={styles.locationRow}>
-              <Chip label={lastLocation.Zone} color={COLORS.primary} />
-              <Text style={styles.locationMeta}>
-                {lastLocation.Date} {t('consultResult.at')} {lastLocation.Time}
-              </Text>
+            <View style={styles.locationContainer}>
+              <View style={styles.locationRow}>
+                <Chip label={lastLocation.Zone} color={COLORS.primary} />
+                <Text style={styles.locationMeta}>
+                  {lastLocation.Date} {t('consultResult.at')} {lastLocation.Time}
+                </Text>
+              </View>
+              {lastLocation.UserName && (
+                <View style={styles.scannerInfo}>
+                  <Text style={styles.scannerLabel}>{t('consultResult.scannedBy')}:</Text>
+                  <Text style={styles.scannerName}>{lastLocation.UserName}</Text>
+                  {lastLocation.UserEmail && (
+                    <Text style={styles.scannerEmail}>{lastLocation.UserEmail}</Text>
+                  )}
+                </View>
+              )}
             </View>
           ) : (
             <Text style={styles.noData}>{t('consultResult.noLocation')}</Text>
@@ -198,8 +209,32 @@ const styles = StyleSheet.create({
   countBadge: { fontWeight: '400', color: COLORS.text2 },
 
   // Last location
+  locationContainer: { gap: 12 },
   locationRow: { flexDirection: 'row', alignItems: 'center', gap: 12, flexWrap: 'wrap' },
   locationMeta: { fontSize: 12, color: COLORS.text2 },
+  scannerInfo: {
+    marginTop: 8,
+    paddingTop: 8,
+    borderTopWidth: 1,
+    borderTopColor: COLORS.border,
+  },
+  scannerLabel: {
+    fontSize: 11,
+    color: COLORS.text3,
+    textTransform: 'uppercase',
+    letterSpacing: 0.5,
+    marginBottom: 2,
+  },
+  scannerName: {
+    fontSize: 14,
+    fontWeight: '600',
+    color: COLORS.text,
+  },
+  scannerEmail: {
+    fontSize: 12,
+    color: COLORS.text2,
+    marginTop: 2,
+  },
 
   // List items
   listItem: {

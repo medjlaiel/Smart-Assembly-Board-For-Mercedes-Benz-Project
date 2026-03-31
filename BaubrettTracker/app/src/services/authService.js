@@ -7,6 +7,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import i18n from '../i18n';
 
 const USERS_KEY = 'baubrett_tracker_users';
+const CURRENT_USER_KEY = 'baubrett_tracker_current_user';
 
 /**
  * Get all users from storage
@@ -133,5 +134,46 @@ export async function clearAllUsers() {
     await AsyncStorage.removeItem(USERS_KEY);
   } catch (error) {
     console.error('Error clearing users:', error);
+  }
+}
+
+/**
+ * Get the currently logged-in user
+ * @returns {Promise<Object|null>} Current user object or null
+ */
+export async function getCurrentUser() {
+  try {
+    const userJson = await AsyncStorage.getItem(CURRENT_USER_KEY);
+    return userJson ? JSON.parse(userJson) : null;
+  } catch (error) {
+    console.error('Error getting current user:', error);
+    return null;
+  }
+}
+
+/**
+ * Set the currently logged-in user
+ * @param {Object} user - User object (should have id, email, fullName)
+ */
+export async function setCurrentUser(user) {
+  try {
+    if (user) {
+      await AsyncStorage.setItem(CURRENT_USER_KEY, JSON.stringify(user));
+    } else {
+      await AsyncStorage.removeItem(CURRENT_USER_KEY);
+    }
+  } catch (error) {
+    console.error('Error setting current user:', error);
+  }
+}
+
+/**
+ * Clear current user session (logout)
+ */
+export async function clearCurrentUser() {
+  try {
+    await AsyncStorage.removeItem(CURRENT_USER_KEY);
+  } catch (error) {
+    console.error('Error clearing current user:', error);
   }
 }

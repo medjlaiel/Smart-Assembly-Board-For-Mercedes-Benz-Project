@@ -8,15 +8,18 @@ import { NavigationContainer } from '@react-navigation/native';
 import { StatusBar } from 'expo-status-bar';
 import AppNavigator from './src/navigation/AppNavigator';
 import { LanguageProvider } from './src/contexts/LanguageContext';
+import { AuthProvider } from './src/contexts/AuthContext';
 
 export default function App() {
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
       <LanguageProvider>
-        <NavigationContainer>
-          <StatusBar style="light" backgroundColor="#0A5FBF" />
-          <AppNavigator />
-        </NavigationContainer>
+        <AuthProvider>
+          <NavigationContainer>
+            <StatusBar style="light" backgroundColor="#0A5FBF" />
+            <AppNavigator />
+          </NavigationContainer>
+        </AuthProvider>
       </LanguageProvider>
     </GestureHandlerRootView>
   );
