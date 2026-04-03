@@ -77,6 +77,10 @@
       "title": "Rechercher dans la base",
       "subtitle": "Rechercher par SOM, BB_Nb ou FP-NO"
     },
+    "statistics": {
+      "title": "Voir les statistiques",
+      "subtitle": "Voir la répartition des scans par Baubrett"
+    },
     "records": "ENREGISTREMENTS",
     "history": {
       "title": "Historique des emplacements",
@@ -184,5 +188,15 @@
     "fpNo": "FP-NO",
     "accessories": "Accessoires",
     "noAccessories": "Aucun accessoire listé"
+  },
+  "statistics": {
+    "title": "Statistiques",
+    "subtitle": "Répartition des scans par Baubrett",
+    "totalScans": "Scans totaux",
+    "uniqueBaubretts": "Baubretts uniques",
+    "chartTitle": "Scans par Baubrett",
+    "emptyTitle": "Aucune donnée",
+    "emptyText": "Aucun enregistrement de scan disponible. Commencez à scanner des Baubretts pour voir les statistiques.",
+    "refresh": "Actualiser"
   }
 }

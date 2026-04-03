@@ -77,6 +77,10 @@
       "title": "Search Database",
       "subtitle": "Search by SOM, BB_Nb, or FP-NO"
     },
+    "statistics": {
+      "title": "View Statistics",
+      "subtitle": "See scan distribution by Baubrett"
+    },
     "records": "RECORDS",
     "history": {
       "title": "Location History",
@@ -184,5 +188,15 @@
     "fpNo": "FP-NO",
     "accessories": "Accessories",
     "noAccessories": "No accessories listed"
+  },
+  "statistics": {
+    "title": "Statistics",
+    "subtitle": "Scan distribution by Baubrett",
+    "totalScans": "Total Scans",
+    "uniqueBaubretts": "Unique Baubretts",
+    "chartTitle": "Scans per Baubrett",
+    "emptyTitle": "No Data",
+    "emptyText": "No scan records available. Start scanning Baubretts to see statistics.",
+    "refresh": "Refresh"
   }
 }

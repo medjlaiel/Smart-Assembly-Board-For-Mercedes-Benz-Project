@@ -77,6 +77,10 @@
       "title": "Datenbank durchsuchen",
       "subtitle": "Suche nach SOM, BB_Nb oder FP-NO"
     },
+    "statistics": {
+      "title": "Statistiken anzeigen",
+      "subtitle": "Scan-Verteilung nach Baubrett sehen"
+    },
     "records": "DATENSÄTZE",
     "history": {
       "title": "Standortverlauf",
@@ -184,5 +188,15 @@
     "fpNo": "FP-NO",
     "accessories": "Zubehör",
     "noAccessories": "Keine Zubehörteile aufgelistet"
+  },
+  "statistics": {
+    "title": "Statistiken",
+    "subtitle": "Scan-Verteilung nach Baubrett",
+    "totalScans": "Gesamte Scans",
+    "uniqueBaubretts": "Einzigartige Baubretts",
+    "chartTitle": "Scans pro Baubrett",
+    "emptyTitle": "Keine Daten",
+    "emptyText": "Keine Scan-Datensätze verfügbar. Beginnen Sie mit dem Scannen von Baubretts, um Statistiken zu sehen.",
+    "refresh": "Aktualisieren"
   }
 }

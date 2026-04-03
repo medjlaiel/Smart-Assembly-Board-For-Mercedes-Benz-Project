@@ -80,6 +80,14 @@ export default function HomeScreen({ navigation }) {
           onPress={() => navigation.navigate('Search')}
         />
 
+        <ActionCard
+          emoji="📊"
+          title={t('home.statistics.title')}
+          subtitle={t('home.statistics.subtitle')}
+          color={COLORS.success}
+          onPress={() => navigation.navigate('Statistics')}
+        />
+
         {/* ── Divider ─────────────────────────────────────── */}
         <View style={styles.divider} />
         <Text style={styles.sectionLabel}>{t('home.records')}</Text>
