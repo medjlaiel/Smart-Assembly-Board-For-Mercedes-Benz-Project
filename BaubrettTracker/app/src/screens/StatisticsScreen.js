@@ -17,7 +17,6 @@ import { useTranslation } from 'react-i18next';
 import { loadTrackingRecords } from '../services/trackingService';
 import { COLORS, RADIUS, SHADOW, FONT_SIZES } from '../assets/theme';
 import Svg, { Circle, G, Path, Text as SvgText } from 'react-native-svg';
-import Svg, { Circle, G, Text as SvgText } from 'react-native-svg';
 
 export default function StatisticsScreen({ navigation }) {
   const { t } = useTranslation();
