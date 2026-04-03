@@ -135,7 +135,7 @@ export default function SignUpScreen({ navigation }) {
         Alert.alert(t('common.success'), result.message, [
           {
             text: t('common.ok'),
-            onPress: () => navigation.replace('Home'),
+            onPress: () => navigation.navigate('Login'),
           },
         ]);
       } else {
