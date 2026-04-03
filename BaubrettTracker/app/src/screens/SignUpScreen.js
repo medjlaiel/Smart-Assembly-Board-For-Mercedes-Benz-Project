@@ -130,12 +130,15 @@ export default function SignUpScreen({ navigation }) {
       const result = await signUpUser(email, password, fullName);
  
       if (result.success) {
-        // Set current user in AuthContext
-        signup(result.user);
+        // Do NOT auto-login after signup, navigate to login instead
+        // User must log in with credentials
         Alert.alert(t('common.success'), result.message, [
           {
             text: t('common.ok'),
-            onPress: () => navigation.navigate('Login'),
+            onPress: () => {
+              // Clear any persisted session just in case
+              navigation.navigate('Login');
+            },
           },
         ]);
       } else {
