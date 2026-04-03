@@ -191,6 +191,7 @@
     "totalScans": "Gesamte Scans",
     "uniqueBaubretts": "Einzigartige Baubretts",
     "chartTitle": "Scans pro Baubrett",
+    "others": "Andere",
     "emptyTitle": "Keine Daten",
     "emptyText": "Keine Scan-Datensätze verfügbar. Beginnen Sie mit dem Scannen von Baubretts, um Statistiken zu sehen.",
     "refresh": "Aktualisieren"

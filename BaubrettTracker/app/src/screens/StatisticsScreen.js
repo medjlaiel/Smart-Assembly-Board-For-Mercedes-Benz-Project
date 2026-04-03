@@ -16,6 +16,8 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { useTranslation } from 'react-i18next';
 import { loadTrackingRecords } from '../services/trackingService';
 import { COLORS, RADIUS, SHADOW, FONT_SIZES } from '../assets/theme';
+import Svg, { Circle, G, Path, Text as SvgText } from 'react-native-svg';
+import Svg, { Circle, G, Text as SvgText } from 'react-native-svg';
 
 export default function StatisticsScreen({ navigation }) {
   const { t } = useTranslation();
@@ -54,6 +56,58 @@ export default function StatisticsScreen({ navigation }) {
 
     return stats;
   }, [allRecords]);
+
+  // Color palette for pie chart slices
+  const getColorForIndex = (index) => {
+    const colors = [
+      COLORS.primary,
+      '#4CAF50', // Green
+      '#2196F3', // Blue
+      '#FF9800', // Orange
+      '#9C27B0', // Purple
+    ];
+    return colors[index % colors.length];
+  };
+
+  // Prepare data for pie chart (top 5 + "Others")
+  const pieChartData = useMemo(() => {
+    if (statistics.length === 0) return [];
+    
+    const top5 = statistics.slice(0, 5);
+    const othersCount = statistics.slice(5).reduce((sum, stat) => sum + stat.count, 0);
+    
+    const data = top5.map((stat, index) => ({
+      ...stat,
+      color: getColorForIndex(index),
+      startAngle: 0, // will be calculated
+      endAngle: 0,   // will be calculated
+    }));
+
+    // Calculate angles
+    let currentAngle = 0;
+    const total = allRecords.length;
+    data.forEach((item) => {
+      const angle = (item.count / total) * 360;
+      item.startAngle = currentAngle;
+      item.endAngle = currentAngle + angle;
+      currentAngle += angle;
+    });
+
+    // Add "Others" if exists
+    if (othersCount > 0) {
+      const othersAngle = (othersCount / total) * 360;
+      data.push({
+        bb_Nb: t('statistics.others'),
+        count: othersCount,
+        percentage: (othersCount / total) * 100,
+        color: COLORS.text3,
+        startAngle: currentAngle,
+        endAngle: currentAngle + othersAngle,
+      });
+    }
+
+    return data;
+  }, [statistics, allRecords.length, t]);
 
   const totalScans = allRecords.length;
 
@@ -118,6 +172,115 @@ export default function StatisticsScreen({ navigation }) {
     </View>
   );
 
+  // Render a pie slice as an SVG path
+  const renderPieSlice = (item, index) => {
+    const { startAngle, endAngle, color, bb_Nb, percentage } = item;
+    const radius = 80;
+    const centerX = 100;
+    const centerY = 100;
+    
+    // Convert angles to radians (start from -90 degrees, i.e., top)
+    const startRad = ((startAngle - 90) * Math.PI) / 180;
+    const endRad = ((endAngle - 90) * Math.PI) / 180;
+    
+    // Calculate coordinates
+    const x1 = centerX + radius * Math.cos(startRad);
+    const y1 = centerY + radius * Math.sin(startRad);
+    const x2 = centerX + radius * Math.cos(endRad);
+    const y2 = centerY + radius * Math.sin(endRad);
+    
+    // Determine if the arc is more than 180 degrees
+    const largeArcFlag = endAngle - startAngle > 180 ? 1 : 0;
+    
+    // Create SVG path for the slice
+    const pathData = [
+      `M ${centerX} ${centerY}`,
+      `L ${x1} ${y1}`,
+      `A ${radius} ${radius} 0 ${largeArcFlag} 1 ${x2} ${y2}`,
+      'Z',
+    ].join(' ');
+    
+    return (
+      <G key={index}>
+        <Path d={pathData} fill={color} stroke="#fff" strokeWidth={2}>
+          <SvgText
+            x={centerX + (radius * 0.6) * Math.cos(((startAngle + endAngle) / 2 - 90) * Math.PI / 180)}
+            y={centerY + (radius * 0.6) * Math.sin(((startAngle + endAngle) / 2 - 90) * Math.PI / 180)}
+            fill="#fff"
+            fontSize="10"
+            fontWeight="bold"
+            textAnchor="middle"
+            alignmentBaseline="middle"
+          >
+            {percentage.toFixed(1)}%
+          </SvgText>
+        </Path>
+      </G>
+    );
+  };
+
+  const renderPieChart = () => {
+    if (pieChartData.length === 0) {
+      return (
+        <View style={styles.emptyContainer}>
+          <Text style={styles.emptyEmoji}>🥧</Text>
+          <Text style={styles.emptyTitle}>{t('statistics.emptyTitle')}</Text>
+          <Text style={styles.emptyText}>{t('statistics.emptyText')}</Text>
+        </View>
+      );
+    }
+
+    return (
+      <View style={styles.pieChartContainer}>
+        <Svg width="200" height="200" viewBox="0 0 200 200">
+          {pieChartData.map((item, index) => renderPieSlice(item, index))}
+          {/* Inner circle for donut effect */}
+          <Circle cx="100" cy="100" r="50" fill={COLORS.surface} />
+          {/* Center text showing total */}
+          <SvgText
+            x="100"
+            y="95"
+            fill={COLORS.text}
+            fontSize="16"
+            fontWeight="bold"
+            textAnchor="middle"
+          >
+            {totalScans}
+          </SvgText>
+          <SvgText
+            x="100"
+            y="115"
+            fill={COLORS.text2}
+            fontSize="10"
+            textAnchor="middle"
+          >
+            {t('statistics.totalScans')}
+          </SvgText>
+        </Svg>
+        
+        {/* Legend */}
+        <View style={styles.legendContainer}>
+          {pieChartData.slice(0, 5).map((item, index) => (
+            <View key={index} style={styles.legendItem}>
+              <View style={[styles.legendColor, { backgroundColor: item.color }]} />
+              <Text style={styles.legendText} numberOfLines={1}>
+                {item.bb_Nb} ({item.count})
+              </Text>
+            </View>
+          ))}
+          {pieChartData.length > 5 && (
+            <View style={styles.legendItem}>
+              <View style={[styles.legendColor, { backgroundColor: COLORS.text3 }]} />
+              <Text style={styles.legendText}>
+                {t('statistics.others')} ({pieChartData.slice(5).reduce((sum, item) => sum + item.count, 0)})
+              </Text>
+            </View>
+          )}
+        </View>
+      </View>
+    );
+  };
+
   return (
     <SafeAreaView style={styles.safe}>
       <ScrollView contentContainerStyle={styles.container}>
@@ -135,6 +298,15 @@ export default function StatisticsScreen({ navigation }) {
             <ActivityIndicator style={{ marginTop: 40 }} color={COLORS.primary} size="large" />
           ) : (
             renderChart()
+          )}
+        </View>
+
+        <View style={styles.chartSection}>
+          <Text style={styles.chartTitle}>🥧 {t('statistics.chartTitle')} ({t('statistics.others')} {t('statistics.uniqueBaubretts')})</Text>
+          {loading ? (
+            <ActivityIndicator style={{ marginTop: 40 }} color={COLORS.primary} size="large" />
+          ) : (
+            renderPieChart()
           )}
         </View>
 
@@ -288,5 +460,32 @@ const styles = StyleSheet.create({
     fontSize: 15,
     fontWeight: '600',
     color: COLORS.text,
+  },
+
+  // Pie chart
+  pieChartContainer: {
+    alignItems: 'center',
+    marginTop: 10,
+  },
+  legendContainer: {
+    marginTop: 20,
+    width: '100%',
+  },
+  legendItem: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: 8,
+    paddingHorizontal: 10,
+  },
+  legendColor: {
+    width: 16,
+    height: 16,
+    borderRadius: 3,
+    marginRight: 10,
+  },
+  legendText: {
+    fontSize: 12,
+    color: COLORS.text,
+    flex: 1,
   },
 });

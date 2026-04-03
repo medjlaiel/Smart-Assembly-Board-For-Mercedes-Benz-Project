@@ -191,6 +191,7 @@
     "totalScans": "Total Scans",
     "uniqueBaubretts": "Unique Baubretts",
     "chartTitle": "Scans per Baubrett",
+    "others": "Others",
     "emptyTitle": "No Data",
     "emptyText": "No scan records available. Start scanning Baubretts to see statistics.",
     "refresh": "Refresh"

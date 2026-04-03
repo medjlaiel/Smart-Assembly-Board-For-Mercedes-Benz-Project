@@ -406,11 +406,14 @@ graph TD
     Load --> Group[Group by BB_Nb<br/>count scans]
     Group --> Calc[Calculate percentages]
     Calc --> Sort[Sort by count]
-    Sort --> Render[Render bar chart]
-    Render --> Show[Show:<br/>- Total scans<br/>- Unique Baubretts<br/>- Distribution chart]
+    Sort --> RenderBar[Render bar chart]
+    Sort --> RenderPie[Prepare pie data<br/>top 5 + Others]
+    RenderBar --> ShowBar[Show:<br/>- Total scans<br/>- Unique Baubretts<br/>- Bar distribution]
+    RenderPie --> ShowPie[Render donut chart<br/>with legend]
     
     style Load fill:#fff3e0
-    style Render fill:#e8f5e9
+    style RenderBar fill:#e8f5e9
+    style RenderPie fill:#ffe0e0
 ```
 
 **Data Processing**:
@@ -418,13 +421,22 @@ graph TD
 - Groups entries by `BB_Nb` and counts occurrences
 - Calculates percentage: `(count / totalScans) × 100`
 - Sorts Baubretts by scan count (descending)
+- Takes top 5 Baubretts for pie chart, aggregates rest as "Others"
 - Renders horizontal bar chart with proportional widths
+- Renders donut chart with SVG arcs and legend
 
-**Chart Features**:
+**Bar Chart Features**:
 - Bar width scaled to the highest count (max 250px)
 - First (most scanned) Baubrett highlighted in primary color
 - Shows count and percentage for each Baubrett
-- Refresh button to reload data
+
+**Pie Chart Features**:
+- Donut chart showing distribution of scans
+- Top 5 Baubretts displayed with distinct colors
+- "Others" segment for remaining Baubretts
+- Legend showing Baubrett numbers and counts
+- Center displays total scan count
+- Percentages shown on each slice
 
 ---
 
