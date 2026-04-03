@@ -77,10 +77,6 @@
       "title": "بحث في قاعدة البيانات",
       "subtitle": "البحث حسب SOM، BB_Nb أو FP-NO"
     },
-    "statistics": {
-      "title": "عرض الإحصائيات",
-      "subtitle": "رؤية توزيع المسحات حسب Baubrett"
-    },
     "records": "السجلات",
     "history": {
       "title": "سجل المواقع",

@@ -77,10 +77,6 @@
       "title": "Rechercher dans la base",
       "subtitle": "Rechercher par SOM, BB_Nb ou FP-NO"
     },
-    "statistics": {
-      "title": "Voir les statistiques",
-      "subtitle": "Voir la répartition des scans par Baubrett"
-    },
     "records": "ENREGISTREMENTS",
     "history": {
       "title": "Historique des emplacements",

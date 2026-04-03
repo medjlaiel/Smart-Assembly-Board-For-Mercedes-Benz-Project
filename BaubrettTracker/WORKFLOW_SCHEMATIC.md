@@ -124,16 +124,16 @@ graph LR
 ├─────────────────────────────────────────────────────────────┤
 │  1. Login (no header)                                      │
 │  2. SignUp (no header)                                     │
-│  3. Home ──────────┬→ SaveScanBaubrett → SaveScanZone →   │
-│                    │   SaveConfirm                          │
-│                    │                                        │
-│                    ├→ ConsultScan → ConsultResult         │
-│                    │                                        │
-│                    ├→ Search                               │
-│                    │                                        │
-│                    ├→ Statistics                           │
-│                    │                                        │
-│                    └→ History                              │
+│  3. Home ───────┬→ SaveScanBaubrett → SaveScanZone →      │
+│                │   SaveConfirm                              │
+│                │                                            │
+│                ├→ ConsultScan → ConsultResult             │
+│                │                                            │
+│                ├→ Search                                   │
+│                │                                            │
+│                ├→ Statistics (via header button 📊)       │
+│                │                                            │
+│                └→ History                                  │
 └─────────────────────────────────────────────────────────────┘
 ```
 
