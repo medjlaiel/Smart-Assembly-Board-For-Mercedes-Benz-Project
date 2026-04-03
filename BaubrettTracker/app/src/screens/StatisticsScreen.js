@@ -292,20 +292,20 @@ export default function StatisticsScreen({ navigation }) {
         {renderSummary()}
 
         <View style={styles.chartSection}>
-          <Text style={styles.chartTitle}>{t('statistics.chartTitle')}</Text>
-          {loading ? (
-            <ActivityIndicator style={{ marginTop: 40 }} color={COLORS.primary} size="large" />
-          ) : (
-            renderChart()
-          )}
-        </View>
-
-        <View style={styles.chartSection}>
           <Text style={styles.chartTitle}>🥧 {t('statistics.chartTitle')} ({t('statistics.others')} {t('statistics.uniqueBaubretts')})</Text>
           {loading ? (
             <ActivityIndicator style={{ marginTop: 40 }} color={COLORS.primary} size="large" />
           ) : (
             renderPieChart()
+          )}
+        </View>
+
+        <View style={styles.chartSection}>
+          <Text style={styles.chartTitle}>{t('statistics.chartTitle')}</Text>
+          {loading ? (
+            <ActivityIndicator style={{ marginTop: 40 }} color={COLORS.primary} size="large" />
+          ) : (
+            renderChart()
           )}
         </View>
 
