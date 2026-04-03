@@ -3,7 +3,7 @@
  * Provides authentication state and current user information throughout the app.
  */
 import React, { createContext, useState, useEffect, useContext } from 'react';
-import { getCurrentUser, clearCurrentUser as clearUser } from '../services/authService';
+import { getCurrentUser, setCurrentUser as setPersistedUser, clearCurrentUser as clearUser } from '../services/authService';
 
 const AuthContext = createContext(null);
 
@@ -23,10 +23,12 @@ export function AuthProvider({ children }) {
 
   const login = async (user) => {
     setCurrentUser(user);
+    await setPersistedUser(user);
   };
 
   const signup = async (user) => {
     setCurrentUser(user);
+    await setPersistedUser(user);
   };
 
   const logout = async () => {
