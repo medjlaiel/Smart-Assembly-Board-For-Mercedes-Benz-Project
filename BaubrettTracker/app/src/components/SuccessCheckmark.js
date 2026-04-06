@@ -12,67 +12,56 @@ export default function SuccessCheckmark({ size = 80, onComplete }) {
   const opacity = useRef(new Animated.Value(0)).current;
 
   useEffect(() => {
-    // Sequence of animations
-    const animate = () => {
-      // Reset
-      circleScale.setValue(0);
-      checkmarkScale.setValue(0);
-      opacity.setValue(0);
+    // Reset
+    circleScale.setValue(0);
+    checkmarkScale.setValue(0);
+    opacity.setValue(0);
 
-      // Circle pop-in
-      Animated.spring(circleScale, {
+    // Circle pop-in with spring
+    Animated.spring(circleScale, {
+      toValue: 1,
+      friction: 5,
+      tension: 40,
+      useNativeDriver: true,
+    }).start();
+
+    // Checkmark draw after circle appears
+    const timeout1 = setTimeout(() => {
+      Animated.timing(checkmarkScale, {
         toValue: 1,
-        friction: 5,
-        tension: 40,
+        duration: 300,
         useNativeDriver: true,
       }).start();
 
-      // Checkmark draw after circle appears
-      setTimeout(() => {
-        Animated.timing(checkmarkScale, {
-          toValue: 1,
-          duration: 300,
+      // Fade out after delay
+      const timeout2 = setTimeout(() => {
+        Animated.timing(opacity, {
+          toValue: 0,
+          duration: 400,
           useNativeDriver: true,
-        }).start();
+        }).start(() => {
+          if (onComplete) onComplete();
+        });
+      }, 1500);
 
-        // Fade out after delay
-        setTimeout(() => {
-          Animated.timing(opacity, {
-            toValue: 0,
-            duration: 400,
-            useNativeDriver: true,
-          }).start(() => {
-            if (onComplete) onComplete();
-          });
-        }, 1500);
-      }, 300);
-    };
+      return () => clearTimeout(timeout2);
+    }, 300);
 
-    animate();
     return () => {
+      clearTimeout(timeout1);
       circleScale.stopAnimation();
       checkmarkScale.stopAnimation();
       opacity.stopAnimation();
     };
   }, [onComplete]);
 
-  const circleAnimStyle = useAnimatedStyle(() => ({
-    transform: [{ scale: circleScale.value }],
-    opacity: opacity.value,
-  }));
-
-  const checkmarkAnimStyle = useAnimatedStyle(() => ({
-    transform: [{ scale: checkmarkScale.value }],
-    opacity: opacity.value,
-  }));
-
   return (
-    <Animated.View style={[styles.container, circleAnimStyle]}>
-      <View style={[styles.circle, { width: size, height: size, borderRadius: size / 2 }]}>
-        <Animated.View style={checkmarkAnimStyle}>
+    <Animated.View style={[styles.container, { opacity: opacity }]}>
+      <Animated.View style={[styles.circle, { width: size, height: size, borderRadius: size / 2 }, { transform: [{ scale: circleScale }] }]}>
+        <Animated.View style={{ transform: [{ scale: checkmarkScale }] }}>
           <Text style={[styles.checkmark, { fontSize: size * 0.6 }]}>✓</Text>
         </Animated.View>
-      </View>
+      </Animated.View>
     </Animated.View>
   );
 }

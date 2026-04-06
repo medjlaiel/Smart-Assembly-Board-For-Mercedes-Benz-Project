@@ -3,14 +3,7 @@
  * A button component with press-scale animation and loading state
  */
 import React, { useEffect, useRef } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, ActivityIndicator } from 'react-native';
-import Animated, {
-  useSharedValue,
-  useAnimatedStyle,
-  withSpring,
-  withTiming,
-  interpolate,
-} from 'react-native-reanimated';
+import { View, Text, StyleSheet, TouchableOpacity, ActivityIndicator, Animated } from 'react-native';
 import { COLORS, RADIUS, FONT_SIZES } from '../assets/theme';
 
 export default function AnimatedButton({
@@ -24,27 +17,43 @@ export default function AnimatedButton({
   style,
   ...props
 }) {
-  const scale = useSharedValue(1);
-  const opacity = useSharedValue(1);
+  const scaleAnim = useRef(new Animated.Value(1)).current;
+  const opacityAnim = useRef(new Animated.Value(1)).current;
 
   const handlePressIn = () => {
     if (!disabled && !loading) {
-      scale.value = withSpring(0.95, { damping: 15, stiffness: 400 });
-      opacity.value = withTiming(0.8, { duration: 100 });
+      Animated.spring(scaleAnim, {
+        toValue: 0.95,
+        damping: 15,
+        stiffness: 400,
+        useNativeDriver: true,
+      }).start();
+      Animated.timing(opacityAnim, {
+        toValue: 0.8,
+        duration: 100,
+        useNativeDriver: true,
+      }).start();
     }
   };
 
   const handlePressOut = () => {
-    scale.value = withSpring(1, { damping: 15, stiffness: 400 });
-    opacity.value = withTiming(1, { duration: 100 });
+    Animated.spring(scaleAnim, {
+      toValue: 1,
+      damping: 15,
+      stiffness: 400,
+      useNativeDriver: true,
+    }).start();
+    Animated.timing(opacityAnim, {
+      toValue: 1,
+      duration: 100,
+      useNativeDriver: true,
+    }).start();
   };
 
-  const animatedStyle = useAnimatedStyle(() => {
-    return {
-      transform: [{ scale: scale.value }],
-      opacity: opacity.value,
-    };
-  });
+  const animatedStyle = {
+    transform: [{ scale: scaleAnim }],
+    opacity: opacityAnim,
+  };
 
   const getBackgroundColor = () => {
     if (disabled || loading) return COLORS.text3;

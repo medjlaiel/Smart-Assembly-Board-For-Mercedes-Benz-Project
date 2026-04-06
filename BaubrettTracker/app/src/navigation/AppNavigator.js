@@ -6,7 +6,6 @@ import React from 'react';
 import { TouchableOpacity, Text } from 'react-native';
 import { createStackNavigator, CardStyleInterpolators } from '@react-navigation/stack';
 import { COLORS } from '../assets/theme';
-import { fade, scaleFromCenter } from './transitions';
 
 import LoginScreen from '../screens/LoginScreen';
 import SignUpScreen from '../screens/SignUpScreen';
@@ -45,7 +44,7 @@ export default function AppNavigator() {
         component={LoginScreen}
         options={{ 
           headerShown: false,
-          cardStyleInterpolator: fade,
+          cardStyleInterpolator: CardStyleInterpolators.forFadeFromBottomAndroid,
         }}
       />
       <Stack.Screen
@@ -53,7 +52,7 @@ export default function AppNavigator() {
         component={SignUpScreen}
         options={{ 
           headerShown: false,
-          cardStyleInterpolator: fade,
+          cardStyleInterpolator: CardStyleInterpolators.forFadeFromBottomAndroid,
         }}
       />
       <Stack.Screen
@@ -77,7 +76,7 @@ export default function AppNavigator() {
         component={StatisticsScreen}
         options={{ 
           title: 'Statistics',
-          cardStyleInterpolator: fade,
+          cardStyleInterpolator: CardStyleInterpolators.forFadeFromBottomAndroid,
         }}
       />
       <Stack.Screen
@@ -85,7 +84,7 @@ export default function AppNavigator() {
         component={SaveScanBaubrettScreen}
         options={{ 
           title: 'Scan Baubrett',
-          cardStyleInterpolator: scaleFromCenter,
+          cardStyleInterpolator: CardStyleInterpolators.forModalPresentationIOS,
         }}
       />
       <Stack.Screen
@@ -93,7 +92,7 @@ export default function AppNavigator() {
         component={SaveScanZoneScreen}
         options={{ 
           title: 'Scan Zone',
-          cardStyleInterpolator: scaleFromCenter,
+          cardStyleInterpolator: CardStyleInterpolators.forModalPresentationIOS,
         }}
       />
       <Stack.Screen
@@ -101,7 +100,7 @@ export default function AppNavigator() {
         component={SaveConfirmScreen}
         options={{ 
           title: 'Confirm & Save',
-          cardStyleInterpolator: scaleFromCenter,
+          cardStyleInterpolator: CardStyleInterpolators.forModalPresentationIOS,
         }}
       />
       <Stack.Screen
@@ -109,7 +108,7 @@ export default function AppNavigator() {
         component={ConsultScanScreen}
         options={{ 
           title: 'Scan Baubrett',
-          cardStyleInterpolator: scaleFromCenter,
+          cardStyleInterpolator: CardStyleInterpolators.forModalPresentationIOS,
         }}
       />
       <Stack.Screen
@@ -117,7 +116,7 @@ export default function AppNavigator() {
         component={ConsultResultScreen}
         options={{ 
           title: 'Baubrett Details',
-          cardStyleInterpolator: fade,
+          cardStyleInterpolator: CardStyleInterpolators.forFadeFromBottomAndroid,
         }}
       />
       <Stack.Screen
@@ -125,7 +124,7 @@ export default function AppNavigator() {
         component={SearchScreen}
         options={{ 
           title: 'Search Database',
-          cardStyleInterpolator: fade,
+          cardStyleInterpolator: CardStyleInterpolators.forFadeFromBottomAndroid,
         }}
       />
       <Stack.Screen
@@ -133,7 +132,7 @@ export default function AppNavigator() {
         component={HistoryScreen}
         options={{ 
           title: 'Location History',
-          cardStyleInterpolator: fade,
+          cardStyleInterpolator: CardStyleInterpolators.forFadeFromBottomAndroid,
         }}
       />
     </Stack.Navigator>
