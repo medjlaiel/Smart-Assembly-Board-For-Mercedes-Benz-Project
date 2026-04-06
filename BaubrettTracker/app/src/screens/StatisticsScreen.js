@@ -15,6 +15,7 @@ import {
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useTranslation } from 'react-i18next';
 import { loadTrackingRecords } from '../services/trackingService';
+import { getAll } from '../services/databaseService';
 import { COLORS, RADIUS, SHADOW, FONT_SIZES } from '../assets/theme';
 import Svg, { Circle, G, Path, Text as SvgText } from 'react-native-svg';
 
@@ -55,6 +56,24 @@ export default function StatisticsScreen({ navigation }) {
 
     return stats;
   }, [allRecords]);
+
+  // Get total number of Baubretts from database
+  const totalBaubretts = useMemo(() => {
+    const allBaubretts = getAll();
+    return allBaubretts.length;
+  }, []);
+
+  // Calculate unscanned Baubretts count
+  const unscannedCount = useMemo(() => {
+    if (allRecords.length === 0) return totalBaubretts;
+    
+    const scannedBBs = new Set();
+    allRecords.forEach((record) => {
+      scannedBBs.add(String(record.BB_Nb).trim());
+    });
+    
+    return totalBaubretts - scannedBBs.size;
+  }, [allRecords, totalBaubretts]);
 
   // Color palette for pie chart slices
   const getColorForIndex = (index) => {
@@ -167,6 +186,10 @@ export default function StatisticsScreen({ navigation }) {
       <View style={[styles.summaryCard, SHADOW.small]}>
         <Text style={styles.summaryLabel}>{t('statistics.uniqueBaubretts')}</Text>
         <Text style={styles.summaryValue}>{statistics.length}</Text>
+      </View>
+      <View style={[styles.summaryCard, SHADOW.small]}>
+        <Text style={styles.summaryLabel}>{t('statistics.unscannedBaubretts')}</Text>
+        <Text style={[styles.summaryValue, { color: COLORS.warning }]}>{unscannedCount}</Text>
       </View>
     </View>
   );

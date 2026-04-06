@@ -190,6 +190,7 @@
     "subtitle": "Scan distribution by Baubrett",
     "totalScans": "Total Scans",
     "uniqueBaubretts": "Unique Baubretts",
+    "unscannedBaubretts": "Unscanned Baubretts",
     "chartTitle": "Scans per Baubrett",
     "others": "Others",
     "emptyTitle": "No Data",

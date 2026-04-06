@@ -190,6 +190,7 @@
     "subtitle": "Scan-Verteilung nach Baubrett",
     "totalScans": "Gesamte Scans",
     "uniqueBaubretts": "Einzigartige Baubretts",
+    "unscannedBaubretts": "Nicht gescannte Baubretts",
     "chartTitle": "Scans pro Baubrett",
     "others": "Andere",
     "emptyTitle": "Keine Daten",
