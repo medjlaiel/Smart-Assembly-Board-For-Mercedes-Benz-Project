@@ -337,40 +337,46 @@ export default function StatisticsScreen({ navigation }) {
         activeOpacity={1}
         onPress={() => setShowUnscannedSheet(false)}
       >
-        <SafeAreaView style={styles.bottomSheetContainer}>
-          <View style={styles.bottomSheetHandle} />
-          <View style={styles.bottomSheetContent}>
-            <Text style={styles.bottomSheetTitle}>
-              {t('statistics.unscannedBaubretts')} ({unscannedBaubretts.length})
-            </Text>
-            {unscannedBaubretts.length === 0 ? (
-              <View style={styles.emptyContainer}>
-                <Text style={styles.emptyEmoji}>✅</Text>
-                <Text style={styles.emptyTitle}>{t('statistics.allScannedTitle')}</Text>
-                <Text style={styles.emptyText}>{t('statistics.allScannedMessage')}</Text>
-              </View>
-            ) : (
-              <FlatList
-                data={unscannedBaubretts}
-                keyExtractor={(item) => item}
-                showsVerticalScrollIndicator={false}
-                contentContainerStyle={styles.bottomSheetList}
-                renderItem={({ item, index }) => (
-                  <View style={[styles.bottomSheetItem, index % 2 === 0 && styles.bottomSheetItemEven]}>
-                    <Text style={styles.bottomSheetItemNumber}>{index + 1}.</Text>
-                    <Text style={styles.bottomSheetItemText}>{item}</Text>
-                  </View>
-                )}
-              />
-            )}
-          </View>
-          <TouchableOpacity
-            style={styles.closeButton}
-            onPress={() => setShowUnscannedSheet(false)}
-          >
-            <Text style={styles.closeButtonText}>{t('common.close')}</Text>
-          </TouchableOpacity>
-        </SafeAreaView>
+        <TouchableOpacity
+          style={styles.bottomSheetContainerTouchable}
+          activeOpacity={1}
+          onPress={(e) => e.stopPropagation()}
+        >
+          <SafeAreaView style={styles.bottomSheetContainer}>
+            <View style={styles.bottomSheetHandle} />
+            <View style={styles.bottomSheetContent}>
+              <Text style={styles.bottomSheetTitle}>
+                {t('statistics.unscannedBaubretts')} ({unscannedBaubretts.length})
+              </Text>
+              {unscannedBaubretts.length === 0 ? (
+                <View style={styles.emptyContainer}>
+                  <Text style={styles.emptyEmoji}>✅</Text>
+                  <Text style={styles.emptyTitle}>{t('statistics.allScannedTitle')}</Text>
+                  <Text style={styles.emptyText}>{t('statistics.allScannedMessage')}</Text>
+                </View>
+              ) : (
+                <FlatList
+                  data={unscannedBaubretts}
+                  keyExtractor={(item) => item}
+                  showsVerticalScrollIndicator={false}
+                  contentContainerStyle={styles.bottomSheetList}
+                  renderItem={({ item, index }) => (
+                    <View style={[styles.bottomSheetItem, index % 2 === 0 && styles.bottomSheetItemEven]}>
+                      <Text style={styles.bottomSheetItemNumber}>{index + 1}.</Text>
+                      <Text style={styles.bottomSheetItemText}>{item}</Text>
+                    </View>
+                  )}
+                />
+              )}
+            </View>
+            <TouchableOpacity
+              style={styles.closeButton}
+              onPress={() => setShowUnscannedSheet(false)}
+            >
+              <Text style={styles.closeButtonText}>{t('common.close')}</Text>
+            </TouchableOpacity>
+          </SafeAreaView>
+        </TouchableOpacity>
       </TouchableOpacity>
     </Modal>
   );
@@ -590,11 +596,15 @@ const styles = StyleSheet.create({
     backgroundColor: 'rgba(0,0,0,0.5)',
     justifyContent: 'flex-end',
   },
+  bottomSheetContainerTouchable: {
+    flex: 1,
+    justifyContent: 'flex-end',
+  },
   bottomSheetContainer: {
     backgroundColor: COLORS.surface,
     borderTopLeftRadius: RADIUS.xl,
     borderTopRightRadius: RADIUS.xl,
-    maxHeight: '80%',
+    height: '80%',
     paddingBottom: 20,
   },
   bottomSheetHandle: {
