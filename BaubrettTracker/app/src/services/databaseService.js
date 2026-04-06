@@ -112,3 +112,72 @@ export function searchDatabase(query) {
 
   return results;
 }
+
+/**
+ * Fuzzy/partial search function for typeahead suggestions
+ * Searches across BB_Nb, SOM, and FP_NO with partial matching
+ * @param {string} query - Partial search query (min 2 characters recommended)
+ * @param {number} limit - Maximum number of suggestions to return (default 10)
+ * @returns {Array} Array of objects with { type, record, matchField, matchValue, displayText }
+ */
+export function searchDatabaseFuzzy(query, limit = 10) {
+  if (!query || !query.trim() || query.trim().length < 2) return [];
+  const trimmed = query.trim().toLowerCase();
+  const results = [];
+  const seenBB_Nb = new Set();
+
+  // Search all records
+  for (const record of database) {
+    // Check BB_Nb partial match
+    const bbNbStr = String(record.BB_Nb).toLowerCase();
+    if (bbNbStr.includes(trimmed)) {
+      seenBB_Nb.add(record.BB_Nb);
+      results.push({
+        type: 'bb_nb',
+        record: record,
+        matchField: 'BB_Nb',
+        matchValue: record.BB_Nb,
+        displayText: `${record.BB_Nb} — ${record.SOM}`
+      });
+      if (results.length >= limit) continue;
+    }
+
+    // Check SOM partial match (case-insensitive)
+    if (record.SOM && String(record.SOM).toLowerCase().includes(trimmed)) {
+      if (!seenBB_Nb.has(record.BB_Nb)) {
+        seenBB_Nb.add(record.BB_Nb);
+        results.push({
+          type: 'som',
+          record: record,
+          matchField: 'SOM',
+          matchValue: record.SOM,
+          displayText: `${record.SOM} — ${record.BB_Nb}`
+        });
+        if (results.length >= limit) continue;
+      }
+    }
+
+    // Check FP_NO array partial match
+    if (record.FP_NO && Array.isArray(record.FP_NO)) {
+      for (const fp of record.FP_NO) {
+        if (String(fp).toLowerCase().includes(trimmed)) {
+          if (!seenBB_Nb.has(record.BB_Nb)) {
+            seenBB_Nb.add(record.BB_Nb);
+            results.push({
+              type: 'fp_no',
+              record: record,
+              matchField: 'FP_NO',
+              matchValue: fp,
+              displayText: `${fp} — ${record.BB_Nb} (${record.SOM})`
+            });
+            if (results.length >= limit) break;
+          }
+          break; // Only add one suggestion per record even if multiple FP_NO match
+        }
+      }
+      if (results.length >= limit) continue;
+    }
+  }
+
+  return results;
+}
