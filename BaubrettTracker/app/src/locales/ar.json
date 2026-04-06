@@ -52,7 +52,8 @@
     "success": "نجاح",
     "error": "خطأ",
     "ok": "موافق",
-    "cancel": "إلغاء"
+    "cancel": "إلغاء",
+    "close": "إغلاق"
   },
   "auth": {
     "invalidCredentials": "بريد إلكتروني أو كلمة مرور غير صالحة",
@@ -114,7 +115,7 @@
     "cardHeader": "الإدخال للتسجيل",
     "date": "التاريخ",
     "time": "الوقت",
-    "hint": "سيتم حفظ هذا الإدخال في baubrett_tracking.xlsx على جهازك.",
+    "hint": "سيتم حفظ هذا الإدخال في baubrett_tracking.xlsx علىجهازك.",
     "saveButton": "تأكيد وحفظ",
     "rescan": "إعادة مسح المنطقة",
     "backHome": "العودة إلى الصفحة الرئيسية",
@@ -195,6 +196,9 @@
     "others": "آخرون",
     "emptyTitle": "لا توجد بيانات",
     "emptyText": "لا توجد سجلات مسح متاحة. ابدأ في مسح Baubretts لرؤية الإحصائيات.",
-    "refresh": "تحديث"
+    "refresh": "تحديث",
+    "allScannedTitle": "تم مسح جميع Baubretts!",
+    "allScannedMessage": "تهانينا! تم مسح جميع Baubretts في قاعدة البيانات.",
+    "close": "إغلاق"
   }
 }

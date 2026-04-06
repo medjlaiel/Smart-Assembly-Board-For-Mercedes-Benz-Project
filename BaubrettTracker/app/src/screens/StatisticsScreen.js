@@ -11,6 +11,8 @@ import {
   ScrollView,
   ActivityIndicator,
   TouchableOpacity,
+  Modal,
+  FlatList,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useTranslation } from 'react-i18next';
@@ -23,6 +25,7 @@ export default function StatisticsScreen({ navigation }) {
   const { t } = useTranslation();
   const [allRecords, setAllRecords] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [showUnscannedSheet, setShowUnscannedSheet] = useState(false);
 
   useEffect(() => {
     loadData();
@@ -74,6 +77,21 @@ export default function StatisticsScreen({ navigation }) {
     
     return totalBaubretts - scannedBBs.size;
   }, [allRecords, totalBaubretts]);
+
+  // Get list of unscanned Baubretts
+  const unscannedBaubretts = useMemo(() => {
+    const allBaubretts = getAll();
+    const scannedBBs = new Set();
+    allRecords.forEach((record) => {
+      scannedBBs.add(String(record.BB_Nb).trim());
+    });
+
+    // Filter to get only unscanned Baubretts, sorted by BB_Nb
+    return allBaubretts
+      .filter((record) => !scannedBBs.has(String(record.BB_Nb).trim()))
+      .map((record) => String(record.BB_Nb).trim())
+      .sort();
+  }, [allRecords]);
 
   // Color palette for pie chart slices
   const getColorForIndex = (index) => {
@@ -187,10 +205,14 @@ export default function StatisticsScreen({ navigation }) {
         <Text style={styles.summaryLabel}>{t('statistics.uniqueBaubretts')}</Text>
         <Text style={styles.summaryValue}>{statistics.length}</Text>
       </View>
-      <View style={[styles.summaryCard, SHADOW.small]}>
+      <TouchableOpacity
+        style={[styles.summaryCard, SHADOW.small]}
+        onPress={() => setShowUnscannedSheet(true)}
+        activeOpacity={0.7}
+      >
         <Text style={styles.summaryLabel}>{t('statistics.unscannedBaubretts')}</Text>
         <Text style={[styles.summaryValue, { color: COLORS.warning }]}>{unscannedCount}</Text>
-      </View>
+      </TouchableOpacity>
     </View>
   );
 
@@ -303,6 +325,56 @@ export default function StatisticsScreen({ navigation }) {
     );
   };
 
+  const renderBottomSheet = () => (
+    <Modal
+      visible={showUnscannedSheet}
+      animationType="slide"
+      transparent
+      onRequestClose={() => setShowUnscannedSheet(false)}
+    >
+      <TouchableOpacity
+        style={styles.modalOverlay}
+        activeOpacity={1}
+        onPress={() => setShowUnscannedSheet(false)}
+      >
+        <SafeAreaView style={styles.bottomSheetContainer}>
+          <View style={styles.bottomSheetHandle} />
+          <View style={styles.bottomSheetContent}>
+            <Text style={styles.bottomSheetTitle}>
+              {t('statistics.unscannedBaubretts')} ({unscannedBaubretts.length})
+            </Text>
+            {unscannedBaubretts.length === 0 ? (
+              <View style={styles.emptyContainer}>
+                <Text style={styles.emptyEmoji}>✅</Text>
+                <Text style={styles.emptyTitle}>{t('statistics.allScannedTitle')}</Text>
+                <Text style={styles.emptyText}>{t('statistics.allScannedMessage')}</Text>
+              </View>
+            ) : (
+              <FlatList
+                data={unscannedBaubretts}
+                keyExtractor={(item) => item}
+                showsVerticalScrollIndicator={false}
+                contentContainerStyle={styles.bottomSheetList}
+                renderItem={({ item, index }) => (
+                  <View style={[styles.bottomSheetItem, index % 2 === 0 && styles.bottomSheetItemEven]}>
+                    <Text style={styles.bottomSheetItemNumber}>{index + 1}.</Text>
+                    <Text style={styles.bottomSheetItemText}>{item}</Text>
+                  </View>
+                )}
+              />
+            )}
+          </View>
+          <TouchableOpacity
+            style={styles.closeButton}
+            onPress={() => setShowUnscannedSheet(false)}
+          >
+            <Text style={styles.closeButtonText}>{t('common.close')}</Text>
+          </TouchableOpacity>
+        </SafeAreaView>
+      </TouchableOpacity>
+    </Modal>
+  );
+
   return (
     <SafeAreaView style={styles.safe}>
       <ScrollView contentContainerStyle={styles.container}>
@@ -342,6 +414,7 @@ export default function StatisticsScreen({ navigation }) {
           </Text>
         </TouchableOpacity>
       </ScrollView>
+      {renderBottomSheet()}
     </SafeAreaView>
   );
 }
@@ -509,5 +582,79 @@ const styles = StyleSheet.create({
     fontSize: 12,
     color: COLORS.text,
     flex: 1,
+  },
+
+  // Bottom Sheet
+  modalOverlay: {
+    flex: 1,
+    backgroundColor: 'rgba(0,0,0,0.5)',
+    justifyContent: 'flex-end',
+  },
+  bottomSheetContainer: {
+    backgroundColor: COLORS.surface,
+    borderTopLeftRadius: RADIUS.xl,
+    borderTopRightRadius: RADIUS.xl,
+    maxHeight: '80%',
+    paddingBottom: 20,
+  },
+  bottomSheetHandle: {
+    width: 60,
+    height: 4,
+    backgroundColor: COLORS.text3,
+    borderRadius: 2,
+    alignSelf: 'center',
+    marginTop: 12,
+    marginBottom: 16,
+  },
+  bottomSheetContent: {
+    flex: 1,
+    paddingHorizontal: 20,
+  },
+  bottomSheetTitle: {
+    fontSize: 18,
+    fontWeight: '700',
+    color: COLORS.text,
+    marginBottom: 16,
+    textAlign: 'center',
+  },
+  bottomSheetList: {
+    paddingBottom: 20,
+  },
+  bottomSheetItem: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: COLORS.background,
+    padding: 16,
+    borderRadius: RADIUS.md,
+    marginBottom: 8,
+  },
+  bottomSheetItemEven: {
+    backgroundColor: COLORS.surface,
+  },
+  bottomSheetItemNumber: {
+    fontSize: 14,
+    fontWeight: '600',
+    color: COLORS.text3,
+    marginRight: 12,
+    minWidth: 30,
+  },
+  bottomSheetItemText: {
+    fontSize: 16,
+    fontWeight: '600',
+    color: COLORS.text,
+    fontFamily: 'monospace',
+  },
+  closeButton: {
+    backgroundColor: COLORS.primary,
+    marginHorizontal: 20,
+    marginTop: 12,
+    borderRadius: RADIUS.md,
+    padding: 16,
+    alignItems: 'center',
+  },
+  closeButtonText: {
+    color: COLORS.white,
+    fontSize: 16,
+    fontWeight: '600',
   },
 });

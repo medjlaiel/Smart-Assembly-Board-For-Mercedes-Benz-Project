@@ -52,7 +52,8 @@
     "success": "Success",
     "error": "Error",
     "ok": "OK",
-    "cancel": "Cancel"
+    "cancel": "Cancel",
+    "close": "Close"
   },
   "auth": {
     "invalidCredentials": "Invalid email or password",
@@ -195,6 +196,9 @@
     "others": "Others",
     "emptyTitle": "No Data",
     "emptyText": "No scan records available. Start scanning Baubretts to see statistics.",
-    "refresh": "Refresh"
+    "refresh": "Refresh",
+    "allScannedTitle": "All Baubretts Scanned!",
+    "allScannedMessage": "Congratulations! All Baubretts in the database have been scanned.",
+    "close": "Close"
   }
 }

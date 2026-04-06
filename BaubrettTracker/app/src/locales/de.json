@@ -52,7 +52,8 @@
     "success": "Erfolg",
     "error": "Fehler",
     "ok": "OK",
-    "cancel": "Abbrechen"
+    "cancel": "Abbrechen",
+    "close": "Schließen"
   },
   "auth": {
     "invalidCredentials": "Ungültige E-Mail oder Passwort",
@@ -195,6 +196,9 @@
     "others": "Andere",
     "emptyTitle": "Keine Daten",
     "emptyText": "Keine Scan-Datensätze verfügbar. Beginnen Sie mit dem Scannen von Baubretts, um Statistiken zu sehen.",
-    "refresh": "Aktualisieren"
+    "refresh": "Aktualisieren",
+    "allScannedTitle": "Alle Baubretts wurden gescannt!",
+    "allScannedMessage": "Herzlichen Glückwunsch! Alle Baubretts in der Datenbank wurden gescannt.",
+    "close": "Schließen"
   }
 }

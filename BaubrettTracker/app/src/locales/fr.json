@@ -52,7 +52,8 @@
     "success": "Succès",
     "error": "Erreur",
     "ok": "OK",
-    "cancel": "Annuler"
+    "cancel": "Annuler",
+    "close": "Fermer"
   },
   "auth": {
     "invalidCredentials": "Email ou mot de passe invalide",
@@ -195,6 +196,9 @@
     "others": "Autres",
     "emptyTitle": "Aucune donnée",
     "emptyText": "Aucun enregistrement de scan disponible. Commencez à scanner des Baubretts pour voir les statistiques.",
-    "refresh": "Actualiser"
+    "refresh": "Actualiser",
+    "allScannedTitle": "Tous les Baubretts ont été scannés!",
+    "allScannedMessage": "Félicitations! Tous les Baubretts de la base de données ont été scannés.",
+    "close": "Fermer"
   }
 }

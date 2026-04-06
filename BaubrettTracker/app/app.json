@@ -1,28 +1,35 @@
 {
-    "expo":  {
-                 "name":  "Baubrett Tracker",
-                 "slug":  "baubrett-tracker",
-                 "version":  "1.0.0",
-                 "orientation":  "portrait",
-                 "userInterfaceStyle":  "light",
-                 "splash":  {
-                                "backgroundColor":  "#0A5FBF"
-                            },
-                 "ios":  {
-                             "supportsTablet":  false,
-                             "bundleIdentifier":  "com.baubrett.tracker",
-                             "infoPlist":  {
-                                               "NSCameraUsageDescription":  "Camera is needed to scan QR codes on Baubretts and Zones.",
-                                               "NSPhotoLibraryUsageDescription":  "Access is needed to save tracking data."
-                                           }
-                         },
-                 "plugins":  [
-                                 [
-                                     "expo-camera",
-                                     {
-                                         "cameraPermission":  "Allow Baubrett Tracker to access your camera to scan QR codes."
-                                     }
-                                 ]
-                             ]
-             }
+  "expo": {
+    "name": "Baubrett Tracker",
+    "slug": "baubrett-tracker",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "userInterfaceStyle": "light",
+    "splash": {
+      "backgroundColor": "#0A5FBF"
+    },
+    "ios": {
+      "supportsTablet": false,
+      "bundleIdentifier": "com.baubrett.tracker",
+      "infoPlist": {
+        "NSCameraUsageDescription": "Camera is needed to scan QR codes on Baubretts and Zones.",
+        "NSPhotoLibraryUsageDescription": "Access is needed to save tracking data."
+      }
+    },
+    "plugins": [
+      [
+        "expo-camera",
+        {
+          "cameraPermission": "Allow Baubrett Tracker to access your camera to scan QR codes."
+        }
+      ]
+    ],
+    "android": {
+      "permissions": [
+        "android.permission.CAMERA",
+        "android.permission.RECORD_AUDIO"
+      ],
+      "package": "com.baubrett.tracker"
+    }
+  }
 }
