@@ -13,6 +13,7 @@ import {
   TouchableOpacity,
   Modal,
   FlatList,
+  RefreshControl,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useTranslation } from 'react-i18next';
@@ -383,7 +384,17 @@ export default function StatisticsScreen({ navigation }) {
 
   return (
     <SafeAreaView style={styles.safe}>
-      <ScrollView contentContainerStyle={styles.container}>
+      <ScrollView
+        contentContainerStyle={styles.container}
+        refreshControl={
+          <RefreshControl
+            refreshing={loading}
+            onRefresh={loadData}
+            colors={[COLORS.primary]}
+            tintColor={COLORS.primary}
+          />
+        }
+      >
         {/* Header */}
         <View style={styles.header}>
           <Text style={styles.headerTitle}>{t('statistics.title')}</Text>
@@ -419,7 +430,7 @@ export default function StatisticsScreen({ navigation }) {
             {loading ? '⏳' : '🔄'} {t('statistics.refresh')}
           </Text>
         </TouchableOpacity>
-      </ScrollView>
+        </ScrollView>
       {renderBottomSheet()}
     </SafeAreaView>
   );

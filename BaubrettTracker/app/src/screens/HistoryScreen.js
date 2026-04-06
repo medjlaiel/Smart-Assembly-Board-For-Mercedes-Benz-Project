@@ -23,6 +23,9 @@ import { useFocusEffect } from '@react-navigation/native';
 import { useTranslation } from 'react-i18next';
 import { loadTrackingRecords, exportTrackingFile } from '../services/trackingService';
 import { COLORS, RADIUS, SHADOW } from '../assets/theme';
+import Swipeable from 'react-native-gesture-handler/Swipeable';
+import { RectButton } from 'react-native-gesture-handler';
+import * as Sharing from 'expo-sharing';
 
 export default function HistoryScreen({ route }) {
   const { t } = useTranslation();
@@ -85,6 +88,37 @@ export default function HistoryScreen({ route }) {
     }
   };
 
+  const handleDelete = async (item) => {
+    Alert.alert(
+      t('history.confirmDelete'),
+      t('history.confirmDeleteMessage', { bb: item.BB_Nb, zone: item.Zone }),
+      [
+        { text: t('common.cancel'), style: 'cancel' },
+        {
+          text: t('common.delete'),
+          style: 'destructive',
+          onPress: async () => {
+            // TODO: Implement actual delete functionality
+            // For now, just reload the list
+            await load();
+          },
+        },
+      ]
+    );
+  };
+
+  const handleShare = async (item) => {
+    try {
+      const shareMessage = `${t('history.baubrett')}: ${item.BB_Nb}\n${t('history.zone')}: ${item.Zone}\n${t('history.date')}: ${item.Date}\n${t('history.time')}: ${item.Time}`;
+      await Sharing.share({
+        message: shareMessage,
+        title: `${t('history.baubrett')} ${item.BB_Nb}`,
+      });
+    } catch (err) {
+      Alert.alert(t('common.error'), err.message);
+    }
+  };
+
   const handleSelectSuggestion = (bb) => {
     setSearchQuery(bb);
     setIsSearchActive(true);
@@ -119,24 +153,49 @@ export default function HistoryScreen({ route }) {
     </View>
   );
 
+  // ── Swipe actions ─────────────────────────────────────────────
+  const renderRightActions = (progress, dragX, item) => (
+    <View style={styles.swipeActions}>
+      <RectButton
+        style={[styles.swipeAction, styles.swipeActionShare]}
+        onPress={() => handleShare(item)}
+      >
+        <Text style={styles.swipeActionIcon}>📤</Text>
+        <Text style={styles.swipeActionText}>{t('common.share')}</Text>
+      </RectButton>
+      <RectButton
+        style={[styles.swipeAction, styles.swipeActionDelete]}
+        onPress={() => handleDelete(item)}
+      >
+        <Text style={styles.swipeActionIcon}>🗑️</Text>
+        <Text style={styles.swipeActionText}>{t('common.delete')}</Text>
+      </RectButton>
+    </View>
+  );
+
   // ── Row renderer ─────────────────────────────────────────────
   const renderItem = ({ item, index }) => (
-    <TouchableOpacity
-      style={[styles.row, index === 0 && styles.rowFirst]}
-      onPress={() => {
-        setSearchQuery(String(item.BB_Nb).trim());
-        setIsSearchActive(true);
-      }}
-      activeOpacity={0.7}
+    <Swipeable
+      renderRightActions={(progress, dragX) => renderRightActions(progress, dragX, item)}
+      overshootRight={false}
     >
-      <View style={styles.rowLeft}>
-        <Text style={styles.rowBB}>{item.BB_Nb}</Text>
-        <Text style={styles.rowMeta}>{item.Date}  ·  {item.Time}</Text>
-      </View>
-      <View style={styles.zoneBadge}>
-        <Text style={styles.zoneText}>{item.Zone}</Text>
-      </View>
-    </TouchableOpacity>
+      <TouchableOpacity
+        style={[styles.row, index === 0 && styles.rowFirst]}
+        onPress={() => {
+          setSearchQuery(String(item.BB_Nb).trim());
+          setIsSearchActive(true);
+        }}
+        activeOpacity={0.7}
+      >
+        <View style={styles.rowLeft}>
+          <Text style={styles.rowBB}>{item.BB_Nb}</Text>
+          <Text style={styles.rowMeta}>{item.Date}  ·  {item.Time}</Text>
+        </View>
+        <View style={styles.zoneBadge}>
+          <Text style={styles.zoneText}>{item.Zone}</Text>
+        </View>
+      </TouchableOpacity>
+    </Swipeable>
   );
 
   return (
@@ -365,6 +424,36 @@ const styles = StyleSheet.create({
     marginLeft: 12,
   },
   zoneText: { fontSize: 12, fontWeight: '700', color: COLORS.primary },
+
+  // Swipe actions
+  swipeActions: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'flex-end',
+    marginBottom: 10,
+  },
+  swipeAction: {
+    width: 80,
+    height: '100%',
+    alignItems: 'center',
+    justifyContent: 'center',
+    flexDirection: 'column',
+  },
+  swipeActionShare: {
+    backgroundColor: COLORS.primary,
+  },
+  swipeActionDelete: {
+    backgroundColor: COLORS.error,
+  },
+  swipeActionIcon: {
+    fontSize: 24,
+    marginBottom: 4,
+  },
+  swipeActionText: {
+    fontSize: 11,
+    fontWeight: '600',
+    color: COLORS.white,
+  },
 
   // Empty
   emptyContainer: {

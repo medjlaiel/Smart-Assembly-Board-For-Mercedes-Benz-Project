@@ -4,8 +4,9 @@
  */
 import React from 'react';
 import { TouchableOpacity, Text } from 'react-native';
-import { createStackNavigator } from '@react-navigation/stack';
+import { createStackNavigator, CardStyleInterpolators } from '@react-navigation/stack';
 import { COLORS } from '../assets/theme';
+import { fade, scaleFromCenter } from './transitions';
 
 import LoginScreen from '../screens/LoginScreen';
 import SignUpScreen from '../screens/SignUpScreen';
@@ -28,6 +29,12 @@ const screenOptions = {
   headerTitleStyle: { fontWeight: '700', fontSize: 18 },
   headerBackTitleVisible: false,
   cardStyle: { backgroundColor: COLORS.background },
+  // Smooth fade transition for all screens
+  cardStyleInterpolator: CardStyleInterpolators.forFadeFromBottomAndroid,
+  transitionSpec: {
+    open: { animation: 'timing', config: { duration: 300 } },
+    close: { animation: 'timing', config: { duration: 200 } },
+  },
 };
 
 export default function AppNavigator() {
@@ -36,12 +43,18 @@ export default function AppNavigator() {
       <Stack.Screen
         name="Login"
         component={LoginScreen}
-        options={{ headerShown: false }}
+        options={{ 
+          headerShown: false,
+          cardStyleInterpolator: fade,
+        }}
       />
       <Stack.Screen
         name="SignUp"
         component={SignUpScreen}
-        options={{ headerShown: false }}
+        options={{ 
+          headerShown: false,
+          cardStyleInterpolator: fade,
+        }}
       />
       <Stack.Screen
         name="Home"
@@ -62,42 +75,66 @@ export default function AppNavigator() {
       <Stack.Screen
         name="Statistics"
         component={StatisticsScreen}
-        options={{ title: 'Statistics' }}
+        options={{ 
+          title: 'Statistics',
+          cardStyleInterpolator: fade,
+        }}
       />
       <Stack.Screen
         name="SaveScanBaubrett"
         component={SaveScanBaubrettScreen}
-        options={{ title: 'Scan Baubrett' }}
+        options={{ 
+          title: 'Scan Baubrett',
+          cardStyleInterpolator: scaleFromCenter,
+        }}
       />
       <Stack.Screen
         name="SaveScanZone"
         component={SaveScanZoneScreen}
-        options={{ title: 'Scan Zone' }}
+        options={{ 
+          title: 'Scan Zone',
+          cardStyleInterpolator: scaleFromCenter,
+        }}
       />
       <Stack.Screen
         name="SaveConfirm"
         component={SaveConfirmScreen}
-        options={{ title: 'Confirm & Save' }}
+        options={{ 
+          title: 'Confirm & Save',
+          cardStyleInterpolator: scaleFromCenter,
+        }}
       />
       <Stack.Screen
         name="ConsultScan"
         component={ConsultScanScreen}
-        options={{ title: 'Scan Baubrett' }}
+        options={{ 
+          title: 'Scan Baubrett',
+          cardStyleInterpolator: scaleFromCenter,
+        }}
       />
       <Stack.Screen
         name="ConsultResult"
         component={ConsultResultScreen}
-        options={{ title: 'Baubrett Details' }}
+        options={{ 
+          title: 'Baubrett Details',
+          cardStyleInterpolator: fade,
+        }}
       />
       <Stack.Screen
         name="Search"
         component={SearchScreen}
-        options={{ title: 'Search Database' }}
+        options={{ 
+          title: 'Search Database',
+          cardStyleInterpolator: fade,
+        }}
       />
       <Stack.Screen
         name="History"
         component={HistoryScreen}
-        options={{ title: 'Location History' }}
+        options={{ 
+          title: 'Location History',
+          cardStyleInterpolator: fade,
+        }}
       />
     </Stack.Navigator>
   );
