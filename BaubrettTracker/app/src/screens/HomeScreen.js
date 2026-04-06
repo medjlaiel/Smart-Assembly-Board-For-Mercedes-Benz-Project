@@ -1,214 +1,434 @@
 /**
  * HomeScreen.js
- * Landing screen with two primary actions:
- *   1. Save a Baubrett (scan + link to zone + write Excel)
- *   2. Consult a Baubrett (scan + show DB details)
- * Plus a shortcut to the tracking History screen.
+ * Modernized landing screen with improved design and organization
  */
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import {
   View,
   Text,
   StyleSheet,
   TouchableOpacity,
   ScrollView,
+  Animated,
+  Dimensions,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useTranslation } from 'react-i18next';
 import { COLORS, RADIUS, SHADOW, FONT_SIZES } from '../assets/theme';
+import Icon from 'react-native-vector-icons/MaterialIcons';
 
-// ── Action card component ──────────────────────────────────────
-function ActionCard({ emoji, title, subtitle, color, onPress }) {
+const { width } = Dimensions.get('window');
+
+// ── Animated Header Component ──────────────────────────────────────
+function Header({ scrollY }) {
+  const headerOpacity = scrollY.interpolate({
+    inputRange: [0, 100],
+    outputRange: [1, 0.95],
+    extrapolate: 'clamp',
+  });
+
+  return (
+    <Animated.View style={[styles.header, { opacity: headerOpacity }]}>
+      <View style={styles.headerContent}>
+        <View style={styles.logoContainer}>
+          <View style={styles.logoIcon}>
+            <Icon name="inventory" size={32} color={COLORS.white} />
+          </View>
+          <View>
+            <Text style={styles.appName}>Baubrett Tracker</Text>
+            <Text style={styles.appVersion}>v1.0.0</Text>
+          </View>
+        </View>
+      </View>
+    </Animated.View>
+  );
+}
+
+// ── Quick Stats Card ───────────────────────────────────────────────
+function StatsCard({ savesToday, totalRecords, lastSync }) {
+  return (
+    <View style={styles.statsContainer}>
+      <View style={[styles.statItem, { backgroundColor: COLORS.primary + '15' }]}>
+        <Icon name="today" size={24} color={COLORS.primary} />
+        <Text style={styles.statValue}>{savesToday}</Text>
+        <Text style={styles.statLabel}>{'home.stats.today'}</Text>
+      </View>
+      <View style={[styles.statItem, { backgroundColor: COLORS.success + '15' }]}>
+        <Icon name="list" size={24} color={COLORS.success} />
+        <Text style={styles.statValue}>{totalRecords}</Text>
+        <Text style={styles.statLabel}>{'home.stats.total'}</Text>
+      </View>
+      <View style={[styles.statItem, { backgroundColor: COLORS.accent + '15' }]}>
+        <Icon name="sync" size={24} color={COLORS.accent} />
+        <Text style={styles.statValue}>{lastSync}</Text>
+        <Text style={styles.statLabel}>{'home.stats.sync'}</Text>
+      </View>
+    </View>
+  );
+}
+
+// ── Action Card Component ──────────────────────────────────────────
+function ActionCard({ icon, title, subtitle, color, onPress, badge }) {
   return (
     <TouchableOpacity
-      style={[styles.card, { borderLeftColor: color }, SHADOW.medium]}
+      style={[styles.actionCard, { borderLeftColor: color }, SHADOW.small]}
       onPress={onPress}
-      activeOpacity={0.82}
+      activeOpacity={0.85}
     >
-      <View style={[styles.cardIcon, { backgroundColor: color + '20' }]}>
-        <Text style={styles.emoji}>{emoji}</Text>
+      <View style={[styles.actionIconContainer, { backgroundColor: color + '15' }]}>
+        <Icon name={icon} size={28} color={color} />
       </View>
-      <View style={styles.cardText}>
-        <Text style={styles.cardTitle}>{title}</Text>
-        <Text style={styles.cardSubtitle}>{subtitle}</Text>
+      <View style={styles.actionContent}>
+        <View style={styles.actionHeader}>
+          <Text style={styles.actionTitle}>{title}</Text>
+          {badge && <View style={[styles.badge, { backgroundColor: color }]}>
+            <Text style={styles.badgeText}>{badge}</Text>
+          </View>}
+        </View>
+        <Text style={styles.actionSubtitle}>{subtitle}</Text>
       </View>
-      <Text style={[styles.arrow, { color }]}>›</Text>
+      <Icon name="chevron-right" size={24} color={COLORS.text3} />
     </TouchableOpacity>
   );
 }
 
+// ── Feature Grid ───────────────────────────────────────────────────
+function FeatureGrid({ onScanPress, onSearchPress }) {
+  return (
+    <View style={styles.featureGrid}>
+      <TouchableOpacity
+        style={[styles.featureButton, { backgroundColor: COLORS.primary + '10' }]}
+        onPress={onScanPress}
+      >
+        <Icon name="qr-code-scanner" size={28} color={COLORS.primary} />
+        <Text style={styles.featureButtonText}>{'home.quickScan'}</Text>
+      </TouchableOpacity>
+      <TouchableOpacity
+        style={[styles.featureButton, { backgroundColor: COLORS.success + '10' }]}
+        onPress={onSearchPress}
+      >
+        <Icon name="search" size={28} color={COLORS.success} />
+        <Text style={styles.featureButtonText}>{'home.quickSearch'}</Text>
+      </TouchableOpacity>
+    </View>
+  );
+}
+
+// ── Main Component ────────────────────────────────────────────────
 export default function HomeScreen({ navigation }) {
   const { t } = useTranslation();
+  const scrollY = useRef(new Animated.Value(0)).current;
+
+  // Mock data - replace with real data from your app
+  const [stats, setStats] = React.useState({
+    savesToday: 12,
+    totalRecords: 1247,
+    lastSync: '2m',
+  });
+
+  // Simulate real-time updates
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setStats(prev => ({
+        ...prev,
+        lastSync: prev.lastSync === '2m' ? '1m' : '2m',
+      }));
+    }, 30000);
+    return () => clearInterval(interval);
+  }, []);
+
   return (
     <SafeAreaView style={styles.safe}>
-      <ScrollView contentContainerStyle={styles.container}>
+      <Animated.ScrollView
+        contentContainerStyle={styles.scrollContent}
+        showsVerticalScrollIndicator={false}
+        onScroll={Animated.event(
+          [{ nativeEvent: { contentOffset: { y: scrollY } } }],
+          { useNativeDriver: false }
+        )}
+        scrollEventThrottle={16}
+      >
+        <Header scrollY={scrollY} />
 
-        {/* ── Hero banner ─────────────────────────────────── */}
-        <View style={[styles.hero, SHADOW.medium]}>
-          <Text style={styles.heroEmoji}>📦</Text>
-          <Text style={styles.heroTitle}>{t('home.title')}</Text>
-          <Text style={styles.heroSub}>
-            {t('home.subtitle')}
-          </Text>
+        {/* Stats Overview */}
+        <View style={styles.section}>
+          <StatsCard {...stats} />
         </View>
 
-        {/* ── Section label ───────────────────────────────── */}
-        <Text style={styles.sectionLabel}>{t('home.actions')}</Text>
+        {/* Quick Actions Grid */}
+        <View style={styles.section}>
+          <FeatureGrid
+            onScanPress={() => navigation.navigate('SaveScanBaubrett')}
+            onSearchPress={() => navigation.navigate('Search')}
+          />
+        </View>
 
-        {/* ── Primary action cards ─────────────────────────── */}
-        <ActionCard
-          emoji="💾"
-          title={t('home.saveBaubrett.title')}
-          subtitle={t('home.saveBaubrett.subtitle')}
-          color={COLORS.primary}
-          onPress={() => navigation.navigate('SaveScanBaubrett')}
-        />
+        {/* Main Actions */}
+        <View style={styles.section}>
+          <Text style={styles.sectionTitle}>{t('home.primaryActions')}</Text>
+          
+          <ActionCard
+            icon="save-alt"
+            title={t('home.saveBaubrett.title')}
+            subtitle={t('home.saveBaubrett.subtitle')}
+            color={COLORS.primary}
+            onPress={() => navigation.navigate('SaveScanBaubrett')}
+            badge="NEW"
+          />
 
-        <ActionCard
-          emoji="🔍"
-          title={t('home.consultBaubrett.title')}
-          subtitle={t('home.consultBaubrett.subtitle')}
-          color={COLORS.primary}
-          onPress={() => navigation.navigate('ConsultScan')}
-        />
+          <ActionCard
+            icon="search"
+            title={t('home.consultBaubrett.title')}
+            subtitle={t('home.consultBaubrett.subtitle')}
+            color={COLORS.accent}
+            onPress={() => navigation.navigate('ConsultScan')}
+          />
 
-        <ActionCard
-          emoji="🔎"
-          title={t('home.search.title')}
-          subtitle={t('home.search.subtitle')}
-          color={COLORS.primary}
-          onPress={() => navigation.navigate('Search')}
-        />
+          <ActionCard
+            icon="find-in-page"
+            title={t('home.search.title')}
+            subtitle={t('home.search.subtitle')}
+            color={COLORS.success}
+            onPress={() => navigation.navigate('Search')}
+          />
+        </View>
 
-        {/* ── Divider ─────────────────────────────────────── */}
-        <View style={styles.divider} />
-        <Text style={styles.sectionLabel}>{t('home.records')}</Text>
+        {/* Records Section */}
+        <View style={styles.section}>
+          <Text style={styles.sectionTitle}>{t('home.records')}</Text>
 
-        {/* ── History card ─────────────────────────────────── */}
-        <ActionCard
-          emoji="📋"
-          title={t('home.history.title')}
-          subtitle={t('home.history.subtitle')}
-          color={COLORS.success}
-          onPress={() => navigation.navigate('History')}
-        />
+          <ActionCard
+            icon="history"
+            title={t('home.history.title')}
+            subtitle={t('home.history.subtitle')}
+            color={COLORS.warning}
+            onPress={() => navigation.navigate('History')}
+          />
 
-        {/* ── Logout button ────────────────────────────────── */}
+          <ActionCard
+            icon="bar-chart"
+            title={t('home.statistics.title')}
+            subtitle={t('home.statistics.subtitle')}
+            color={COLORS.primaryDark}
+            onPress={() => navigation.navigate('Statistics')}
+          />
+        </View>
+
+        {/* Logout Button */}
         <TouchableOpacity
           style={styles.logoutButton}
           onPress={() => navigation.replace('Login')}
           activeOpacity={0.8}
         >
-          <Text style={styles.logoutIcon}>🚪</Text>
+          <Icon name="logout" size={20} color={COLORS.error} />
           <Text style={styles.logoutText}>{t('home.logout')}</Text>
         </TouchableOpacity>
 
-      </ScrollView>
+        <View style={styles.footer}>
+          <Text style={styles.footerText}>© 2025 Baubrett Tracker</Text>
+          <Text style={styles.footerVersion}>Version 1.0.0</Text>
+        </View>
+      </Animated.ScrollView>
     </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
   safe: { flex: 1, backgroundColor: COLORS.background },
-  container: { padding: 20, paddingBottom: 40 },
-
-  // Hero
-  hero: {
-    backgroundColor: COLORS.primary,
-    borderRadius: RADIUS.lg,
-    padding: 28,
-    alignItems: 'center',
-    marginBottom: 28,
+  
+  scrollContent: {
+    paddingBottom: 40,
   },
-  heroEmoji: { fontSize: 48, marginBottom: 10 },
-  heroTitle: {
-    fontSize: 26,
+
+  // Header
+  header: {
+    backgroundColor: COLORS.primary,
+    paddingHorizontal: 20,
+    paddingTop: 16,
+    paddingBottom: 20,
+    borderBottomLeftRadius: RADIUS.xl,
+    borderBottomRightRadius: RADIUS.xl,
+    ...SHADOW.medium,
+  },
+  headerContent: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+  },
+  logoContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  logoIcon: {
+    width: 56,
+    height: 56,
+    borderRadius: RADIUS.md,
+    backgroundColor: 'rgba(255,255,255,0.2)',
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginRight: 14,
+  },
+  appName: {
+    fontSize: 20,
     fontWeight: '800',
     color: COLORS.white,
-    letterSpacing: -0.5,
+    letterSpacing: -0.3,
   },
-  heroSub: {
-    marginTop: 6,
-    fontSize: 13,
-    color: 'rgba(255,255,255,0.75)',
-    textAlign: 'center',
-    lineHeight: 20,
+  appVersion: {
+    fontSize: 12,
+    color: 'rgba(255,255,255,0.7)',
+    marginTop: 2,
   },
 
-  // Section labels
-  sectionLabel: {
-    fontSize: 11,
+  // Section
+  section: {
+    paddingHorizontal: 16,
+    marginTop: 24,
+  },
+  sectionTitle: {
+    fontSize: 14,
     fontWeight: '700',
     color: COLORS.text3,
-    letterSpacing: 1.2,
+    letterSpacing: 0.8,
+    textTransform: 'uppercase',
     marginBottom: 12,
     marginLeft: 4,
   },
 
-  // Cards
-  card: {
+  // Stats Card
+  statsContainer: {
+    flexDirection: 'row',
+    backgroundColor: COLORS.surface,
+    borderRadius: RADIUS.lg,
+    padding: 16,
+    ...SHADOW.small,
+  },
+  statItem: {
+    flex: 1,
+    alignItems: 'center',
+    paddingVertical: 12,
+    borderRadius: RADIUS.md,
+  },
+  statValue: {
+    fontSize: 22,
+    fontWeight: '800',
+    color: COLORS.text,
+    marginTop: 6,
+  },
+  statLabel: {
+    fontSize: 11,
+    color: COLORS.text3,
+    marginTop: 4,
+    textTransform: 'uppercase',
+    fontWeight: '600',
+  },
+
+  // Feature Grid
+  featureGrid: {
+    flexDirection: 'row',
+    gap: 12,
+  },
+  featureButton: {
+    flex: 1,
+    borderRadius: RADIUS.md,
+    padding: 20,
+    alignItems: 'center',
+    ...SHADOW.small,
+  },
+  featureButtonText: {
+    fontSize: 13,
+    fontWeight: '600',
+    color: COLORS.text,
+    marginTop: 8,
+  },
+
+  // Action Cards
+  actionCard: {
     backgroundColor: COLORS.surface,
     borderRadius: RADIUS.md,
     borderLeftWidth: 4,
     padding: 18,
     flexDirection: 'row',
     alignItems: 'center',
-    marginBottom: 14,
+    marginBottom: 12,
+    ...SHADOW.small,
   },
-  cardIcon: {
-    width: 52,
-    height: 52,
-    borderRadius: RADIUS.sm,
+  actionIconContainer: {
+    width: 56,
+    height: 56,
+    borderRadius: RADIUS.md,
     alignItems: 'center',
     justifyContent: 'center',
-    marginRight: 14,
+    marginRight: 16,
   },
-  emoji: { fontSize: 26 },
-  cardText: { flex: 1 },
-  cardTitle: {
+  actionContent: {
+    flex: 1,
+  },
+  actionHeader: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: 4,
+  },
+  actionTitle: {
     fontSize: 16,
     fontWeight: '700',
     color: COLORS.text,
-    marginBottom: 3,
+    marginRight: 8,
   },
-  cardSubtitle: {
-    fontSize: 12,
+  badge: {
+    paddingHorizontal: 8,
+    paddingVertical: 2,
+    borderRadius: 10,
+  },
+  badgeText: {
+    fontSize: 10,
+    fontWeight: '700',
+    color: COLORS.white,
+    letterSpacing: 0.3,
+  },
+  actionSubtitle: {
+    fontSize: 13,
     color: COLORS.text2,
     lineHeight: 18,
   },
-  arrow: {
-    fontSize: 28,
-    fontWeight: '300',
-    marginLeft: 8,
-  },
 
-  // Divider
-  divider: {
-    height: 1,
-    backgroundColor: COLORS.border,
-    marginVertical: 20,
-  },
-
-  // Logout button
+  // Logout Button
   logoutButton: {
     backgroundColor: COLORS.surface,
-    borderRadius: RADIUS.lg,
+    borderRadius: RADIUS.md,
     padding: 16,
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
-    marginTop: 12,
-    borderWidth: 1,
-    borderColor: COLORS.error,
+    marginHorizontal: 16,
+    marginTop: 32,
+    borderWidth: 1.5,
+    borderColor: COLORS.error + '40',
     ...SHADOW.small,
-  },
-  logoutIcon: {
-    fontSize: 20,
-    marginRight: 8,
   },
   logoutText: {
     fontSize: FONT_SIZES.button,
     fontWeight: '600',
     color: COLORS.error,
+    marginLeft: 10,
+  },
+
+  // Footer
+  footer: {
+    alignItems: 'center',
+    marginTop: 32,
+    paddingTop: 20,
+    borderTopWidth: 1,
+    borderTopColor: COLORS.border + '60',
+  },
+  footerText: {
+    fontSize: 12,
+    color: COLORS.text3,
+    marginBottom: 4,
+  },
+  footerVersion: {
+    fontSize: 11,
+    color: COLORS.text3,
+    opacity: 0.7,
   },
 });
