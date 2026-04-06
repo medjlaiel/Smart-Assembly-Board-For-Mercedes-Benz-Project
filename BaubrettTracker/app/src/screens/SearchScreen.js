@@ -2,8 +2,9 @@
  * SearchScreen.js
  * Search the database by SOM, BB_Nb, or FP-NO
  * Displays matching records with their details.
+ * Includes typeahead/autocomplete functionality.
  */
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
 import {
   View,
   Text,
@@ -13,11 +14,19 @@ import {
   ScrollView,
   ActivityIndicator,
   Alert,
+  Keyboard,
+  TouchableWithoutFeedback,
+  Dimensions,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useTranslation } from 'react-i18next';
-import { searchDatabase } from '../services/databaseService';
+import { searchDatabase, searchDatabaseFuzzy } from '../services/databaseService';
 import { COLORS, RADIUS, SHADOW, FONT_SIZES } from '../assets/theme';
+
+// Constants for suggestions dropdown
+const MAX_VISIBLE_SUGGESTIONS = 8;
+const SUGGESTION_HEIGHT = 50; // Approximate height per suggestion item
+const DEBOUNCE_DELAY = 150; // ms to wait before showing suggestions
 
 export default function SearchScreen({ navigation }) {
   const { t } = useTranslation();
@@ -25,6 +34,166 @@ export default function SearchScreen({ navigation }) {
   const [results, setResults] = useState([]);
   const [searching, setSearching] = useState(false);
   const [hasSearched, setHasSearched] = useState(false);
+  
+  // Typeahead state
+  const [suggestions, setSuggestions] = useState([]);
+  const [showSuggestions, setShowSuggestions] = useState(false);
+  const [selectedIndex, setSelectedIndex] = useState(-1);
+  const [isNavigatingSuggestions, setIsNavigatingSuggestions] = useState(false);
+  
+  // Refs
+  const inputRef = useRef(null);
+  const debounceTimerRef = useRef(null);
+
+  // Debounced query change handler for typeahead
+  const handleQueryChange = useCallback((text) => {
+    setQuery(text);
+    
+    // Clear existing debounce timer
+    if (debounceTimerRef.current) {
+      clearTimeout(debounceTimerRef.current);
+    }
+    
+    // Only trigger typeahead if query has at least 2 characters
+    if (text.trim().length >= 2) {
+      debounceTimerRef.current = setTimeout(() => {
+        const fuzzyResults = searchDatabaseFuzzy(text.trim(), MAX_VISIBLE_SUGGESTIONS);
+        setSuggestions(fuzzyResults);
+        setShowSuggestions(fuzzyResults.length > 0);
+        setSelectedIndex(-1);
+        setIsNavigatingSuggestions(false);
+      }, DEBOUNCE_DELAY);
+    } else {
+      setSuggestions([]);
+      setShowSuggestions(false);
+      setSelectedIndex(-1);
+    }
+  }, []);
+
+  // Handle suggestion selection
+  const selectSuggestion = useCallback((suggestion) => {
+    const { record, type } = suggestion;
+    setQuery(record.BB_Nb);
+    setShowSuggestions(false);
+    setSuggestions([]);
+    setSelectedIndex(-1);
+    
+    // Perform full search with the selected record's BB_Nb
+    if (record.BB_Nb) {
+      setSearching(true);
+      setHasSearched(true);
+      setTimeout(() => {
+        const searchResults = searchDatabase(record.BB_Nb);
+        setResults(searchResults);
+        setSearching(false);
+      }, 300);
+    }
+  }, []);
+
+  // Render suggestions dropdown
+  const renderSuggestionsDropdown = useCallback(() => {
+    if (!showSuggestions || suggestions.length === 0) {
+      return null;
+    }
+
+    return (
+      <View style={styles.suggestionsContainer}>
+        <ScrollView
+          style={styles.suggestionsScroll}
+          keyboardShouldPersistTaps="handled"
+          showsVerticalScrollIndicator={true}
+        >
+          {suggestions.map((suggestion, index) => {
+            const isSelected = index === selectedIndex;
+            const { type, record, displayText } = suggestion;
+            const matchLabel = getMatchLabel(type);
+            const badgeColor = getBadgeColor(type);
+
+            return (
+              <TouchableOpacity
+                key={`${record.BB_Nb}-${type}`}
+                style={[
+                  styles.suggestionItem,
+                  isSelected && styles.suggestionItemSelected
+                ]}
+                onPress={() => selectSuggestion(suggestion)}
+                onPressIn={() => {
+                  setSelectedIndex(index);
+                  setIsNavigatingSuggestions(true);
+                }}
+              >
+                <View style={[styles.suggestionBadge, {
+                  borderColor: badgeColor.borderColor,
+                  backgroundColor: badgeColor.backgroundColor
+                }]}>
+                  <Text style={[styles.suggestionBadgeText, { color: badgeColor.textColor }]}>
+                    {matchLabel}
+                  </Text>
+                </View>
+                <Text style={[
+                  styles.suggestionText,
+                  isSelected && styles.suggestionTextSelected
+                ]}>
+                  {displayText}
+                </Text>
+              </TouchableOpacity>
+            );
+          })}
+        </ScrollView>
+      </View>
+    );
+  }, [showSuggestions, suggestions, selectedIndex, selectSuggestion]);
+
+  // Handle keyboard navigation (arrow keys, enter, escape)
+  const handleKeyPress = (e) => {
+    if (!showSuggestions || suggestions.length === 0) {
+      return;
+    }
+
+    const { key } = e.nativeEvent;
+    
+    if (key === 'ArrowDown') {
+      e.preventDefault?.();
+      setSelectedIndex(prev =>
+        prev < suggestions.length - 1 ? prev + 1 : prev
+      );
+      setIsNavigatingSuggestions(true);
+    } else if (key === 'ArrowUp') {
+      e.preventDefault?.();
+      setSelectedIndex(prev => (prev > 0 ? prev - 1 : 0));
+      setIsNavigatingSuggestions(true);
+    } else if (key === 'Enter') {
+      e.preventDefault?.();
+      if (selectedIndex >= 0 && selectedIndex < suggestions.length) {
+        selectSuggestion(suggestions[selectedIndex]);
+      } else if (query.trim()) {
+        handleSearch();
+      }
+    } else if (key === 'Escape') {
+      setShowSuggestions(false);
+      setSelectedIndex(-1);
+      setIsNavigatingSuggestions(false);
+    }
+  };
+
+  // Close suggestions when tapping outside
+  const handleDismissKeyboard = () => {
+    Keyboard.dismiss();
+    // Delay hiding suggestions to allow tap on suggestion
+    setTimeout(() => {
+      if (!showSuggestions) return;
+      setShowSuggestions(false);
+    }, 150);
+  };
+
+  // Cleanup debounce timer on unmount
+  useEffect(() => {
+    return () => {
+      if (debounceTimerRef.current) {
+        clearTimeout(debounceTimerRef.current);
+      }
+    };
+  }, []);
 
   const handleSearch = () => {
     if (!query.trim()) {
@@ -34,6 +203,8 @@ export default function SearchScreen({ navigation }) {
 
     setSearching(true);
     setHasSearched(true);
+    setShowSuggestions(false);
+    setSuggestions([]);
 
     // Simulate a small delay for UX (optional)
     setTimeout(() => {
@@ -94,33 +265,40 @@ export default function SearchScreen({ navigation }) {
 
   return (
     <SafeAreaView style={styles.safe}>
-      <View style={styles.container}>
-        {/* Search Input */}
-        <View style={styles.searchContainer}>
-          <TextInput
-            style={styles.searchInput}
-            placeholder={t('search.placeholder')}
-            value={query}
-            onChangeText={setQuery}
-            onSubmitEditing={handleSearch}
-            returnKeyType="search"
-            autoFocus={true}
-          />
-          <TouchableOpacity
-            style={[styles.searchButton, query.trim() ? styles.searchButtonActive : styles.searchButtonDisabled]}
-            onPress={handleSearch}
-            disabled={!query.trim() || searching}
-          >
-            {searching ? (
-              <ActivityIndicator color={COLORS.white} size="small" />
-            ) : (
-              <Text style={styles.searchButtonText}>{t('search.searchButton')}</Text>
-            )}
-          </TouchableOpacity>
-        </View>
+      <TouchableWithoutFeedback onPress={handleDismissKeyboard}>
+        <View style={styles.container}>
+          {/* Search Input */}
+          <View style={styles.searchContainer}>
+            <TextInput
+              ref={inputRef}
+              style={styles.searchInput}
+              placeholder={t('search.placeholder')}
+              value={query}
+              onChangeText={handleQueryChange}
+              onKeyPress={handleKeyPress}
+              onSubmitEditing={handleSearch}
+              returnKeyType="search"
+              autoFocus={true}
+              blurOnSubmit={false}
+            />
+            <TouchableOpacity
+              style={[styles.searchButton, query.trim() ? styles.searchButtonActive : styles.searchButtonDisabled]}
+              onPress={handleSearch}
+              disabled={!query.trim() || searching}
+            >
+              {searching ? (
+                <ActivityIndicator color={COLORS.white} size="small" />
+              ) : (
+                <Text style={styles.searchButtonText}>{t('search.searchButton')}</Text>
+              )}
+            </TouchableOpacity>
+          </View>
 
-        {/* Results */}
-        {searching ? (
+          {/* Suggestions Dropdown */}
+          {renderSuggestionsDropdown()}
+
+          {/* Results */}
+          {searching ? (
           <View style={styles.loadingContainer}>
             <ActivityIndicator color={COLORS.primary} size="large" />
             <Text style={styles.loadingText}>{t('search.searching')}</Text>
@@ -146,6 +324,7 @@ export default function SearchScreen({ navigation }) {
           </View>
         )}
       </View>
+      </TouchableWithoutFeedback>
     </SafeAreaView>
   );
 }
@@ -365,5 +544,57 @@ const styles = StyleSheet.create({
     fontSize: 12,
     color: COLORS.text3,
     fontStyle: 'italic',
+  },
+
+  // Suggestions dropdown (typeahead)
+  suggestionsContainer: {
+    position: 'absolute',
+    top: 70, // Below search input (searchContainer height + margin)
+    left: 20,
+    right: 20,
+    backgroundColor: COLORS.surface,
+    borderRadius: RADIUS.md,
+    ...SHADOW.medium,
+    zIndex: 1000,
+    maxHeight: MAX_VISIBLE_SUGGESTIONS * SUGGESTION_HEIGHT,
+    overflow: 'hidden',
+    borderWidth: 1,
+    borderColor: COLORS.border,
+  },
+  suggestionsScroll: {
+    flex: 1,
+  },
+  suggestionItem: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingVertical: 12,
+    paddingHorizontal: 14,
+    borderBottomWidth: 1,
+    borderBottomColor: COLORS.border,
+    backgroundColor: COLORS.surface,
+  },
+  suggestionItemSelected: {
+    backgroundColor: COLORS.primary + '10',
+  },
+  suggestionBadge: {
+    paddingHorizontal: 8,
+    paddingVertical: 3,
+    borderRadius: 10,
+    borderWidth: 1,
+    marginRight: 10,
+  },
+  suggestionBadgeText: {
+    fontSize: 9,
+    fontWeight: '700',
+    textTransform: 'uppercase',
+  },
+  suggestionText: {
+    fontSize: 14,
+    color: COLORS.text,
+    flex: 1,
+  },
+  suggestionTextSelected: {
+    color: COLORS.primary,
+    fontWeight: '600',
   },
 });
