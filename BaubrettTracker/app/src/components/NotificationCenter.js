@@ -136,7 +136,7 @@ export default function NotificationCenter({ visible, onClose, badgeCount }) {
       transparent={true}
       onRequestClose={onClose}
     >
-      <View style={styles.overlay}>
+      <TouchableOpacity style={styles.overlay} activeOpacity={1} onPress={onClose}>
         <View style={styles.modalContent} onStartShouldSetResponder={() => true}>
           {/* Header */}
           <View style={styles.header}>
@@ -146,32 +146,43 @@ export default function NotificationCenter({ visible, onClose, badgeCount }) {
             </View>
           </View>
 
-          {/* Content */}
-          {loading ? (
-            <View style={styles.loadingContainer}>
-              <Text style={styles.loadingText}>{t('common.loading')}</Text>
-            </View>
-          ) : incompleteUFBs.length === 0 ? (
-            <ScrollView style={styles.scrollView}>
-              {renderEmpty()}
-            </ScrollView>
-          ) : (
-            <FlatList
-              data={incompleteUFBs}
-              keyExtractor={(item) => item.key}
-              renderItem={renderIncompleteUFB}
-              contentContainerStyle={styles.listContent}
-              showsVerticalScrollIndicator={true}
-              style={styles.flatList}
-            />
-          )}
+          {/* Content Area - Wrapped for proper flex layout */}
+          <View style={styles.contentArea}>
+            {loading ? (
+              <View style={styles.loadingContainer}>
+                <Text style={styles.loadingText}>{t('common.loading')}</Text>
+              </View>
+            ) : incompleteUFBs.length === 0 ? (
+              <ScrollView 
+                style={styles.scrollView} 
+                contentContainerStyle={styles.scrollContent}
+                showsVerticalScrollIndicator={true}
+              >
+                {renderEmpty()}
+              </ScrollView>
+            ) : (
+              <FlatList
+                data={incompleteUFBs}
+                keyExtractor={(item) => item.key}
+                renderItem={renderIncompleteUFB}
+                contentContainerStyle={styles.listContent}
+                showsVerticalScrollIndicator={true}
+                style={styles.flatList}
+                nestedScrollEnabled={true}
+              />
+            )}
+          </View>
 
           {/* Close Button */}
-          <TouchableOpacity style={styles.closeButton} onPress={onClose}>
+          <TouchableOpacity 
+            style={styles.closeButton} 
+            onPress={onClose}
+            activeOpacity={0.8}
+          >
             <Text style={styles.closeButtonText}>{t('common.close')}</Text>
           </TouchableOpacity>
         </View>
-      </View>
+      </TouchableOpacity>
     </Modal>
   );
 }
@@ -187,9 +198,10 @@ const styles = StyleSheet.create({
   modalContent: {
     backgroundColor: COLORS.surface,
     borderRadius: RADIUS.xl,
-    width: '100%',
-    maxWidth: 500,
-    maxHeight: '80%',
+    width: '95%',
+    maxWidth: 600,
+    maxHeight: '90%',
+    height: '85%',
     flexDirection: 'column',
     ...SHADOW.large,
     overflow: 'hidden',
@@ -198,13 +210,13 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    paddingHorizontal: 20,
-    paddingVertical: 16,
+    paddingHorizontal: 24,
+    paddingVertical: 20,
     borderBottomWidth: 1,
     borderBottomColor: COLORS.border,
   },
   headerTitle: {
-    fontSize: FONT_SIZES.title,
+    fontSize: 22,
     fontWeight: '700',
     color: COLORS.text,
   },
@@ -223,22 +235,29 @@ const styles = StyleSheet.create({
     minWidth: 24,
     textAlign: 'center',
   },
-  flatList: {
+  contentArea: {
     flex: 1,
+    minHeight: 300,
+  },
+  flatList: {
+    flexGrow: 1,
   },
   listContent: {
-    padding: 16,
-    paddingBottom: 20,
+    padding: 20,
+    paddingBottom: 24,
   },
   scrollView: {
     flex: 1,
   },
+  scrollContent: {
+    flex: 1,
+  },
   notificationCard: {
     backgroundColor: COLORS.background,
-    borderRadius: RADIUS.md,
-    padding: 16,
-    marginBottom: 12,
-    borderLeftWidth: 4,
+    borderRadius: 16,
+    padding: 20,
+    marginBottom: 14,
+    borderLeftWidth: 5,
     borderLeftColor: COLORS.warning,
     ...SHADOW.small,
   },
@@ -247,42 +266,43 @@ const styles = StyleSheet.create({
     alignItems: 'flex-start',
   },
   progressCircle: {
-    width: 56,
-    height: 56,
-    borderRadius: 28,
+    width: 64,
+    height: 64,
+    borderRadius: 32,
     alignItems: 'center',
     justifyContent: 'center',
-    borderWidth: 2,
-    marginRight: 14,
+    borderWidth: 3,
+    marginRight: 16,
   },
   progressText: {
-    fontSize: 12,
+    fontSize: 14,
     fontWeight: '700',
   },
   notificationContent: {
     flex: 1,
   },
   notificationTitle: {
-    fontSize: 16,
+    fontSize: 18,
     fontWeight: '700',
     color: COLORS.text,
-    marginBottom: 4,
+    marginBottom: 6,
   },
   notificationMessage: {
-    fontSize: 13,
+    fontSize: 14,
     color: COLORS.text2,
-    lineHeight: 18,
-    marginBottom: 8,
+    lineHeight: 20,
+    marginBottom: 10,
   },
   progressBarContainer: {
-    height: 6,
+    height: 8,
     backgroundColor: COLORS.border + '30',
-    borderRadius: 3,
+    borderRadius: 4,
     overflow: 'hidden',
+    marginTop: 6,
   },
   progressBar: {
     height: '100%',
-    borderRadius: 3,
+    borderRadius: 4,
   },
   loadingContainer: {
     padding: 60,
@@ -312,15 +332,18 @@ const styles = StyleSheet.create({
   },
   closeButton: {
     backgroundColor: COLORS.primary,
-    marginHorizontal: 20,
-    marginBottom: 16,
-    borderRadius: RADIUS.md,
-    padding: 16,
+    marginHorizontal: 24,
+    marginBottom: 20,
+    marginTop: 8,
+    borderRadius: RADIUS.lg,
+    paddingVertical: 18,
     alignItems: 'center',
+    ...SHADOW.medium,
   },
   closeButtonText: {
     color: COLORS.white,
-    fontSize: 16,
-    fontWeight: '600',
+    fontSize: 17,
+    fontWeight: '700',
+    letterSpacing: 0.3,
   },
 });
