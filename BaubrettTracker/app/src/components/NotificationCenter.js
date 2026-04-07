@@ -80,6 +80,11 @@ export default function NotificationCenter({ visible, onClose, badgeCount }) {
     return COLORS.primary;
   };
 
+  // Helper to get missing count
+  const getMissingCount = (item) => {
+    return UFB_TARGET - (item.current || 0);
+  };
+
   const renderIncompleteUFB = ({ item }) => (
     <View style={styles.notificationCard}>
       <View style={styles.notificationHeader}>
@@ -104,6 +109,11 @@ export default function NotificationCenter({ visible, onClose, badgeCount }) {
                   },
                 ]}
               />
+            </View>
+          )}
+          {item.current === 0 && (
+            <View style={styles.progressBarContainer}>
+              <View style={[styles.progressBar, { width: '0%', backgroundColor: COLORS.text3 }]} />
             </View>
           )}
         </View>
