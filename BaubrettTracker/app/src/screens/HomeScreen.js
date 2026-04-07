@@ -92,28 +92,6 @@ function ActionCard({ icon, title, subtitle, color, onPress, badge }) {
   );
 }
 
-// ── Feature Grid ───────────────────────────────────────────────────
-function FeatureGrid({ onScanPress, onSearchPress }) {
-  return (
-    <View style={styles.featureGrid}>
-      <TouchableOpacity
-        style={[styles.featureButton, { backgroundColor: COLORS.primary + '10' }]}
-        onPress={onScanPress}
-      >
-        <Icon name="qr-code-scanner" size={28} color={COLORS.primary} />
-        <Text style={styles.featureButtonText}>{'home.quickScan'}</Text>
-      </TouchableOpacity>
-      <TouchableOpacity
-        style={[styles.featureButton, { backgroundColor: COLORS.success + '10' }]}
-        onPress={onSearchPress}
-      >
-        <Icon name="search" size={28} color={COLORS.success} />
-        <Text style={styles.featureButtonText}>{'home.quickSearch'}</Text>
-      </TouchableOpacity>
-    </View>
-  );
-}
-
 // ── Main Component ────────────────────────────────────────────────
 export default function HomeScreen({ navigation }) {
   const { t } = useTranslation();
@@ -153,14 +131,6 @@ export default function HomeScreen({ navigation }) {
         {/* Stats Overview */}
         <View style={styles.section}>
           <StatsCard {...stats} />
-        </View>
-
-        {/* Quick Actions Grid */}
-        <View style={styles.section}>
-          <FeatureGrid
-            onScanPress={() => navigation.navigate('SaveScanBaubrett')}
-            onSearchPress={() => navigation.navigate('Search')}
-          />
         </View>
 
         {/* Main Actions */}
@@ -321,25 +291,6 @@ const styles = StyleSheet.create({
     marginTop: 4,
     textTransform: 'uppercase',
     fontWeight: '600',
-  },
-
-  // Feature Grid
-  featureGrid: {
-    flexDirection: 'row',
-    gap: 12,
-  },
-  featureButton: {
-    flex: 1,
-    borderRadius: RADIUS.md,
-    padding: 20,
-    alignItems: 'center',
-    ...SHADOW.small,
-  },
-  featureButtonText: {
-    fontSize: 13,
-    fontWeight: '600',
-    color: COLORS.text,
-    marginTop: 8,
   },
 
   // Action Cards
