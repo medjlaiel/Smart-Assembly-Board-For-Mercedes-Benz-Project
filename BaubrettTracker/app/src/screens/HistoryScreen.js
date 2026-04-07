@@ -26,6 +26,7 @@ import { COLORS, RADIUS, SHADOW } from '../assets/theme';
 import Swipeable from 'react-native-gesture-handler/Swipeable';
 import { RectButton } from 'react-native-gesture-handler';
 import * as Sharing from 'expo-sharing';
+import Icon from 'react-native-vector-icons/MaterialIcons';
 import DateRangePicker from '../components/DateRangePicker';
 
 export default function HistoryScreen({ route }) {
