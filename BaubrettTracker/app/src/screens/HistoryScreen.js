@@ -26,6 +26,7 @@ import { COLORS, RADIUS, SHADOW } from '../assets/theme';
 import Swipeable from 'react-native-gesture-handler/Swipeable';
 import { RectButton } from 'react-native-gesture-handler';
 import * as Sharing from 'expo-sharing';
+import DateRangePicker from '../components/DateRangePicker';
 
 export default function HistoryScreen({ route }) {
   const { t } = useTranslation();
@@ -35,6 +36,8 @@ export default function HistoryScreen({ route }) {
   const [exporting, setExporting] = useState(false);
   const [searchQuery, setSearchQuery] = useState(filterBB || '');
   const [isSearchActive, setIsSearchActive] = useState(!!filterBB);
+  const [dateRange, setDateRange] = useState(null); // { start: 'YYYY-MM-DD', end: 'YYYY-MM-DD' }
+  const [showDatePicker, setShowDatePicker] = useState(false);
 
   const load = useCallback(async () => {
     setLoading(true);
@@ -55,14 +58,46 @@ export default function HistoryScreen({ route }) {
     }
   }, [filterBB]);
 
-  // Filtered records based on search query
+  // Filtered records based on search query and date range
   const records = useMemo(() => {
+    let filtered = allRecords;
+
+    // Apply BB_Nb search filter
     const query = searchQuery.trim();
-    if (!query) return allRecords;
-    return allRecords.filter((r) =>
-      String(r.BB_Nb).trim().includes(query)
-    );
-  }, [allRecords, searchQuery]);
+    if (query) {
+      filtered = filtered.filter((r) =>
+        String(r.BB_Nb).trim().includes(query)
+      );
+    }
+
+    // Apply date range filter
+    if (dateRange && dateRange.start && dateRange.end) {
+      filtered = filtered.filter((r) => {
+        const recordDate = parseDate(r.Date);
+        if (!recordDate) return false;
+        return recordDate >= parseDate(dateRange.start) && recordDate <= parseDate(dateRange.end);
+      });
+    }
+
+    return filtered;
+  }, [allRecords, searchQuery, dateRange]);
+
+  // Parse date from DD/MM/YYYY format to Date object
+  const parseDate = (dateStr) => {
+    if (!dateStr) return null;
+    const parts = dateStr.split('/');
+    if (parts.length !== 3) return null;
+    // DD/MM/YYYY -> Date object
+    const [day, month, year] = parts.map(Number);
+    return new Date(year, month - 1, day);
+  };
+
+  const formatFilterChipDate = (dateStr) => {
+    if (!dateStr) return '';
+    const date = new Date(dateStr);
+    const options = { day: 'numeric', month: 'short' };
+    return date.toLocaleDateString('en-US', options);
+  };
 
   // Unique baubrett numbers for suggestions
   const uniqueBBNumbers = useMemo(() => {
@@ -128,6 +163,23 @@ export default function HistoryScreen({ route }) {
   const handleClearSearch = () => {
     setSearchQuery('');
     setIsSearchActive(false);
+  };
+
+  const handleOpenDatePicker = () => {
+    setShowDatePicker(true);
+  };
+
+  const handleCloseDatePicker = () => {
+    setShowDatePicker(false);
+  };
+
+  const handleApplyDateRange = ({ start, end }) => {
+    setDateRange({ start, end });
+    setShowDatePicker(false);
+  };
+
+  const handleClearDateFilter = () => {
+    setDateRange(null);
   };
 
   const handleSearch = () => {
@@ -246,25 +298,45 @@ export default function HistoryScreen({ route }) {
 
       {/* Header bar */}
       <View style={styles.headerBar}>
-        <View>
+        <View style={{ flex: 1 }}>
           <Text style={styles.headerTitle}>
             {searchQuery.trim() ? t('history.headerFiltered', { bb: searchQuery.trim() }) : t('history.headerAllEntries')}
           </Text>
           <Text style={styles.headerSub}>
             {loading ? '…' : t('history.recordCount', { count: records.length })}
           </Text>
-        </View>
-        <TouchableOpacity
-          style={[styles.exportBtn, exporting && styles.btnDisabled]}
-          onPress={handleExport}
-          disabled={exporting || loading}
-        >
-          {exporting ? (
-            <ActivityIndicator color={COLORS.white} size="small" />
-          ) : (
-            <Text style={styles.exportText}>⬆ {t('history.export')}</Text>
+          {/* Active date filter chip */}
+          {dateRange && (
+            <View style={styles.dateFilterChip}>
+              <Icon name="event" size={12} color={COLORS.white} />
+              <Text style={styles.dateFilterText}>
+                {formatFilterChipDate(dateRange.start)} – {formatFilterChipDate(dateRange.end)}
+              </Text>
+              <TouchableOpacity onPress={handleClearDateFilter} style={styles.dateFilterClose}>
+                <Icon name="close" size={14} color={COLORS.white} />
+              </TouchableOpacity>
+            </View>
           )}
-        </TouchableOpacity>
+        </View>
+        <View style={styles.headerActions}>
+          <TouchableOpacity
+            style={[styles.iconBtn, styles.calendarBtn]}
+            onPress={handleOpenDatePicker}
+          >
+            <Icon name="calendar-today" size={22} color={COLORS.primary} />
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={[styles.exportBtn, exporting && styles.btnDisabled]}
+            onPress={handleExport}
+            disabled={exporting || loading}
+          >
+            {exporting ? (
+              <ActivityIndicator color={COLORS.white} size="small" />
+            ) : (
+              <Text style={styles.exportText}>⬆ {t('history.export')}</Text>
+            )}
+          </TouchableOpacity>
+        </View>
       </View>
 
       {/* Content */}
@@ -287,6 +359,15 @@ export default function HistoryScreen({ route }) {
           }
         />
       )}
+
+      {/* Date Range Picker Modal */}
+      <DateRangePicker
+        visible={showDatePicker}
+        onClose={handleCloseDatePicker}
+        onApply={handleApplyDateRange}
+        initialStartDate={dateRange?.start || null}
+        initialEndDate={dateRange?.end || null}
+      />
     </SafeAreaView>
   );
 }
@@ -385,6 +466,42 @@ const styles = StyleSheet.create({
   },
   headerTitle: { fontSize: 17, fontWeight: '700', color: COLORS.text },
   headerSub: { fontSize: 12, color: COLORS.text3, marginTop: 2 },
+  dateFilterChip: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: COLORS.primary,
+    paddingHorizontal: 10,
+    paddingVertical: 4,
+    borderRadius: 12,
+    marginTop: 6,
+    alignSelf: 'flex-start',
+    gap: 6,
+  },
+  dateFilterText: {
+    fontSize: 11,
+    fontWeight: '600',
+    color: COLORS.white,
+  },
+  dateFilterClose: {
+    padding: 2,
+  },
+  headerActions: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 8,
+    marginLeft: 12,
+  },
+  iconBtn: {
+    width: 40,
+    height: 40,
+    borderRadius: RADIUS.sm,
+    backgroundColor: COLORS.surface,
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderWidth: 1,
+    borderColor: COLORS.border,
+  },
+  calendarBtn: {},
   exportBtn: {
     backgroundColor: COLORS.primary,
     paddingHorizontal: 16,
