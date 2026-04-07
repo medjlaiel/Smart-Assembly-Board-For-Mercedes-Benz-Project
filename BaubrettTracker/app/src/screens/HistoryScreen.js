@@ -59,6 +59,23 @@ export default function HistoryScreen({ route }) {
     }
   }, [filterBB]);
 
+  // Parse date from DD/MM/YYYY format to Date object
+  const parseDate = (dateStr) => {
+    if (!dateStr) return null;
+    const parts = dateStr.split('/');
+    if (parts.length !== 3) return null;
+    // DD/MM/YYYY -> Date object
+    const [day, month, year] = parts.map(Number);
+    return new Date(year, month - 1, day);
+  };
+
+  const formatFilterChipDate = (dateStr) => {
+    if (!dateStr) return '';
+    const date = new Date(dateStr);
+    const options = { day: 'numeric', month: 'short' };
+    return date.toLocaleDateString('en-US', options);
+  };
+
   // Filtered records based on search query and date range
   const records = useMemo(() => {
     let filtered = allRecords;
@@ -82,23 +99,6 @@ export default function HistoryScreen({ route }) {
 
     return filtered;
   }, [allRecords, searchQuery, dateRange]);
-
-  // Parse date from DD/MM/YYYY format to Date object
-  const parseDate = (dateStr) => {
-    if (!dateStr) return null;
-    const parts = dateStr.split('/');
-    if (parts.length !== 3) return null;
-    // DD/MM/YYYY -> Date object
-    const [day, month, year] = parts.map(Number);
-    return new Date(year, month - 1, day);
-  };
-
-  const formatFilterChipDate = (dateStr) => {
-    if (!dateStr) return '';
-    const date = new Date(dateStr);
-    const options = { day: 'numeric', month: 'short' };
-    return date.toLocaleDateString('en-US', options);
-  };
 
   // Unique baubrett numbers for suggestions
   const uniqueBBNumbers = useMemo(() => {
