@@ -44,29 +44,6 @@ function Header({ scrollY }) {
   );
 }
 
-// ── Quick Stats Card ───────────────────────────────────────────────
-function StatsCard({ savesToday, totalRecords, lastSync }) {
-  return (
-    <View style={styles.statsContainer}>
-      <View style={[styles.statItem, { backgroundColor: COLORS.primary + '15' }]}>
-        <Icon name="today" size={24} color={COLORS.primary} />
-        <Text style={styles.statValue}>{savesToday}</Text>
-        <Text style={styles.statLabel}>{'home.stats.today'}</Text>
-      </View>
-      <View style={[styles.statItem, { backgroundColor: COLORS.success + '15' }]}>
-        <Icon name="list" size={24} color={COLORS.success} />
-        <Text style={styles.statValue}>{totalRecords}</Text>
-        <Text style={styles.statLabel}>{'home.stats.total'}</Text>
-      </View>
-      <View style={[styles.statItem, { backgroundColor: COLORS.accent + '15' }]}>
-        <Icon name="sync" size={24} color={COLORS.accent} />
-        <Text style={styles.statValue}>{lastSync}</Text>
-        <Text style={styles.statLabel}>{'home.stats.sync'}</Text>
-      </View>
-    </View>
-  );
-}
-
 // ── Action Card Component ──────────────────────────────────────────
 function ActionCard({ icon, title, subtitle, color, onPress, badge }) {
   return (
@@ -97,24 +74,6 @@ export default function HomeScreen({ navigation }) {
   const { t } = useTranslation();
   const scrollY = useRef(new Animated.Value(0)).current;
 
-  // Mock data - replace with real data from your app
-  const [stats, setStats] = React.useState({
-    savesToday: 12,
-    totalRecords: 1247,
-    lastSync: '2m',
-  });
-
-  // Simulate real-time updates
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setStats(prev => ({
-        ...prev,
-        lastSync: prev.lastSync === '2m' ? '1m' : '2m',
-      }));
-    }, 30000);
-    return () => clearInterval(interval);
-  }, []);
-
   return (
     <SafeAreaView style={styles.safe}>
       <Animated.ScrollView
@@ -127,11 +86,6 @@ export default function HomeScreen({ navigation }) {
         scrollEventThrottle={16}
       >
         <Header scrollY={scrollY} />
-
-        {/* Stats Overview */}
-        <View style={styles.section}>
-          <StatsCard {...stats} />
-        </View>
 
         {/* Main Actions */}
         <View style={styles.section}>
@@ -263,34 +217,6 @@ const styles = StyleSheet.create({
     textTransform: 'uppercase',
     marginBottom: 12,
     marginLeft: 4,
-  },
-
-  // Stats Card
-  statsContainer: {
-    flexDirection: 'row',
-    backgroundColor: COLORS.surface,
-    borderRadius: RADIUS.lg,
-    padding: 16,
-    ...SHADOW.small,
-  },
-  statItem: {
-    flex: 1,
-    alignItems: 'center',
-    paddingVertical: 12,
-    borderRadius: RADIUS.md,
-  },
-  statValue: {
-    fontSize: 22,
-    fontWeight: '800',
-    color: COLORS.text,
-    marginTop: 6,
-  },
-  statLabel: {
-    fontSize: 11,
-    color: COLORS.text3,
-    marginTop: 4,
-    textTransform: 'uppercase',
-    fontWeight: '600',
   },
 
   // Action Cards
