@@ -25,7 +25,7 @@ import { useAuth } from '../contexts/AuthContext';
 const LogoPlaceholder = () => (
   <View style={styles.logoContainer}>
     <View style={styles.logoCircle}>
-      <Text style={styles.logoText}>BT</Text>
+      <Text style={styles.logoText}>D</Text>
     </View>
   </View>
 );
