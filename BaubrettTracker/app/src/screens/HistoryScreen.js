@@ -59,14 +59,37 @@ export default function HistoryScreen({ route }) {
     }
   }, [filterBB]);
 
-  // Parse date from DD/MM/YYYY format to Date object
+  // Parse date from DD/MM/YYYY format (from Excel) to Date object
   const parseDate = (dateStr) => {
     if (!dateStr) return null;
     const parts = dateStr.split('/');
     if (parts.length !== 3) return null;
-    // DD/MM/YYYY -> Date object
+    // DD/MM/YYYY -> Date object (local midnight)
     const [day, month, year] = parts.map(Number);
     return new Date(year, month - 1, day);
+  };
+
+  // Parse ISO date (YYYY-MM-DD) from calendar to Date object (local midnight)
+  const parseISODate = (dateStr) => {
+    if (!dateStr) return null;
+    const parts = dateStr.split('-');
+    if (parts.length !== 3) return null;
+    const [year, month, day] = parts.map(Number);
+    return new Date(year, month - 1, day);
+  };
+
+  // Compare two Date objects at day precision (ignore time)
+  const isSameDay = (d1, d2) => {
+    if (!d1 || !d2) return false;
+    return d1.getFullYear() === d2.getFullYear() &&
+           d1.getMonth() === d2.getMonth() &&
+           d1.getDate() === d2.getDate();
+  };
+
+  // Check if recordDate is within range [startDate, endDate] inclusive
+  const isInRange = (recordDate, startDate, endDate) => {
+    if (!recordDate || !startDate || !endDate) return false;
+    return recordDate >= startDate && recordDate <= endDate;
   };
 
   const formatFilterChipDate = (dateStr) => {
@@ -90,10 +113,16 @@ export default function HistoryScreen({ route }) {
 
     // Apply date range filter
     if (dateRange && dateRange.start && dateRange.end) {
+      const startDate = parseISODate(dateRange.start);
+      const endDate = parseISODate(dateRange.end);
+      // Set endDate to end of day (23:59:59) for inclusive range
+      if (endDate) {
+        endDate.setHours(23, 59, 59, 999);
+      }
       filtered = filtered.filter((r) => {
         const recordDate = parseDate(r.Date);
         if (!recordDate) return false;
-        return recordDate >= parseDate(dateRange.start) && recordDate <= parseDate(dateRange.end);
+        return isInRange(recordDate, startDate, endDate);
       });
     }
 
