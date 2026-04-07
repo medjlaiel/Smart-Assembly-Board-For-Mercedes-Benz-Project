@@ -200,5 +200,11 @@
     "allScannedTitle": "All Baubretts Scanned!",
     "allScannedMessage": "Congratulations! All Baubretts in the database have been scanned.",
     "close": "Close"
+  },
+  "notifications": {
+    "title": "Notifications",
+    "message": "{{current}}/{{target}} Baubretts scanned — {{remaining}} remaining",
+    "allCompleteTitle": "All UFBs are full",
+    "allCompleteMessage": "All UFBs have reached the required 8 scans. Great job!"
   }
 }
