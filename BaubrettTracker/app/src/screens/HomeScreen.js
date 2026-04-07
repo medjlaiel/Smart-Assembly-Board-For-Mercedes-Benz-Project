@@ -2,7 +2,7 @@
  * HomeScreen.js
  * Modernized landing screen with improved design and organization
  */
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState, useMemo } from 'react';
 import {
   View,
   Text,
@@ -16,6 +16,9 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { useTranslation } from 'react-i18next';
 import { COLORS, RADIUS, SHADOW, FONT_SIZES } from '../assets/theme';
 import Icon from 'react-native-vector-icons/MaterialIcons';
+import NotificationCenter from '../components/NotificationCenter';
+import { loadTrackingRecords } from '../services/trackingService';
+import { getValidZoneKeys } from '../data/zones';
 
 const { width } = Dimensions.get('window');
 
@@ -58,8 +61,8 @@ function ActionCard({ icon, title, subtitle, color, onPress, badge }) {
       <View style={styles.actionContent}>
         <View style={styles.actionHeader}>
           <Text style={styles.actionTitle}>{title}</Text>
-          {badge && <View style={[styles.badge, { backgroundColor: color }]}>
-            <Text style={styles.badgeText}>{badge}</Text>
+          {badge && <View style={[styles.actionBadge, { backgroundColor: color }]}>
+            <Text style={styles.actionBadgeText}>{badge}</Text>
           </View>}
         </View>
         <Text style={styles.actionSubtitle}>{subtitle}</Text>
@@ -73,20 +76,71 @@ function ActionCard({ icon, title, subtitle, color, onPress, badge }) {
 export default function HomeScreen({ navigation }) {
   const { t } = useTranslation();
   const scrollY = useRef(new Animated.Value(0)).current;
+  const [showNotifications, setShowNotifications] = useState(false);
+  const [allRecords, setAllRecords] = useState([]);
 
-  // Set header options with statistics icon
+  // Load tracking records for notification count
+  useEffect(() => {
+    loadData();
+    const interval = setInterval(loadData, 30000); // Refresh every 30 seconds
+    return () => clearInterval(interval);
+  }, []);
+
+  const loadData = async () => {
+    try {
+      const data = await loadTrackingRecords();
+      setAllRecords(data);
+    } catch (err) {
+      console.error('Failed to load tracking records:', err);
+    }
+  };
+
+  // Calculate incomplete UFB count for badge
+  const incompleteUFBCount = useMemo(() => {
+    const ufbKeys = getValidZoneKeys().filter((key) => key.startsWith('UFB'));
+    const ufbStats = {};
+    
+    ufbKeys.forEach((key) => {
+      ufbStats[key] = 0;
+    });
+    
+    allRecords.forEach((record) => {
+      const zone = String(record.Zone).trim();
+      if (ufbKeys.includes(zone)) {
+        ufbStats[zone] = (ufbStats[zone] || 0) + 1;
+      }
+    });
+    
+    const incomplete = ufbKeys.filter((key) => (ufbStats[key] || 0) < 8).length;
+    return incomplete;
+  }, [allRecords]);
+
+  // Set header options with notification bell and statistics icon
   useEffect(() => {
     navigation.setOptions({
       headerRight: () => (
-        <TouchableOpacity
-          onPress={() => navigation.navigate('Statistics')}
-          style={{ paddingHorizontal: 16, paddingVertical: 8 }}
-        >
-          <Icon name="bar-chart" size={24} color={COLORS.white} />
-        </TouchableOpacity>
+        <View style={styles.headerActionsContainer}>
+          <TouchableOpacity
+            style={styles.headerActionBtn}
+            onPress={() => setShowNotifications(true)}
+          >
+            <Icon name="notifications" size={24} color={COLORS.white} />
+            {incompleteUFBCount > 0 && (
+              <View style={styles.notifBadge}>
+                <Text style={styles.notifBadgeText}>{incompleteUFBCount}</Text>
+              </View>
+            )}
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.headerActionBtn}
+            onPress={() => navigation.navigate('Statistics')}
+          >
+            <Icon name="bar-chart" size={24} color={COLORS.white} />
+          </TouchableOpacity>
+        </View>
       ),
     });
-  }, [navigation]);
+  }, [navigation, incompleteUFBCount]);
 
   return (
     <SafeAreaView style={styles.safe}>
@@ -167,6 +221,13 @@ export default function HomeScreen({ navigation }) {
           <Text style={styles.footerVersion}>Version 1.0.0</Text>
         </View>
       </Animated.ScrollView>
+
+      {/* Notification Center Modal */}
+      <NotificationCenter
+        visible={showNotifications}
+        onClose={() => setShowNotifications(false)}
+        badgeCount={incompleteUFBCount}
+      />
     </SafeAreaView>
   );
 }
@@ -192,6 +253,16 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
+  },
+  headerActionsContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 8,
+  },
+  headerActionBtn: {
+    paddingHorizontal: 12,
+    paddingVertical: 6,
+    position: 'relative',
   },
   logoContainer: {
     flexDirection: 'row',
@@ -266,12 +337,12 @@ const styles = StyleSheet.create({
     color: COLORS.text,
     marginRight: 8,
   },
-  badge: {
+  actionBadge: {
     paddingHorizontal: 8,
     paddingVertical: 2,
     borderRadius: 10,
   },
-  badgeText: {
+  actionBadgeText: {
     fontSize: 10,
     fontWeight: '700',
     color: COLORS.white,
@@ -281,6 +352,25 @@ const styles = StyleSheet.create({
     fontSize: 13,
     color: COLORS.text2,
     lineHeight: 18,
+  },
+
+  // Notification Badge
+  notifBadge: {
+    position: 'absolute',
+    top: -2,
+    right: 0,
+    backgroundColor: COLORS.error,
+    borderRadius: 10,
+    minWidth: 18,
+    height: 18,
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingHorizontal: 4,
+  },
+  notifBadgeText: {
+    color: COLORS.white,
+    fontSize: 10,
+    fontWeight: '700',
   },
 
   // Logout Button
