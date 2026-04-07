@@ -16,7 +16,7 @@ import { useTranslation } from 'react-i18next';
 import { COLORS, RADIUS, SHADOW, FONT_SIZES } from '../assets/theme';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import { loadTrackingRecords } from '../services/trackingService';
-import { getValidZoneKeys } from '../services/databaseService';
+import { getValidZoneKeys } from '../data/zones';
 
 const UFB_TARGET = 8; // Required scans per UFB to be considered complete
 

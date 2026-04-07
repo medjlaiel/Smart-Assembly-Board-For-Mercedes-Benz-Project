@@ -18,7 +18,7 @@ import { COLORS, RADIUS, SHADOW, FONT_SIZES } from '../assets/theme';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import NotificationCenter from '../components/NotificationCenter';
 import { loadTrackingRecords } from '../services/trackingService';
-import { getValidZoneKeys } from '../services/databaseService';
+import { getValidZoneKeys } from '../data/zones';
 
 const { width } = Dimensions.get('window');
 
