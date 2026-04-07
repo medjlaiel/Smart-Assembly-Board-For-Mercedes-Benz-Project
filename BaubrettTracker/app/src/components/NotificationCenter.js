@@ -10,7 +10,6 @@ import {
   TouchableOpacity,
   Modal,
   FlatList,
-  ScrollView,
 } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import { COLORS, RADIUS, SHADOW, FONT_SIZES } from '../assets/theme';
@@ -80,7 +79,7 @@ export default function NotificationCenter({ visible, onClose }) {
     return COLORS.primary;
   };
 
-  const renderIncompleteUFB = ({ item, index }) => (
+  const renderIncompleteUFB = ({ item }) => (
     <View style={styles.notificationCard}>
       <View style={styles.notificationHeader}>
         <View style={[styles.progressCircle, { backgroundColor: getProgressColor(item.current) + '20', borderColor: getProgressColor(item.current) }]}>
@@ -142,16 +141,17 @@ export default function NotificationCenter({ visible, onClose }) {
               <Text style={styles.loadingText}>{t('common.loading')}</Text>
             </View>
           ) : incompleteUFBs.length === 0 ? (
-            <ScrollView style={styles.content}>
+            <View style={styles.emptyScrollContainer}>
               {renderEmpty()}
-            </ScrollView>
+            </View>
           ) : (
             <FlatList
               data={incompleteUFBs}
               keyExtractor={(item) => item.key}
               renderItem={renderIncompleteUFB}
               contentContainerStyle={styles.listContent}
-              showsVerticalScrollIndicator={false}
+              showsVerticalScrollIndicator={true}
+              style={styles.flatList}
             />
           )}
 
@@ -180,6 +180,7 @@ const styles = StyleSheet.create({
     maxWidth: 500,
     maxHeight: '80%',
     ...SHADOW.large,
+    overflow: 'hidden',
   },
   header: {
     flexDirection: 'row',
@@ -210,7 +211,7 @@ const styles = StyleSheet.create({
     minWidth: 24,
     textAlign: 'center',
   },
-  content: {
+  flatList: {
     flex: 1,
   },
   listContent: {
@@ -275,6 +276,10 @@ const styles = StyleSheet.create({
   loadingText: {
     fontSize: 16,
     color: COLORS.text3,
+  },
+  emptyScrollContainer: {
+    flex: 1,
+    justifyContent: 'center',
   },
   emptyContainer: {
     alignItems: 'center',
