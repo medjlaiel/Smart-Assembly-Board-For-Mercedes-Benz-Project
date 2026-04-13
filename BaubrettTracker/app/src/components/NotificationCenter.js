@@ -11,6 +11,7 @@ import {
   Modal,
   FlatList,
   ScrollView,
+  TouchableWithoutFeedback,
 } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import { COLORS, RADIUS, SHADOW, FONT_SIZES } from '../assets/theme';
@@ -137,51 +138,56 @@ export default function NotificationCenter({ visible, onClose, badgeCount }) {
       onRequestClose={onClose}
     >
       <TouchableOpacity style={styles.overlay} activeOpacity={1} onPress={onClose}>
-        <View style={styles.modalContent} onStartShouldSetResponder={() => true}>
-          {/* Header */}
-          <View style={styles.header}>
-            <Text style={styles.headerTitle}>{t('notifications.title')}</Text>
-            <View style={styles.headerRight}>
-              <Text style={styles.countBadge}>{badgeCount}</Text>
-            </View>
-          </View>
-
-          {/* Content Area - Wrapped for proper flex layout */}
-          <View style={styles.contentArea}>
-            {loading ? (
-              <View style={styles.loadingContainer}>
-                <Text style={styles.loadingText}>{t('common.loading')}</Text>
+        <TouchableWithoutFeedback>
+          <View style={styles.modalContent}>
+            {/* Header */}
+            <View style={styles.header}>
+              <Text style={styles.headerTitle}>{t('notifications.title')}</Text>
+              <View style={styles.headerRight}>
+                <Text style={styles.countBadge}>{badgeCount}</Text>
               </View>
-            ) : incompleteUFBs.length === 0 ? (
-              <ScrollView 
-                style={styles.scrollView} 
-                contentContainerStyle={styles.scrollContent}
-                showsVerticalScrollIndicator={true}
-              >
-                {renderEmpty()}
-              </ScrollView>
-            ) : (
-              <FlatList
-                data={incompleteUFBs}
-                keyExtractor={(item) => item.key}
-                renderItem={renderIncompleteUFB}
-                contentContainerStyle={styles.listContent}
-                showsVerticalScrollIndicator={true}
-                style={styles.flatList}
-                nestedScrollEnabled={true}
-              />
-            )}
-          </View>
+            </View>
 
-          {/* Close Button */}
-          <TouchableOpacity 
-            style={styles.closeButton} 
-            onPress={onClose}
-            activeOpacity={0.8}
-          >
-            <Text style={styles.closeButtonText}>{t('common.close')}</Text>
-          </TouchableOpacity>
-        </View>
+            {/* Content Area - Wrapped for proper flex layout */}
+            <View style={styles.contentArea}>
+              {loading ? (
+                <View style={styles.loadingContainer}>
+                  <Text style={styles.loadingText}>{t('common.loading')}</Text>
+                </View>
+              ) : incompleteUFBs.length === 0 ? (
+                <ScrollView
+                  style={styles.scrollView}
+                  contentContainerStyle={styles.scrollContent}
+                  showsVerticalScrollIndicator={true}
+                  nestedScrollEnabled
+                  keyboardShouldPersistTaps="handled"
+                >
+                  {renderEmpty()}
+                </ScrollView>
+              ) : (
+                <FlatList
+                  data={incompleteUFBs}
+                  keyExtractor={(item) => item.key}
+                  renderItem={renderIncompleteUFB}
+                  contentContainerStyle={styles.listContent}
+                  showsVerticalScrollIndicator={true}
+                  style={styles.flatList}
+                  nestedScrollEnabled
+                  keyboardShouldPersistTaps="handled"
+                />
+              )}
+            </View>
+
+            {/* Close Button */}
+            <TouchableOpacity
+              style={styles.closeButton}
+              onPress={onClose}
+              activeOpacity={0.8}
+            >
+              <Text style={styles.closeButtonText}>{t('common.close')}</Text>
+            </TouchableOpacity>
+          </View>
+        </TouchableWithoutFeedback>
       </TouchableOpacity>
     </Modal>
   );
@@ -250,7 +256,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   scrollContent: {
-    flex: 1,
+    flexGrow: 1,
   },
   notificationCard: {
     backgroundColor: COLORS.background,
