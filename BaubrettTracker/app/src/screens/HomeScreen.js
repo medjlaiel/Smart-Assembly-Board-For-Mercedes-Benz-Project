@@ -49,7 +49,7 @@ function Header({ scrollY }) {
 }
 
 // ── Action Card Component ──────────────────────────────────────────
-function ActionCard({ icon, title, subtitle, color, onPress, badge }) {
+function ActionCard({ icon, title, color, onPress, badge }) {
   return (
     <TouchableOpacity
       style={[styles.actionCard, { borderLeftColor: color }, SHADOW.small]}
@@ -66,7 +66,6 @@ function ActionCard({ icon, title, subtitle, color, onPress, badge }) {
             <Text style={styles.actionBadgeText}>{badge}</Text>
           </View>}
         </View>
-        <Text style={styles.actionSubtitle}>{subtitle}</Text>
       </View>
       <Icon name="chevron-right" size={24} color={COLORS.text3} />
     </TouchableOpacity>
@@ -172,7 +171,6 @@ export default function HomeScreen({ navigation }) {
           <ActionCard
             icon="save-alt"
             title={t('home.saveBaubrett.title')}
-            subtitle={t('home.saveBaubrett.subtitle')}
             color={COLORS.primary}
             onPress={() => navigation.navigate('SaveScanBaubrett')}
             badge="NEW"
@@ -181,7 +179,6 @@ export default function HomeScreen({ navigation }) {
           <ActionCard
             icon="search"
             title={t('home.consultBaubrett.title')}
-            subtitle={t('home.consultBaubrett.subtitle')}
             color={COLORS.accent}
             onPress={() => navigation.navigate('ConsultScan')}
           />
@@ -189,7 +186,6 @@ export default function HomeScreen({ navigation }) {
           <ActionCard
             icon="find-in-page"
             title={t('home.search.title')}
-            subtitle={t('home.search.subtitle')}
             color={COLORS.success}
             onPress={() => navigation.navigate('Search')}
           />
@@ -202,7 +198,6 @@ export default function HomeScreen({ navigation }) {
           <ActionCard
             icon="history"
             title={t('home.history.title')}
-            subtitle={t('home.history.subtitle')}
             color={COLORS.warning}
             onPress={() => navigation.navigate('History')}
           />
@@ -210,15 +205,13 @@ export default function HomeScreen({ navigation }) {
           <ActionCard
             icon="build"
             title={t('home.techChanges.title') || 'Technical Changes'}
-            subtitle={t('home.techChanges.subtitle') || 'View technical modifications'}
             color={COLORS.info || '#2196F3'}
             onPress={() => navigation.navigate('TechChanges')}
           />
 
           <ActionCard
             icon="bar-chart"
-            title={t('statistics')}
-            subtitle={t('home.statistics.subtitle')}
+            title={t('statistics.title')}
             color={COLORS.primaryDark}
             onPress={() => navigation.navigate('Statistics')}
           />
@@ -344,7 +337,6 @@ const styles = StyleSheet.create({
   actionHeader: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginBottom: 4,
   },
   actionTitle: {
     fontSize: 16,
@@ -362,11 +354,6 @@ const styles = StyleSheet.create({
     fontWeight: '700',
     color: COLORS.white,
     letterSpacing: 0.3,
-  },
-  actionSubtitle: {
-    fontSize: 13,
-    color: COLORS.text2,
-    lineHeight: 18,
   },
 
   // Notification Badge
