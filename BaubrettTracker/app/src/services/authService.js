@@ -127,6 +127,52 @@ export async function signIn(email, password) {
 }
 
 /**
+ * Change user password
+ * @param {string} userId - User ID
+ * @param {string} currentPassword - Current password
+ * @param {string} newPassword - New password
+ * @returns {Promise<{success: boolean, message: string}>}
+ */
+export async function changePassword(userId, currentPassword, newPassword) {
+  try {
+    const users = await getUsers();
+    const userIndex = users.findIndex(u => u.id === userId);
+
+    if (userIndex === -1) {
+      return {
+        success: false,
+        message: i18n.t('drawer.userNotFound', 'User not found')
+      };
+    }
+
+    const user = users[userIndex];
+
+    // Verify current password
+    if (user.password !== currentPassword) {
+      return {
+        success: false,
+        message: i18n.t('drawer.incorrectPassword', 'Current password is incorrect')
+      };
+    }
+
+    // Update password
+    users[userIndex].password = newPassword;
+    await saveUsers(users);
+
+    return {
+      success: true,
+      message: i18n.t('drawer.passwordChangedSuccess', 'Password changed successfully')
+    };
+  } catch (error) {
+    console.error('Change password error:', error);
+    return {
+      success: false,
+      message: i18n.t('drawer.passwordChangeError', 'An error occurred')
+    };
+  }
+}
+
+/**
  * Clear all users (for testing/development)
  */
 export async function clearAllUsers() {
