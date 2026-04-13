@@ -17,6 +17,7 @@ import { useTranslation } from 'react-i18next';
 import { COLORS, RADIUS, SHADOW, FONT_SIZES } from '../assets/theme';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import NotificationCenter from '../components/NotificationCenter';
+import DrawerMenu from '../components/DrawerMenu';
 import { loadTrackingRecords } from '../services/trackingService';
 import { getValidZoneKeys } from '../data/zones';
 
@@ -77,6 +78,7 @@ export default function HomeScreen({ navigation }) {
   const { t } = useTranslation();
   const scrollY = useRef(new Animated.Value(0)).current;
   const [showNotifications, setShowNotifications] = useState(false);
+  const [showDrawer, setShowDrawer] = useState(false);
   const [allRecords, setAllRecords] = useState([]);
 
   // Load tracking records for notification count
@@ -99,25 +101,33 @@ export default function HomeScreen({ navigation }) {
   const incompleteUFBCount = useMemo(() => {
     const ufbKeys = getValidZoneKeys().filter((key) => key.startsWith('UFB'));
     const ufbStats = {};
-    
+
     ufbKeys.forEach((key) => {
       ufbStats[key] = 0;
     });
-    
+
     allRecords.forEach((record) => {
       const zone = String(record.Zone).trim();
       if (ufbKeys.includes(zone)) {
         ufbStats[zone] = (ufbStats[zone] || 0) + 1;
       }
     });
-    
+
     const incomplete = ufbKeys.filter((key) => (ufbStats[key] || 0) < 8).length;
     return incomplete;
   }, [allRecords]);
 
-  // Set header options with notification bell and statistics icon
+  // Set header options with hamburger menu on left, notification and statistics on right
   useEffect(() => {
     navigation.setOptions({
+      headerLeft: () => (
+        <TouchableOpacity
+          style={styles.headerActionBtn}
+          onPress={() => setShowDrawer(true)}
+        >
+          <Icon name="menu" size={24} color={COLORS.white} />
+        </TouchableOpacity>
+      ),
       headerRight: () => (
         <View style={styles.headerActionsContainer}>
           <TouchableOpacity
@@ -158,7 +168,7 @@ export default function HomeScreen({ navigation }) {
         {/* Main Actions */}
         <View style={styles.section}>
           <Text style={styles.sectionTitle}>{t('home.primaryActions')}</Text>
-          
+
           <ActionCard
             icon="save-alt"
             title={t('home.saveBaubrett.title')}
@@ -228,13 +238,20 @@ export default function HomeScreen({ navigation }) {
         onClose={() => setShowNotifications(false)}
         badgeCount={incompleteUFBCount}
       />
+
+      {/* Drawer Menu */}
+      <DrawerMenu
+        visible={showDrawer}
+        onClose={() => setShowDrawer(false)}
+        navigation={navigation}
+      />
     </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
   safe: { flex: 1, backgroundColor: COLORS.background },
-  
+
   scrollContent: {
     paddingBottom: 40,
   },
