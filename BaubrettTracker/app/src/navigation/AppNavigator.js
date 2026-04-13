@@ -19,6 +19,7 @@ import ConsultResultScreen from '../screens/ConsultResultScreen';
 import HistoryScreen from '../screens/HistoryScreen';
 import SearchScreen from '../screens/SearchScreen';
 import HowToUseScreen from '../screens/HowToUseScreen';
+import TechChangesScreen from '../screens/TechChangesScreen';
 
 const Stack = createStackNavigator();
 
@@ -141,6 +142,14 @@ export default function AppNavigator() {
         component={HowToUseScreen}
         options={{ 
           title: 'How to Use',
+          cardStyleInterpolator: CardStyleInterpolators.forFadeFromBottomAndroid,
+        }}
+      />
+      <Stack.Screen
+        name="TechChanges"
+        component={TechChangesScreen}
+        options={{ 
+          title: 'Technical Changes',
           cardStyleInterpolator: CardStyleInterpolators.forFadeFromBottomAndroid,
         }}
       />

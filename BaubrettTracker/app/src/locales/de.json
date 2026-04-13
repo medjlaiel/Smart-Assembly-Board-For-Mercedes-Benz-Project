@@ -65,6 +65,7 @@
   "home": {
     "title": "Baubrett Tracker",
     "subtitle": "QR-Codes scannen, um Baubrett-Standorte zu speichern oder abzurufen",
+    "primaryActions": "PRIMÄRE AKTIONEN",
     "actions": "AKTIONEN",
     "saveBaubrett": {
       "title": "Baubrett speichern",
@@ -82,6 +83,13 @@
     "history": {
       "title": "Standortverlauf",
       "subtitle": "Alle gespeicherten Einträge anzeigen und exportieren"
+    },
+    "techChanges": {
+      "title": "Technische Änderungen",
+      "subtitle": "Technische Änderungen für Baubretts anzeigen"
+    },
+    "statistics": {
+      "subtitle": "Scans und Standortstatistiken anzeigen"
     },
     "logout": "Abmelden"
   },
@@ -200,5 +208,24 @@
     "allScannedTitle": "Alle Baubretts wurden gescannt!",
     "allScannedMessage": "Herzlichen Glückwunsch! Alle Baubretts in der Datenbank wurden gescannt.",
     "close": "Schließen"
+  },
+  "techChanges": {
+    "title": "Technische Änderungen",
+    "subtitle": "Wartung und technische Änderungen anzeigen",
+    "inputPlaceholder": "Baubrett-Nummer eingeben...",
+    "search": "Suchen",
+    "enterBaubrett": "Baubrett-Nummer eingeben",
+    "description": "Suchen Sie nach einem Baubrett, um alle technischen Änderungen und Wartungsinformationen anzuzeigen.",
+    "baubrettNumber": "Baubrett #",
+    "maintenanceTable": "Wartungsinformation",
+    "allChanges": "Alle technischen Änderungen",
+    "changes": "Technische Änderungen",
+    "notFound": "Nicht gefunden",
+    "invalidBaubrett": "Baubrett nicht gefunden",
+    "notInDatabase": "ist keine gültige Baubrett-Nummer",
+    "noChangesRecord": "Keine technischen Änderungen aufgezeichnet.",
+    "newSearch": "Neue Suche",
+    "tryAnotherNumber": "Bitte geben Sie eine gültige Baubrett-Nummer ein",
+    "error": "Fehler"
   }
 }

@@ -65,6 +65,7 @@
   "home": {
     "title": "Baubrett Tracker",
     "subtitle": "امسح أكواد QR لحفظ أو استشارة مواقع Baubrett",
+    "primaryActions": "الإجراءات الأساسية",
     "actions": "الإجراءات",
     "saveBaubrett": {
       "title": "حفظ Baubrett",
@@ -82,6 +83,13 @@
     "history": {
       "title": "سجل المواقع",
       "subtitle": "عرض وتصدير جميع الإدخالات"
+    },
+    "techChanges": {
+      "title": "التغييرات التقنية",
+      "subtitle": "عرض التعديلات التقنية للـ Baubretts"
+    },
+    "statistics": {
+      "subtitle": "عرض إحصائيات المسحات والمواقع"
     },
     "logout": "تسجيل الخروج"
   },
@@ -200,5 +208,24 @@
     "allScannedTitle": "تم مسح جميع Baubretts!",
     "allScannedMessage": "تهانينا! تم مسح جميع Baubretts في قاعدة البيانات.",
     "close": "إغلاق"
+  },
+  "techChanges": {
+    "title": "التغييرات التقنية",
+    "subtitle": "عرض الصيانة والتعديلات التقنية",
+    "inputPlaceholder": "أدخل رقم Baubrett...",
+    "search": "بحث",
+    "enterBaubrett": "أدخل رقم Baubrett",
+    "description": "ابحث عن Baubrett لعرض جميع التغييرات التقنية ومعلومات الصيانة.",
+    "baubrettNumber": "Baubrett #",
+    "maintenanceTable": "معلومات الصيانة",
+    "allChanges": "جميع التغييرات التقنية",
+    "changes": "التغييرات التقنية",
+    "notFound": "غير موجود",
+    "invalidBaubrett": "Baubrett غير موجود",
+    "notInDatabase": "ليس رقم Baubrett صحيح",
+    "noChangesRecord": "لا توجد تغييرات تقنية مسجلة.",
+    "newSearch": "بحث جديد",
+    "tryAnotherNumber": "يرجى إدخال رقم Baubrett صحيح",
+    "error": "خطأ"
   }
 }

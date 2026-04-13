@@ -65,6 +65,7 @@
   "home": {
     "title": "Baubrett Tracker",
     "subtitle": "Scannez des codes QR pour enregistrer ou consulter des emplacements Baubrett",
+    "primaryActions": "ACTIONS PRINCIPALES",
     "actions": "ACTIONS",
     "saveBaubrett": {
       "title": "Enregistrer un Baubrett",
@@ -82,6 +83,13 @@
     "history": {
       "title": "Historique des emplacements",
       "subtitle": "Voir et exporter toutes les entrées"
+    },
+    "techChanges": {
+      "title": "Changements techniques",
+      "subtitle": "Afficher les modifications techniques pour les Baubretts"
+    },
+    "statistics": {
+      "subtitle": "Afficher les statistiques des scans et des emplacements"
     },
     "logout": "Déconnexion"
   },
@@ -200,5 +208,24 @@
     "allScannedTitle": "Tous les Baubretts ont été scannés!",
     "allScannedMessage": "Félicitations! Tous les Baubretts de la base de données ont été scannés.",
     "close": "Fermer"
+  },
+  "techChanges": {
+    "title": "Changements techniques",
+    "subtitle": "Afficher la maintenance et les modifications techniques",
+    "inputPlaceholder": "Entrez le numéro de Baubrett...",
+    "search": "Rechercher",
+    "enterBaubrett": "Entrez le numéro de Baubrett",
+    "description": "Recherchez un Baubrett pour afficher tous les changements techniques et informations de maintenance.",
+    "baubrettNumber": "Baubrett #",
+    "maintenanceTable": "Informations de maintenance",
+    "allChanges": "Tous les changements techniques",
+    "changes": "Changements techniques",
+    "notFound": "Non trouvé",
+    "invalidBaubrett": "Baubrett non trouvé",
+    "notInDatabase": "n'est pas un numéro de Baubrett valide",
+    "noChangesRecord": "Aucun changement technique enregistré.",
+    "newSearch": "Nouvelle recherche",
+    "tryAnotherNumber": "Veuillez entrer un numéro de Baubrett valide",
+    "error": "Erreur"
   }
 }

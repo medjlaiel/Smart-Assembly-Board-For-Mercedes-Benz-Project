@@ -65,6 +65,7 @@
   "home": {
     "title": "Baubrett Tracker",
     "subtitle": "Scan QR codes to save or consult Baubrett locations",
+    "primaryActions": "PRIMARY ACTIONS",
     "actions": "ACTIONS",
     "saveBaubrett": {
       "title": "Save a Baubrett",
@@ -82,6 +83,13 @@
     "history": {
       "title": "Location History",
       "subtitle": "View and export all saved entries"
+    },
+    "techChanges": {
+      "title": "Technical Changes",
+      "subtitle": "View technical modifications for Baubretts"
+    },
+    "statistics": {
+      "subtitle": "View scans and location statistics"
     },
     "logout": "Log Out"
   },
@@ -200,6 +208,25 @@
     "allScannedTitle": "All Baubretts Scanned!",
     "allScannedMessage": "Congratulations! All Baubretts in the database have been scanned.",
     "close": "Close"
+  },
+  "techChanges": {
+    "title": "Technical Changes",
+    "subtitle": "View maintenance and technical modifications",
+    "inputPlaceholder": "Enter Baubrett number...",
+    "search": "Search",
+    "enterBaubrett": "Enter Baubrett Number",
+    "description": "Search for a Baubrett to view its technical changes and maintenance information.",
+    "baubrettNumber": "Baubrett #",
+    "maintenanceTable": "Maintenance Information",
+    "allChanges": "All Technical Changes",
+    "changes": "Technical Changes",
+    "notFound": "Not Found",
+    "invalidBaubrett": "Baubrett Not Found",
+    "notInDatabase": "is not a valid Baubrett number",
+    "noChangesRecord": "No technical changes recorded.",
+    "newSearch": "New Search",
+    "tryAnotherNumber": "Please enter a valid Baubrett number",
+    "error": "Error"
   },
   "notifications": {
     "title": "Notifications",
