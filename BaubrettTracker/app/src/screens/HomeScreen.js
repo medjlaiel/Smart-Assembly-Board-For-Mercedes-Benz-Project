@@ -208,23 +208,21 @@ export default function HomeScreen({ navigation }) {
           />
 
           <ActionCard
+            icon="build"
+            title={t('home.techChanges.title') || 'Technical Changes'}
+            subtitle={t('home.techChanges.subtitle') || 'View technical modifications'}
+            color={COLORS.info || '#2196F3'}
+            onPress={() => navigation.navigate('TechChanges')}
+          />
+
+          <ActionCard
             icon="bar-chart"
-            title={t('home.statistics.title')}
+            title={t('statistics')}
             subtitle={t('home.statistics.subtitle')}
             color={COLORS.primaryDark}
             onPress={() => navigation.navigate('Statistics')}
           />
         </View>
-
-        {/* Logout Button */}
-        <TouchableOpacity
-          style={styles.logoutButton}
-          onPress={() => navigation.replace('Login')}
-          activeOpacity={0.8}
-        >
-          <Icon name="logout" size={20} color={COLORS.error} />
-          <Text style={styles.logoutText}>{t('home.logout')}</Text>
-        </TouchableOpacity>
 
         <View style={styles.footer}>
           <Text style={styles.footerText}>© 2025 Baubrett Tracker</Text>
@@ -388,27 +386,6 @@ const styles = StyleSheet.create({
     color: COLORS.white,
     fontSize: 10,
     fontWeight: '700',
-  },
-
-  // Logout Button
-  logoutButton: {
-    backgroundColor: COLORS.surface,
-    borderRadius: RADIUS.md,
-    padding: 16,
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
-    marginHorizontal: 16,
-    marginTop: 32,
-    borderWidth: 1.5,
-    borderColor: COLORS.error + '40',
-    ...SHADOW.small,
-  },
-  logoutText: {
-    fontSize: FONT_SIZES.button,
-    fontWeight: '600',
-    color: COLORS.error,
-    marginLeft: 10,
   },
 
   // Footer
