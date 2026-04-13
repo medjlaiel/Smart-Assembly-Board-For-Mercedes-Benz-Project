@@ -18,6 +18,7 @@ import ConsultScanScreen from '../screens/ConsultScanScreen';
 import ConsultResultScreen from '../screens/ConsultResultScreen';
 import HistoryScreen from '../screens/HistoryScreen';
 import SearchScreen from '../screens/SearchScreen';
+import HowToUseScreen from '../screens/HowToUseScreen';
 
 const Stack = createStackNavigator();
 
@@ -132,6 +133,14 @@ export default function AppNavigator() {
         component={HistoryScreen}
         options={{ 
           title: 'Location History',
+          cardStyleInterpolator: CardStyleInterpolators.forFadeFromBottomAndroid,
+        }}
+      />
+      <Stack.Screen
+        name="HowToUse"
+        component={HowToUseScreen}
+        options={{ 
+          title: 'How to Use',
           cardStyleInterpolator: CardStyleInterpolators.forFadeFromBottomAndroid,
         }}
       />
