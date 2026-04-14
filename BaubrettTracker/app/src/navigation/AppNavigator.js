@@ -22,6 +22,7 @@ import HowToUseScreen from '../screens/HowToUseScreen';
 import TechChangesScreen from '../screens/TechChangesScreen';
 import ChangePasswordScreen from '../screens/ChangePasswordScreen';
 import BaubrettListScreen from '../screens/BaubrettListScreen';
+import DatabaseScreen from '../screens/DatabaseScreen';
 
 const Stack = createStackNavigator();
 
@@ -168,6 +169,14 @@ export default function AppNavigator() {
         component={BaubrettListScreen}
         options={{ 
           title: 'All Baubretts',
+          cardStyleInterpolator: CardStyleInterpolators.forFadeFromBottomAndroid,
+        }}
+      />
+      <Stack.Screen
+        name="Database"
+        component={DatabaseScreen}
+        options={{ 
+          title: 'Database',
           cardStyleInterpolator: CardStyleInterpolators.forFadeFromBottomAndroid,
         }}
       />
