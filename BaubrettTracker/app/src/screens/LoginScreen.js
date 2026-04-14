@@ -77,12 +77,12 @@ export default function LoginScreen({ navigation }) {
 
    const handleSignIn = async () => {
      if (!validateForm()) return;
-  
+   
      setIsLoading(true);
-  
+   
      try {
        const result = await signInUser(email, password);
-  
+   
        if (result.success) {
          // Set current user in AuthContext
          login(result.user);
@@ -152,7 +152,7 @@ export default function LoginScreen({ navigation }) {
             onChangeText={setPassword}
             error={passwordError}
             placeholder={t('login.passwordPlaceholder')}
-            secureTextEntry={false} // We handle toggle internally via showSecureToggle
+            secureTextEntry={false}
             showSecureToggle={true}
             autoComplete="current-password"
             importantForAutofill="yes"
@@ -182,10 +182,10 @@ export default function LoginScreen({ navigation }) {
            <TouchableOpacity onPress={() => navigation.navigate('SignUp')}>
              <Text style={styles.footerLink}>{t('login.signUpLink')}</Text>
            </TouchableOpacity>
-         </View>
+          </View>
 
-         {/* Language Selector - Bottom */}
-         <LanguageSelector />
+          {/* Language Selector - Bottom */}
+          <LanguageSelector />
       </ScrollView>
     </KeyboardAvoidingView>
   );
@@ -208,7 +208,7 @@ const styles = StyleSheet.create({
     left: -50,
     right: -50,
     height: 200,
-    backgroundColor: COLORS.primary + '0D', // 8% opacity (0x0D / 0xFF ≈ 5%, using 0D for subtle)
+    backgroundColor: COLORS.primary + '0D',
     borderBottomLeftRadius: 100,
     borderBottomRightRadius: 100,
   },

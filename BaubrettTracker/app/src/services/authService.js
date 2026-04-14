@@ -135,10 +135,16 @@ export async function signIn(email, password) {
  */
 export async function changePassword(userId, currentPassword, newPassword) {
   try {
+    console.log('changePassword called for userId:', userId); // Debug log
+    
     const users = await getUsers();
+    console.log('Retrieved users, searching for userId:', userId); // Debug log
+    
     const userIndex = users.findIndex(u => u.id === userId);
+    console.log('User found at index:', userIndex); // Debug log
 
     if (userIndex === -1) {
+      console.warn('User not found:', userId); // Debug log
       return {
         success: false,
         message: i18n.t('drawer.userNotFound', 'User not found')
@@ -146,9 +152,11 @@ export async function changePassword(userId, currentPassword, newPassword) {
     }
 
     const user = users[userIndex];
+    console.log('Verifying current password'); // Debug log
 
     // Verify current password
     if (user.password !== currentPassword) {
+      console.warn('Current password incorrect'); // Debug log
       return {
         success: false,
         message: i18n.t('drawer.incorrectPassword', 'Current password is incorrect')
@@ -156,8 +164,10 @@ export async function changePassword(userId, currentPassword, newPassword) {
     }
 
     // Update password
+    console.log('Updating password for user'); // Debug log
     users[userIndex].password = newPassword;
     await saveUsers(users);
+    console.log('Password updated successfully'); // Debug log
 
     return {
       success: true,

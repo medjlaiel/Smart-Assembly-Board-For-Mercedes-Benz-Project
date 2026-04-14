@@ -24,16 +24,19 @@ export default function AuthInput({
   showSecureToggle = false,
   rightIcon,
   onRightIconPress,
-  secureTextEntry,
+  secureTextEntry = false,
   ...textInputProps
 }) {
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
   const [isFocused, setIsFocused] = useState(false);
 
-  const isSecure = showSecureToggle && !isPasswordVisible;
+  // Determine if text should be secure based on showSecureToggle and visibility
+  // If showSecureToggle is false, use the secureTextEntry prop value directly
+  const isSecure = showSecureToggle ? !isPasswordVisible : secureTextEntry;
 
   const handleTogglePassword = () => {
     setIsPasswordVisible(!isPasswordVisible);
+    console.log('Password visibility toggled to:', !isPasswordVisible);
   };
 
   const getIconColor = () => {
@@ -85,13 +88,16 @@ export default function AuthInput({
           <TouchableOpacity
             onPress={handleTogglePassword}
             style={styles.rightIconContainer}
+            activeOpacity={0.6}
+            accessible={true}
             accessibilityLabel={isPasswordVisible ? 'Hide password' : 'Show password'}
             accessibilityRole="button"
+            accessibilityState={{ disabled: false }}
           >
             <MaterialIcons
               name={isPasswordVisible ? 'visibility-off' : 'visibility'}
               size={20}
-              color={COLORS.text3}
+              color={COLORS.primary}
             />
           </TouchableOpacity>
         )}
@@ -149,6 +155,7 @@ const styles = StyleSheet.create({
     paddingVertical: 14,
     paddingHorizontal: 12,
     backgroundColor: 'transparent',
+    minHeight: 48,
   },
   inputWithIcon: {
     paddingLeft: 0,
@@ -159,6 +166,10 @@ const styles = StyleSheet.create({
   rightIconContainer: {
     padding: 12,
     marginRight: 4,
+    minWidth: 44,
+    minHeight: 44,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   errorText: {
     fontSize: 12,

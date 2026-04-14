@@ -19,9 +19,6 @@ import { useTranslation } from 'react-i18next';
 import { COLORS, RADIUS, SHADOW, FONT_SIZES } from '../assets/theme';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import { useAuth } from '../contexts/AuthContext';
-import AuthInput from './AuthInput';
-import PasswordStrengthBar from './PasswordStrengthBar';
-import { changePassword } from '../services/authService';
 
 const { width: SCREEN_WIDTH } = Dimensions.get('window');
 const DRAWER_WIDTH = 320;
@@ -36,14 +33,6 @@ export default function DrawerMenu({ visible, onClose, navigation }) {
 
   // About sub-items expansion state
   const [expandedAboutItem, setExpandedAboutItem] = useState(null);
-
-  // Change Password Modal state
-  const [showChangePasswordModal, setShowChangePasswordModal] = useState(false);
-  const [currentPassword, setCurrentPassword] = useState('');
-  const [newPassword, setNewPassword] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
-  const [passwordError, setPasswordError] = useState('');
-  const [isChangingPassword, setIsChangingPassword] = useState(false);
 
   // Animate drawer in/out
   useEffect(() => {
@@ -62,11 +51,6 @@ export default function DrawerMenu({ visible, onClose, navigation }) {
       // Reset states when closing
       setExpandedSection(null);
       setExpandedAboutItem(null);
-      setShowChangePasswordModal(false);
-      setCurrentPassword('');
-      setNewPassword('');
-      setConfirmPassword('');
-      setPasswordError('');
     }
   }, [visible]);
 
@@ -116,46 +100,9 @@ export default function DrawerMenu({ visible, onClose, navigation }) {
     );
   };
 
-  const handleChangePassword = async () => {
-    setPasswordError('');
-
-    // Validate
-    if (!currentPassword) {
-      setPasswordError(t('drawer.currentPasswordRequired', 'Current password is required'));
-      return;
-    }
-    if (!newPassword) {
-      setPasswordError(t('drawer.newPasswordRequired', 'New password is required'));
-      return;
-    }
-    if (newPassword.length < 8) {
-      setPasswordError(t('drawer.passwordMinLength', 'Password must be at least 8 characters'));
-      return;
-    }
-    if (newPassword !== confirmPassword) {
-      setPasswordError(t('drawer.passwordsDoNotMatch', 'Passwords do not match'));
-      return;
-    }
-
-    setIsChangingPassword(true);
-
-    try {
-      const result = await changePassword(currentUser.id, currentPassword, newPassword);
-      if (result.success) {
-        Alert.alert(t('common.success'), t('drawer.passwordChangedSuccess', 'Password changed successfully'), [
-          { text: t('common.ok'), onPress: () => setShowChangePasswordModal(false) },
-        ]);
-        setCurrentPassword('');
-        setNewPassword('');
-        setConfirmPassword('');
-      } else {
-        setPasswordError(result.message || t('drawer.passwordChangeFailed', 'Failed to change password'));
-      }
-    } catch (error) {
-      setPasswordError(t('drawer.passwordChangeError', 'An error occurred'));
-    } finally {
-      setIsChangingPassword(false);
-    }
+  const handleChangePassword = () => {
+    onClose(); // Close drawer
+    navigation.navigate('ChangePassword');
   };
 
   return (
@@ -217,7 +164,7 @@ export default function DrawerMenu({ visible, onClose, navigation }) {
                       <Text style={styles.userId}>ID: {currentUser?.id || ''}</Text>
                     </View>
                   </View>
-                  <TouchableOpacity style={styles.changePasswordBtn} onPress={() => setShowChangePasswordModal(true)}>
+                  <TouchableOpacity style={styles.changePasswordBtn} onPress={handleChangePassword} activeOpacity={0.7}>
                     <Icon name="lock" size={18} color={COLORS.primary} />
                     <Text style={styles.changePasswordText}>{t('drawer.changePassword', 'Change Password')}</Text>
                   </TouchableOpacity>
@@ -308,68 +255,6 @@ export default function DrawerMenu({ visible, onClose, navigation }) {
               </TouchableOpacity>
             </View>
           </ScrollView>
-
-          {/* Change Password Modal */}
-          {showChangePasswordModal && (
-            <View style={styles.modalOverlay}>
-              <View style={styles.modalContent}>
-                <View style={styles.modalHeader}>
-                  <Text style={styles.modalTitle}>{t('drawer.changePassword', 'Change Password')}</Text>
-                  <TouchableOpacity onPress={() => setShowChangePasswordModal(false)}>
-                    <Icon name="close" size={24} color={COLORS.text} />
-                  </TouchableOpacity>
-                </View>
-
-                <ScrollView style={styles.modalBody} showsVerticalScrollIndicator={false}>
-                  <AuthInput
-                    label={t('drawer.currentPassword', 'Current Password')}
-                    iconName="lock"
-                    placeholder={t('drawer.enterCurrentPassword', 'Enter current password')}
-                    value={currentPassword}
-                    onChangeText={setCurrentPassword}
-                    showSecureToggle
-                    secureTextEntry
-                  />
-
-                  <AuthInput
-                    label={t('drawer.newPassword', 'New Password')}
-                    iconName="lock-outline"
-                    placeholder={t('drawer.enterNewPassword', 'Enter new password')}
-                    value={newPassword}
-                    onChangeText={setNewPassword}
-                    showSecureToggle
-                    secureTextEntry
-                  />
-
-                  <PasswordStrengthBar password={newPassword} />
-
-                  <AuthInput
-                    label={t('drawer.confirmPassword', 'Confirm New Password')}
-                    iconName="check-circle-outline"
-                    placeholder={t('drawer.confirmNewPassword', 'Confirm new password')}
-                    value={confirmPassword}
-                    onChangeText={setConfirmPassword}
-                    showSecureToggle
-                    secureTextEntry
-                  />
-
-                  {passwordError ? (
-                    <Text style={styles.errorText}>{passwordError}</Text>
-                  ) : null}
-
-                  <TouchableOpacity
-                    style={[styles.submitButton, isChangingPassword && styles.submitButtonDisabled]}
-                    onPress={handleChangePassword}
-                    disabled={isChangingPassword}
-                  >
-                    <Text style={styles.submitButtonText}>
-                      {isChangingPassword ? t('common.loading') : t('drawer.savePassword', 'Save Password')}
-                    </Text>
-                  </TouchableOpacity>
-                </ScrollView>
-              </View>
-            </View>
-          )}
         </Animated.View>
       </KeyboardAvoidingView>
     </Animated.View>
@@ -569,68 +454,5 @@ const styles = StyleSheet.create({
     fontWeight: '600',
     color: COLORS.error,
     marginLeft: 10,
-  },
-
-  // Change Password Modal
-  modalOverlay: {
-    position: 'absolute',
-    top: 0,
-    left: 0,
-    right: 0,
-    bottom: 0,
-    backgroundColor: 'rgba(0,0,0,0.6)',
-    justifyContent: 'center',
-    alignItems: 'center',
-    zIndex: 2000,
-  },
-  modalContent: {
-    width: '90%',
-    maxWidth: 400,
-    maxHeight: '90%',
-    backgroundColor: COLORS.surface,
-    borderRadius: RADIUS.xl,
-    ...SHADOW.large,
-    overflow: 'hidden',
-  },
-  modalHeader: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    paddingHorizontal: 24,
-    paddingVertical: 20,
-    borderBottomWidth: 1,
-    borderBottomColor: COLORS.border,
-  },
-  modalTitle: {
-    fontSize: 18,
-    fontWeight: '700',
-    color: COLORS.text,
-  },
-  modalBody: {
-    padding: 20,
-    maxHeight: 500,
-  },
-  errorText: {
-    fontSize: 12,
-    color: COLORS.error,
-    marginTop: 8,
-    marginBottom: 12,
-    marginLeft: 4,
-  },
-  submitButton: {
-    backgroundColor: COLORS.primary,
-    borderRadius: RADIUS.lg,
-    paddingVertical: 16,
-    alignItems: 'center',
-    marginTop: 16,
-    ...SHADOW.medium,
-  },
-  submitButtonDisabled: {
-    backgroundColor: COLORS.text3,
-  },
-  submitButtonText: {
-    color: COLORS.white,
-    fontSize: 16,
-    fontWeight: '700',
   },
 });
