@@ -1,6 +1,6 @@
 /**
  * DrawerMenu.js
- * Left side drawer with accordion/expandable sections: Profile, About, Logout
+ * Left side drawer with accordion/expandable sections: Profile, Baubrett, About, Logout
  */
 import React, { useEffect, useState } from 'react';
 import {
@@ -105,6 +105,11 @@ export default function DrawerMenu({ visible, onClose, navigation }) {
     navigation.navigate('ChangePassword');
   };
 
+  const handleBaubrettList = () => {
+    onClose(); // Close drawer
+    navigation.navigate('BaubrettList');
+  };
+
   return (
     <Animated.View
       style={[
@@ -170,6 +175,18 @@ export default function DrawerMenu({ visible, onClose, navigation }) {
                   </TouchableOpacity>
                 </View>
               )}
+            </View>
+
+            {/* ── BAUBRETT SECTION ─────────────────────────────────── */}
+            <View style={styles.sectionContainer}>
+              <TouchableOpacity
+                style={styles.sectionHeader}
+                onPress={handleBaubrettList}
+                activeOpacity={0.7}
+              >
+                <Text style={styles.sectionTitle}>Baubrett</Text>
+                <Icon name="chevron-right" size={20} color={COLORS.text3} />
+              </TouchableOpacity>
             </View>
 
             {/* ── ABOUT SECTION ────────────────────────────────────── */}
