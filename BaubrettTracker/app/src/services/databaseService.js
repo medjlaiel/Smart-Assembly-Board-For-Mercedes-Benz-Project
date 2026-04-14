@@ -3,10 +3,11 @@
  * Service to read and display the static MyDataBase.xlsx file contents.
  */
 import * as FileSystem from 'expo-file-system/legacy';
+import { Asset } from 'expo-asset';
 import XLSX from 'xlsx';
 
 // Path to the database Excel file in assets
-const DATABASE_FILE = require('../assets/MyDataBase.xlsx');
+const DATABASE_ASSET = require('../assets/MyDataBase.xlsx');
 
 /**
  * Load the MyDataBase.xlsx file and return its content as JSON array
@@ -14,8 +15,18 @@ const DATABASE_FILE = require('../assets/MyDataBase.xlsx');
  */
 export async function loadDatabaseRecords() {
   try {
+    // Load the asset using expo-asset
+    const asset = Asset.fromModule(DATABASE_ASSET);
+    await asset.downloadAsync();
+    
+    // Get the local URI of the asset
+    const assetUri = asset.localUri || asset.uri;
+    if (!assetUri) {
+      throw new Error('Failed to get asset URI');
+    }
+    
     // Read the file as base64
-    const base64 = await FileSystem.readAsStringAsync(DATABASE_FILE, {
+    const base64 = await FileSystem.readAsStringAsync(assetUri, {
       encoding: FileSystem.EncodingType.Base64,
     });
     
@@ -37,7 +48,18 @@ export async function loadDatabaseRecords() {
  */
 export async function getDatabaseHeaders() {
   try {
-    const base64 = await FileSystem.readAsStringAsync(DATABASE_FILE, {
+    // Load the asset using expo-asset
+    const asset = Asset.fromModule(DATABASE_ASSET);
+    await asset.downloadAsync();
+    
+    // Get the local URI of the asset
+    const assetUri = asset.localUri || asset.uri;
+    if (!assetUri) {
+      throw new Error('Failed to get asset URI');
+    }
+    
+    // Read the file as base64
+    const base64 = await FileSystem.readAsStringAsync(assetUri, {
       encoding: FileSystem.EncodingType.Base64,
     });
     const workbook = XLSX.read(base64, { type: 'base64' });
