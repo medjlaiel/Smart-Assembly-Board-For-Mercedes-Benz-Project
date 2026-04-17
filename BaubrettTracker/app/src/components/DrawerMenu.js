@@ -115,6 +115,11 @@ export default function DrawerMenu({ visible, onClose, navigation }) {
     navigation.navigate('Database');
   };
 
+  const handleAdminDashboard = () => {
+    onClose(); // Close drawer
+    navigation.navigate('AdminDashboard');
+  };
+
   return (
     <Animated.View
       style={[
@@ -205,6 +210,21 @@ export default function DrawerMenu({ visible, onClose, navigation }) {
                 <Icon name="storage" size={20} color={COLORS.text3} />
               </TouchableOpacity>
             </View>
+
+            {/* ── ADMIN DASHBOARD SECTION (ADMIN ONLY) ─────────────── */}
+            {currentUser?.role === 'admin' && (
+              <View style={styles.sectionContainer}>
+                <TouchableOpacity
+                  style={[styles.sectionHeader, styles.adminSection]}
+                  onPress={handleAdminDashboard}
+                  activeOpacity={0.7}
+                >
+                  <Icon name="admin-panel-settings" size={20} color={COLORS.primary} />
+                  <Text style={[styles.sectionTitle, styles.adminSectionTitle]}>Admin Dashboard</Text>
+                  <Icon name="chevron-right" size={20} color={COLORS.primary} />
+                </TouchableOpacity>
+              </View>
+            )}
 
             {/* ── ABOUT SECTION ────────────────────────────────────── */}
             <View style={styles.sectionContainer}>
@@ -488,5 +508,17 @@ const styles = StyleSheet.create({
     fontWeight: '600',
     color: COLORS.error,
     marginLeft: 10,
+  },
+  // Admin section styles
+  adminSection: {
+    backgroundColor: COLORS.primary + '10',
+    borderLeftWidth: 4,
+    borderLeftColor: COLORS.primary,
+    gap: 12,
+  },
+  adminSectionTitle: {
+    color: COLORS.primary,
+    fontWeight: '700',
+    flex: 1,
   },
 });

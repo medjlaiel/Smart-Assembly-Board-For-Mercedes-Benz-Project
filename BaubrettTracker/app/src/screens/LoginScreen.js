@@ -114,11 +114,7 @@ export default function LoginScreen({ navigation }) {
          Alert.alert(welcomeMessage, '', [
            {
              text: t('common.ok'),
-             onPress: () => {
-               // Navigate to Admin Dashboard if admin, Home if user
-               const destination = selectedRole === 'admin' ? 'AdminDashboard' : 'Home';
-               navigation.replace(destination);
-             },
+             onPress: () => navigation.replace('Home'),
            },
          ]);
        } else {
