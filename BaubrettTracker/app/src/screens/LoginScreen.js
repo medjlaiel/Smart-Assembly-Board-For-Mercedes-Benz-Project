@@ -224,13 +224,13 @@ export default function LoginScreen({ navigation }) {
           {/* Matricule Field - Only for Admin */}
           {selectedRole === 'admin' && (
             <AuthInput
-              label="Enter the matricule"
+              label="Matricule"
               iconName="id-card"
               iconType="ionic"
               value={matricule}
               onChangeText={setMatricule}
               error={matriculeError}
-              placeholder="04048347"
+              placeholder="Enter the matricule"
               autoCapitalize="none"
               autoComplete="off"
             />
