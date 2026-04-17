@@ -86,21 +86,40 @@ export default function AdminDashboard({ navigation }) {
       }));
     }
 
-    // For other categories, collect unique values
+    if (activeCategory === 'fp_no') {
+      // For FP-NO, extract each value from arrays as individual entries
+      const fpNoSet = new Set();
+      allProducts.forEach(product => {
+        if (product.FP_NO && Array.isArray(product.FP_NO)) {
+          product.FP_NO.forEach(fp => {
+            fpNoSet.add(String(fp).trim());
+          });
+        }
+      });
+      return Array.from(fpNoSet).map((fpNo, idx) => ({
+        id: `fpno_${idx}`,
+        FP_NO: fpNo,
+        name: fpNo,
+        sourceCount: allProducts.filter(p => 
+          p.FP_NO && Array.isArray(p.FP_NO) && 
+          p.FP_NO.some(fp => String(fp).trim() === fpNo)
+        ).length,
+      }));
+    }
+
+    // For BB_Nb and SOM, collect unique values
     const productMap = new Map();
     allProducts.forEach(product => {
-      let value = product[key];
+      const value = product[key];
       
-      if (activeCategory === 'fp_no' && Array.isArray(value)) {
-        value.forEach(fp => {
-          if (!productMap.has(fp)) {
-            productMap.set(fp, { [key]: fp, BB_Nb: product.BB_Nb });
-          }
-        });
-      } else if (value) {
+      if (value) {
         const strValue = String(value).trim();
         if (!productMap.has(strValue)) {
-          productMap.set(strValue, { [key]: value, BB_Nb: product.BB_Nb });
+          productMap.set(strValue, { 
+            [key]: value, 
+            BB_Nb: product.BB_Nb,
+            id: `${activeCategory}_${strValue}`,
+          });
         }
       }
     });
@@ -148,15 +167,42 @@ export default function AdminDashboard({ navigation }) {
       return;
     }
 
+    let productToSave = { ...formData };
+
+    // For FP_NO tab, extract the single value from form
+    if (activeCategory === 'fp_no') {
+      if (!productToSave.FP_NO || !productToSave.FP_NO.trim()) {
+        Alert.alert('Error', 'FP_NO is required');
+        return;
+      }
+      // Keep FP_NO as string for single entry, will be added to products array
+    } else if (activeCategory === 'accessories') {
+      // Handle accessories array (comma-separated input)
+      if (productToSave.Accessories && typeof productToSave.Accessories === 'string') {
+        productToSave.Accessories = productToSave.Accessories
+          .split(',')
+          .map(acc => acc.trim())
+          .filter(acc => acc.length > 0);
+      }
+    } else if (activeCategory === 'fp_no_full') {
+      // Handle FP_NO array (comma-separated input for BB_Nb)
+      if (productToSave.FP_NO && typeof productToSave.FP_NO === 'string') {
+        productToSave.FP_NO = productToSave.FP_NO
+          .split(',')
+          .map(fp => fp.trim())
+          .filter(fp => fp.length > 0);
+      }
+    }
+
     if (editingProduct) {
       // Update existing
       const updatedProducts = allProducts.map(p =>
-        p.BB_Nb === editingProduct.BB_Nb ? { ...p, ...formData } : p
+        p.BB_Nb === editingProduct.BB_Nb ? { ...p, ...productToSave } : p
       );
       setAllProducts(updatedProducts);
     } else {
-      // Add new
-      setAllProducts([...allProducts, { ...formData }]);
+      // For new products, just add them
+      setAllProducts([...allProducts, productToSave]);
     }
 
     setShowModal(false);
@@ -251,7 +297,7 @@ export default function AdminDashboard({ navigation }) {
               <View key={item.id || `product_${idx}`} style={styles.productRow}>
                 <View style={styles.productInfo}>
                   <Text style={styles.productName}>
-                    {item.BB_Nb || item.SOM || item.FP_NO || item.name}
+                    {activeCategory === 'fp_no' ? item.FP_NO : (item.BB_Nb || item.SOM || item.name)}
                   </Text>
                   {item.sourceCount && (
                     <Text style={styles.productMeta}>
