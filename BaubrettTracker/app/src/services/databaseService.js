@@ -50,3 +50,17 @@ export async function getDatabaseHeaders() {
 export function getAll() {
   return databaseJSON || [];
 }
+
+/**
+ * Get a Baubrett record by its BB_Nb (exact match)
+ * @param {string} bbNb - The Baubrett number to search for
+ * @returns {Object|undefined} The matching record, or undefined if not found
+ */
+export function getBaubrettByNumber(bbNb) {
+  if (!databaseJSON || !bbNb) {
+    return undefined;
+  }
+  
+  const trimmedBbNb = String(bbNb).trim();
+  return databaseJSON.find((record) => String(record.BB_Nb).trim() === trimmedBbNb);
+}
