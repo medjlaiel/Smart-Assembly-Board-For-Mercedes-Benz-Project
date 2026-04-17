@@ -300,9 +300,6 @@ export default function AdminDashboard({ navigation }) {
                     {activeCategory === 'fp_no' ? item.FP_NO : 
                      activeCategory === 'som' ? item.SOM : 
                      activeCategory === 'accessories' ? item.name : 
-                     item.BB_Nb
-                     activeCategory === 'som' ? item.SOM : 
-                     activeCategory === 'accessories' ? item.name : 
                      item.BB_Nb}
                   </Text>
                   {item.sourceCount && (
