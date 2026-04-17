@@ -297,7 +297,13 @@ export default function AdminDashboard({ navigation }) {
               <View key={item.id || `product_${idx}`} style={styles.productRow}>
                 <View style={styles.productInfo}>
                   <Text style={styles.productName}>
-                    {activeCategory === 'fp_no' ? item.FP_NO : (item.BB_Nb || item.SOM || item.name)}
+                    {activeCategory === 'fp_no' ? item.FP_NO : 
+                     activeCategory === 'som' ? item.SOM : 
+                     activeCategory === 'accessories' ? item.name : 
+                     item.BB_Nb
+                     activeCategory === 'som' ? item.SOM : 
+                     activeCategory === 'accessories' ? item.name : 
+                     item.BB_Nb}
                   </Text>
                   {item.sourceCount && (
                     <Text style={styles.productMeta}>
