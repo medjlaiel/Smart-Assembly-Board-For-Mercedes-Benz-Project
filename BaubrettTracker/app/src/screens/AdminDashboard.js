@@ -30,7 +30,7 @@ const CATEGORIES = [
 
 export default function AdminDashboard({ navigation }) {
   const { t } = useTranslation();
-  const { logout, currentUser } = useAuth();
+  const { currentUser } = useAuth();
   const [activeCategory, setActiveCategory] = useState('bb_nb');
   const [allProducts, setAllProducts] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -209,35 +209,14 @@ export default function AdminDashboard({ navigation }) {
     Alert.alert('Success', editingProduct ? 'Product updated' : 'Product added');
   };
 
-  const handleLogout = () => {
-    Alert.alert(
-      'Logout',
-      'Are you sure you want to logout?',
-      [
-        { text: 'Cancel', onPress: () => {}, style: 'cancel' },
-        {
-          text: 'Logout',
-          onPress: async () => {
-            await logout();
-            navigation.replace('Login');
-          },
-          style: 'destructive',
-        },
-      ]
-    );
-  };
-
   const categoryProducts = getProductsForCategory();
   const currentCategory = CATEGORIES.find(c => c.id === activeCategory);
 
   return (
     <SafeAreaView style={styles.container} edges={['right', 'bottom', 'left']}>
-      {/* Header with Logout */}
+      {/* Header */}
       <View style={styles.header}>
         <Text style={styles.headerTitle}>Admin Dashboard</Text>
-        <TouchableOpacity onPress={handleLogout} style={styles.logoutButton}>
-          <Text style={styles.logoutButtonText}>Logout</Text>
-        </TouchableOpacity>
       </View>
 
       {/* Category Tabs */}
@@ -439,17 +418,7 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     color: COLORS.white,
   },
-  logoutButton: {
-    backgroundColor: COLORS.white,
-    paddingHorizontal: 16,
-    paddingVertical: 8,
-    borderRadius: RADIUS.md,
-  },
-  logoutButtonText: {
-    color: COLORS.primary,
-    fontWeight: '600',
-    fontSize: FONT_SIZES.label,
-  },
+
   tabsContainer: {
     backgroundColor: COLORS.white,
     borderBottomWidth: 1,
