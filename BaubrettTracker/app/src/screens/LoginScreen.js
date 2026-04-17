@@ -102,13 +102,23 @@ export default function LoginScreen({ navigation }) {
        const result = await signInUser(email, password);
    
        if (result.success) {
+         // Add role to user object
+         const userWithRole = {
+           ...result.user,
+           role: selectedRole,
+         };
+         
          // Set current user in AuthContext
-         login(result.user);
+         login(userWithRole);
          const welcomeMessage = `${t('auth.welcome')} ${result.user.fullName}`;
          Alert.alert(welcomeMessage, '', [
            {
              text: t('common.ok'),
-             onPress: () => navigation.replace('Home'),
+             onPress: () => {
+               // Navigate to Admin Dashboard if admin, Home if user
+               const destination = selectedRole === 'admin' ? 'AdminDashboard' : 'Home';
+               navigation.replace(destination);
+             },
            },
          ]);
        } else {

@@ -9,6 +9,7 @@ import { COLORS } from '../assets/theme';
 
 import LoginScreen from '../screens/LoginScreen';
 import SignUpScreen from '../screens/SignUpScreen';
+import AdminDashboard from '../screens/AdminDashboard';
 import HomeScreen from '../screens/HomeScreen';
 import StatisticsScreen from '../screens/StatisticsScreen';
 import SaveScanBaubrettScreen from '../screens/SaveScanBaubrettScreen';
@@ -75,6 +76,14 @@ export default function AppNavigator() {
             </TouchableOpacity>
           ),
         })}
+      />
+      <Stack.Screen
+        name="AdminDashboard"
+        component={AdminDashboard}
+        options={{ 
+          headerShown: false,
+          cardStyleInterpolator: CardStyleInterpolators.forFadeFromBottomAndroid,
+        }}
       />
       <Stack.Screen
         name="Statistics"
