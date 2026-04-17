@@ -46,6 +46,9 @@ export default function LoginScreen({ navigation }) {
   const [emailError, setEmailError] = useState('');
   const [passwordError, setPasswordError] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+  const [selectedRole, setSelectedRole] = useState('user'); // 'user' or 'admin'
+  const [matricule, setMatricule] = useState('');
+  const [matriculeError, setMatriculeError] = useState('');
 
   const validateForm = () => {
     let valid = true;
@@ -70,6 +73,21 @@ export default function LoginScreen({ navigation }) {
       valid = false;
     } else {
       setPasswordError('');
+    }
+
+    // Matricule validation for admin role
+    if (selectedRole === 'admin') {
+      if (!matricule.trim()) {
+        setMatriculeError('Matricule is required for admin login');
+        valid = false;
+      } else if (matricule.trim() !== '04048347') {
+        setMatriculeError('Invalid matricule.');
+        valid = false;
+      } else {
+        setMatriculeError('');
+      }
+    } else {
+      setMatriculeError('');
     }
 
     return valid;
@@ -107,6 +125,12 @@ export default function LoginScreen({ navigation }) {
     Alert.alert('Forgot Password', 'Password reset functionality would go here');
   };
 
+  const handleRoleSwitch = (role) => {
+    setSelectedRole(role);
+    setMatricule(''); // Clear matricule when switching roles
+    setMatriculeError(''); // Clear error
+  };
+
   return (
     <KeyboardAvoidingView
       style={styles.container}
@@ -126,6 +150,45 @@ export default function LoginScreen({ navigation }) {
         <View style={styles.header}>
           <Text style={styles.title}>{t('login.title')}</Text>
           <Text style={styles.subtitle}>{t('login.subtitle')}</Text>
+        </View>
+
+        {/* Role Selector */}
+        <View style={styles.roleSelector}>
+          <TouchableOpacity
+            style={[
+              styles.roleButton,
+              selectedRole === 'user' && styles.roleButtonActive,
+            ]}
+            onPress={() => handleRoleSwitch('user')}
+            activeOpacity={0.7}
+          >
+            <Text
+              style={[
+                styles.roleButtonText,
+                selectedRole === 'user' && styles.roleButtonTextActive,
+              ]}
+            >
+              User
+            </Text>
+          </TouchableOpacity>
+
+          <TouchableOpacity
+            style={[
+              styles.roleButton,
+              selectedRole === 'admin' && styles.roleButtonActive,
+            ]}
+            onPress={() => handleRoleSwitch('admin')}
+            activeOpacity={0.7}
+          >
+            <Text
+              style={[
+                styles.roleButtonText,
+                selectedRole === 'admin' && styles.roleButtonTextActive,
+              ]}
+            >
+              Admin
+            </Text>
+          </TouchableOpacity>
         </View>
 
         {/* Form */}
@@ -157,6 +220,21 @@ export default function LoginScreen({ navigation }) {
             autoComplete="current-password"
             importantForAutofill="yes"
           />
+
+          {/* Matricule Field - Only for Admin */}
+          {selectedRole === 'admin' && (
+            <AuthInput
+              label="Enter the matricule"
+              iconName="id-card"
+              iconType="ionic"
+              value={matricule}
+              onChangeText={setMatricule}
+              error={matriculeError}
+              placeholder="04048347"
+              autoCapitalize="none"
+              autoComplete="off"
+            />
+          )}
 
           <TouchableOpacity onPress={handleForgotPassword} style={styles.forgotPasswordButton}>
             <Text style={styles.forgotPasswordText}>{t('login.forgotPassword')}</Text>
@@ -245,6 +323,34 @@ const styles = StyleSheet.create({
     fontSize: FONT_SIZES.subtitle,
     color: COLORS.text2,
     textAlign: 'center',
+  },
+  roleSelector: {
+    flexDirection: 'row',
+    marginBottom: 32,
+    gap: 12,
+    justifyContent: 'center',
+  },
+  roleButton: {
+    flex: 1,
+    paddingVertical: 12,
+    paddingHorizontal: 24,
+    borderRadius: RADIUS.md,
+    borderWidth: 2,
+    borderColor: COLORS.text2,
+    backgroundColor: 'transparent',
+  },
+  roleButtonActive: {
+    backgroundColor: COLORS.primary,
+    borderColor: COLORS.primary,
+  },
+  roleButtonText: {
+    fontSize: FONT_SIZES.label,
+    fontWeight: '600',
+    color: COLORS.text2,
+    textAlign: 'center',
+  },
+  roleButtonTextActive: {
+    color: COLORS.white,
   },
   form: {
     marginBottom: 24,
