@@ -319,7 +319,7 @@ export default function AdminDashboard({ navigation }) {
         <View style={styles.modalOverlay}>
           <View style={styles.modalContent}>
             <Text style={styles.modalTitle}>
-              {editingProduct ? 'Edit Product' : 'Add New Product'}
+              {editingProduct ? `Edit ${CATEGORIES.find(c => c.id === activeCategory)?.label}` : `Add ${CATEGORIES.find(c => c.id === activeCategory)?.label}`}
             </Text>
 
             {/* Form Fields */}
