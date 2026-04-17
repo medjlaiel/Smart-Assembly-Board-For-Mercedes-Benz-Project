@@ -14,7 +14,6 @@ import {
   TextInput,
   Alert,
   ActivityIndicator,
-  FlatList,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useTranslation } from 'react-i18next';
@@ -222,7 +221,7 @@ export default function AdminDashboard({ navigation }) {
       </View>
 
       {/* Content */}
-      <View style={styles.content}>
+      <ScrollView style={styles.content} showsVerticalScrollIndicator={true}>
         {/* Add Button */}
         <View style={styles.actionBar}>
           <TouchableOpacity
@@ -236,22 +235,20 @@ export default function AdminDashboard({ navigation }) {
 
         {/* Products List */}
         {loading ? (
-          <ActivityIndicator
-            size="large"
-            color={COLORS.primary}
-            style={styles.loader}
-          />
+          <View style={styles.loaderContainer}>
+            <ActivityIndicator
+              size="large"
+              color={COLORS.primary}
+            />
+          </View>
         ) : categoryProducts.length === 0 ? (
           <View style={styles.emptyState}>
             <Text style={styles.emptyStateText}>No products found</Text>
           </View>
         ) : (
-          <FlatList
-            data={categoryProducts}
-            keyExtractor={(item, idx) => item.id || `${idx}`}
-            scrollEnabled={false}
-            renderItem={({ item }) => (
-              <View style={styles.productRow}>
+          <View>
+            {categoryProducts.map((item, idx) => (
+              <View key={item.id || `product_${idx}`} style={styles.productRow}>
                 <View style={styles.productInfo}>
                   <Text style={styles.productName}>
                     {item.BB_Nb || item.SOM || item.FP_NO || item.name}
@@ -279,10 +276,10 @@ export default function AdminDashboard({ navigation }) {
                   </TouchableOpacity>
                 </View>
               </View>
-            )}
-          />
+            ))}
+          </View>
         )}
-      </View>
+      </ScrollView>
 
       {/* Add/Edit Modal */}
       <Modal
@@ -449,9 +446,11 @@ const styles = StyleSheet.create({
     fontWeight: '600',
     fontSize: FONT_SIZES.label,
   },
-  loader: {
+  loaderContainer: {
     flex: 1,
     justifyContent: 'center',
+    alignItems: 'center',
+    paddingVertical: 40,
   },
   emptyState: {
     flex: 1,
@@ -534,7 +533,7 @@ const styles = StyleSheet.create({
     marginBottom: 16,
   },
   formScroll: {
-    maxHeight: 300,
+    maxHeight: 350,
   },
   formGroup: {
     marginBottom: 16,
