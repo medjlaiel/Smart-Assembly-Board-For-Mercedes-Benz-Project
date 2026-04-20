@@ -133,3 +133,64 @@ export async function exportTrackingFile() {
     UTI: 'com.microsoft.excel.xlsx',
   });
 }
+
+/**
+ * Delete a specific tracking entry.
+ * @param {object} entry - The entry to delete with BB_Nb, Zone, Date, Time
+ * @returns {boolean} true on success
+ */
+export async function deleteTrackingEntry(entry) {
+  try {
+    // Load existing data
+    const existing = await loadTrackingRecords();
+
+    // Filter out the entry to delete
+    const filtered = existing.filter(r =>
+      !(String(r.BB_Nb).trim() === String(entry.BB_Nb).trim() &&
+        String(r.Zone).trim() === String(entry.Zone).trim() &&
+        r.Date === entry.Date &&
+        r.Time === entry.Time)
+    );
+
+    if (filtered.length === existing.length) {
+      throw new Error('Entry not found');
+    }
+
+    // Build workbook with filtered data
+    const ws = XLSX.utils.json_to_sheet(filtered);
+
+    // Style header row — bold text, blue fill
+    const headerStyle = {
+      font: { bold: true, color: { rgb: 'FFFFFF' } },
+      fill: { fgColor: { rgb: '0A5FBF' } },
+      alignment: { horizontal: 'center' },
+    };
+    ['A1', 'B1', 'C1', 'D1', 'E1', 'F1'].forEach((cell) => {
+      if (ws[cell]) ws[cell].s = headerStyle;
+    });
+
+    // Set column widths
+    ws['!cols'] = [
+      { wch: 16 },  // BB_Nb
+      { wch: 18 },  // Zone
+      { wch: 14 },  // Date
+      { wch: 10 },  // Time
+      { wch: 20 },  // UserName
+      { wch: 25 }   // UserEmail
+    ];
+
+    const wb = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, ws, 'Tracking');
+
+    // Write as base64
+    const base64 = XLSX.write(wb, { type: 'base64', bookType: 'xlsx' });
+    await FileSystem.writeAsStringAsync(TRACKING_FILE, base64, {
+      encoding: FileSystem.EncodingType.Base64,
+    });
+
+    return true;
+  } catch (err) {
+    console.error('deleteTrackingEntry error:', err);
+    return false;
+  }
+}
