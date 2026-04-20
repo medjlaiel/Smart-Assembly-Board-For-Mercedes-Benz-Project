@@ -215,6 +215,13 @@ export default function HomeScreen({ navigation }) {
             color={COLORS.primaryDark}
             onPress={() => navigation.navigate('Statistics')}
           />
+
+          <ActionCard
+            icon="file-upload"
+            title="Upload XLSX"
+            color={COLORS.secondary || '#FF9800'}
+            onPress={() => navigation.navigate('UploadXlsx')}
+          />
         </View>
 
         <View style={styles.footer}>

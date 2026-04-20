@@ -22,7 +22,8 @@
         {
           "cameraPermission": "Allow Baubrett Tracker to access your camera to scan QR codes."
         }
-      ]
+      ],
+      "expo-font"
     ],
     "android": {
       "permissions": [

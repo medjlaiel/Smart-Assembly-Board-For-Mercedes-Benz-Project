@@ -17,6 +17,7 @@ import {
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useTranslation } from 'react-i18next';
+import Icon from '@expo/vector-icons/MaterialIcons';
 import { COLORS, FONT_SIZES, RADIUS, SHADOW } from '../assets/theme';
 import { getAll } from '../services/databaseService';
 import { useAuth } from '../contexts/AuthContext';
@@ -293,14 +294,14 @@ export default function AdminDashboard({ navigation }) {
                     onPress={() => handleEditProduct(item)}
                     activeOpacity={0.7}
                   >
-                    <Text style={styles.editBtnText}>✏️</Text>
+                    <Icon name="edit" size={20} color={COLORS.primary} />
                   </TouchableOpacity>
                   <TouchableOpacity
                     style={styles.deleteBtn}
                     onPress={() => handleDeleteProduct(item)}
                     activeOpacity={0.7}
                   >
-                    <Text style={styles.deleteBtnText}>🗑️</Text>
+                    <Icon name="delete" size={20} color={COLORS.error} />
                   </TouchableOpacity>
                 </View>
               </View>

@@ -24,6 +24,7 @@ import TechChangesScreen from '../screens/TechChangesScreen';
 import ChangePasswordScreen from '../screens/ChangePasswordScreen';
 import BaubrettListScreen from '../screens/BaubrettListScreen';
 import DatabaseScreen from '../screens/DatabaseScreen';
+import UploadXlsxScreen from '../screens/UploadXlsxScreen';
 
 const Stack = createStackNavigator();
 
@@ -186,6 +187,14 @@ export default function AppNavigator() {
         component={DatabaseScreen}
         options={{ 
           title: 'Database',
+          cardStyleInterpolator: CardStyleInterpolators.forFadeFromBottomAndroid,
+        }}
+      />
+      <Stack.Screen
+        name="UploadXlsx"
+        component={UploadXlsxScreen}
+        options={{ 
+          title: 'Upload XLSX',
           cardStyleInterpolator: CardStyleInterpolators.forFadeFromBottomAndroid,
         }}
       />

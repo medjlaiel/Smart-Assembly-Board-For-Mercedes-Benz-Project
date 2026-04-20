@@ -19,10 +19,6 @@ import { useTranslation } from 'react-i18next';
 import { COLORS, RADIUS, SHADOW, FONT_SIZES } from '../assets/theme';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import { useAuth } from '../contexts/AuthContext';
-import * as Sharing from 'expo-sharing';
-import * as FileSystem from 'expo-file-system/legacy';
-import XLSX from 'xlsx';
-import { loadDatabaseRecords } from '../services/databaseService';
 
 const { width: SCREEN_WIDTH } = Dimensions.get('window');
 const DRAWER_WIDTH = 320;
@@ -114,59 +110,9 @@ export default function DrawerMenu({ visible, onClose, navigation }) {
     navigation.navigate('BaubrettList');
   };
 
-  const handleDatabase = async () => {
+  const handleDatabase = () => {
     onClose(); // Close drawer
-    try {
-      // Load database records
-      const records = await loadDatabaseRecords();
-      
-      // Create XLSX workbook from the data
-      const ws = XLSX.utils.json_to_sheet(records);
-      
-      // Style header row — bold text, blue fill
-      const headerStyle = {
-        font: { bold: true, color: { rgb: 'FFFFFF' } },
-        fill: { fgColor: { rgb: '0A5FBF' } },
-        alignment: { horizontal: 'center' },
-      };
-      
-      // Get headers from the first record
-      if (records.length > 0) {
-        const headers = Object.keys(records[0]);
-        headers.forEach((header, index) => {
-          const cellRef = XLSX.utils.encode_cell({ r: 0, c: index });
-          if (ws[cellRef]) ws[cellRef].s = headerStyle;
-        });
-        
-        // Set column widths
-        ws['!cols'] = headers.map(header => ({ wch: Math.max(16, header.length * 1.2) }));
-      }
-
-      const wb = XLSX.utils.book_new();
-      XLSX.utils.book_append_sheet(wb, ws, 'Database');
-
-      // Write as base64
-      const base64 = XLSX.write(wb, { type: 'base64', bookType: 'xlsx' });
-      
-      // Save to document directory
-      const fileUri = FileSystem.documentDirectory + 'MyDataBase.xlsx';
-      await FileSystem.writeAsStringAsync(fileUri, base64, {
-        encoding: FileSystem.EncodingType.Base64,
-      });
-
-      // Share the file
-      const canShare = await Sharing.isAvailableAsync();
-      if (!canShare) {
-        Alert.alert(t('common.error'), 'Sharing is not available on this device.');
-        return;
-      }
-      await Sharing.shareAsync(fileUri, {
-        mimeType: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
-        dialogTitle: 'Open Database',
-      });
-    } catch (err) {
-      Alert.alert(t('common.error'), err.message);
-    }
+    navigation.navigate('Database');
   };
 
   const handleAdminDashboard = () => {
