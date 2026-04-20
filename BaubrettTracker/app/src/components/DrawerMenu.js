@@ -19,6 +19,9 @@ import { useTranslation } from 'react-i18next';
 import { COLORS, RADIUS, SHADOW, FONT_SIZES } from '../assets/theme';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import { useAuth } from '../contexts/AuthContext';
+import * as Sharing from 'expo-sharing';
+import * as FileSystem from 'expo-file-system';
+import { Asset } from 'expo-asset';
 
 const { width: SCREEN_WIDTH } = Dimensions.get('window');
 const DRAWER_WIDTH = 320;
@@ -110,9 +113,25 @@ export default function DrawerMenu({ visible, onClose, navigation }) {
     navigation.navigate('BaubrettList');
   };
 
-  const handleDatabase = () => {
+  const handleDatabase = async () => {
     onClose(); // Close drawer
-    navigation.navigate('Database');
+    try {
+      // Load the database asset
+      const asset = Asset.fromModule(require('../assets/MyDataBase.xlsx'));
+      await asset.downloadAsync();
+      
+      const canShare = await Sharing.isAvailableAsync();
+      if (!canShare) {
+        Alert.alert(t('common.error'), 'Sharing is not available on this device.');
+        return;
+      }
+      await Sharing.shareAsync(asset.localUri || asset.uri, {
+        mimeType: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+        dialogTitle: 'Open Database',
+      });
+    } catch (err) {
+      Alert.alert(t('common.error'), err.message);
+    }
   };
 
   const handleAdminDashboard = () => {
