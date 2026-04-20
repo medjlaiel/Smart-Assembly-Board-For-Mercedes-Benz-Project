@@ -218,7 +218,7 @@ export default function HomeScreen({ navigation }) {
 
           <ActionCard
             icon="file-upload"
-            title="Upload XLSX"
+            title="Upload Documents"
             color={COLORS.secondary || '#FF9800'}
             onPress={() => navigation.navigate('UploadXlsx')}
           />

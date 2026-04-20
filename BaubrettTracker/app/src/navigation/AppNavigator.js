@@ -24,7 +24,7 @@ import TechChangesScreen from '../screens/TechChangesScreen';
 import ChangePasswordScreen from '../screens/ChangePasswordScreen';
 import BaubrettListScreen from '../screens/BaubrettListScreen';
 import DatabaseScreen from '../screens/DatabaseScreen';
-import UploadXlsxScreen from '../screens/UploadXlsxScreen';
+import UploadDocumentsScreen from '../screens/UploadDocumentsScreen';
 
 const Stack = createStackNavigator();
 
@@ -192,9 +192,9 @@ export default function AppNavigator() {
       />
       <Stack.Screen
         name="UploadXlsx"
-        component={UploadXlsxScreen}
+        component={UploadDocumentsScreen}
         options={{ 
-          title: 'Upload XLSX',
+          title: 'Upload Documents',
           cardStyleInterpolator: CardStyleInterpolators.forFadeFromBottomAndroid,
         }}
       />
