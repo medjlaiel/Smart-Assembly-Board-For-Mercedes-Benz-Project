@@ -226,7 +226,7 @@ export default function HistoryScreen({ route }) {
   );
 
   // ── Swipe actions ─────────────────────────────────────────────
-  const renderRightActions = (progress, dragX, item) => (
+  const renderRightActions = useCallback((progress, dragX, item) => (
     <View style={styles.swipeActions}>
       <RectButton
         style={[styles.swipeAction, styles.swipeActionDelete]}
@@ -236,10 +236,10 @@ export default function HistoryScreen({ route }) {
         <Text style={styles.swipeActionText}>{t('history.delete')}</Text>
       </RectButton>
     </View>
-  );
+  ), [handleDelete, t]);
 
   // ── Row renderer ─────────────────────────────────────────────
-  const renderItem = ({ item, index }) => (
+  const renderItem = useCallback(({ item, index }) => (
     <Swipeable
       renderRightActions={(progress, dragX) => renderRightActions(progress, dragX, item)}
       overshootRight={false}
@@ -261,7 +261,7 @@ export default function HistoryScreen({ route }) {
         </View>
       </TouchableOpacity>
     </Swipeable>
-  );
+  ), [renderRightActions]);
 
   return (
     <SafeAreaView style={styles.safe}>

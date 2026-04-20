@@ -2,7 +2,7 @@
  * DatabaseScreen.js
  * Displays all contents of MyDataBase.xlsx in a scrollable table format.
  */
-import React, { useEffect, useState, useMemo } from 'react';
+import React, { useEffect, useState, useMemo, useCallback } from 'react';
 import {
   View,
   Text,
@@ -79,7 +79,7 @@ export default function DatabaseScreen({ navigation }) {
   );
 
   // Render table row
-  const renderTableRow = ({ item, index }) => (
+  const renderTableRow = useCallback(({ item, index }) => (
     <View style={[styles.tableRow, index % 2 === 0 && styles.rowEven]}>
       <ScrollView horizontal showsHorizontalScrollIndicator={false}>
         <View style={styles.rowContent}>
@@ -99,13 +99,13 @@ export default function DatabaseScreen({ navigation }) {
         </View>
       </ScrollView>
     </View>
-  );
+  ), [headers, columnWidths]);
 
   // Key extractor - use index as key
-  const keyExtractor = (item, index) => `row-${index}-${item.BB_Nb || index}`;
+  const keyExtractor = useCallback((item, index) => `row-${index}-${item.BB_Nb || index}`, []);
 
   // Render empty state
-  const renderEmptyState = () => (
+  const renderEmptyState = useCallback(() => (
     <View style={styles.emptyContainer}>
       <Icon name="storage" size={64} color={COLORS.text3} />
       <Text style={styles.emptyTitle}>{t('database.emptyTitle', 'No Data')}</Text>
@@ -120,7 +120,7 @@ export default function DatabaseScreen({ navigation }) {
         </TouchableOpacity>
       )}
     </View>
-  );
+  ), [error, t, loadData]);
 
   return (
     <SafeAreaView style={styles.safe}>
