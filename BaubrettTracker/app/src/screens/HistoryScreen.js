@@ -21,11 +21,10 @@ import {
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useFocusEffect } from '@react-navigation/native';
 import { useTranslation } from 'react-i18next';
-import { loadTrackingRecords, exportTrackingFile } from '../services/trackingService';
+import { loadTrackingRecords, exportTrackingFile, deleteTrackingEntry } from '../services/trackingService';
 import { COLORS, RADIUS, SHADOW } from '../assets/theme';
 import Swipeable from 'react-native-gesture-handler/Swipeable';
 import { RectButton } from 'react-native-gesture-handler';
-import * as Sharing from 'expo-sharing';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import DateRangePicker from '../components/DateRangePicker';
 
@@ -156,32 +155,23 @@ export default function HistoryScreen({ route }) {
   const handleDelete = async (item) => {
     Alert.alert(
       t('history.confirmDelete'),
-      t('history.confirmDeleteMessage', { bb: item.BB_Nb, zone: item.Zone }),
+      t('history.confirmDelete'),
       [
         { text: t('common.cancel'), style: 'cancel' },
         {
-          text: t('common.delete'),
+          text: t('history.delete'),
           style: 'destructive',
           onPress: async () => {
-            // TODO: Implement actual delete functionality
-            // For now, just reload the list
-            await load();
+            const success = await deleteTrackingEntry(item);
+            if (success) {
+              await load();
+            } else {
+              Alert.alert(t('common.error'), 'Failed to delete entry');
+            }
           },
         },
       ]
     );
-  };
-
-  const handleShare = async (item) => {
-    try {
-      const shareMessage = `${t('history.baubrett')}: ${item.BB_Nb}\n${t('history.zone')}: ${item.Zone}\n${t('history.date')}: ${item.Date}\n${t('history.time')}: ${item.Time}`;
-      await Sharing.share({
-        message: shareMessage,
-        title: `${t('history.baubrett')} ${item.BB_Nb}`,
-      });
-    } catch (err) {
-      Alert.alert(t('common.error'), err.message);
-    }
   };
 
   const handleSelectSuggestion = (bb) => {
@@ -239,18 +229,11 @@ export default function HistoryScreen({ route }) {
   const renderRightActions = (progress, dragX, item) => (
     <View style={styles.swipeActions}>
       <RectButton
-        style={[styles.swipeAction, styles.swipeActionShare]}
-        onPress={() => handleShare(item)}
-      >
-        <Text style={styles.swipeActionIcon}>📤</Text>
-        <Text style={styles.swipeActionText}>{t('common.share')}</Text>
-      </RectButton>
-      <RectButton
         style={[styles.swipeAction, styles.swipeActionDelete]}
         onPress={() => handleDelete(item)}
       >
-        <Text style={styles.swipeActionIcon}>🗑️</Text>
-        <Text style={styles.swipeActionText}>{t('common.delete')}</Text>
+        <Icon name="delete" size={24} color={COLORS.white} />
+        <Text style={styles.swipeActionText}>{t('history.delete')}</Text>
       </RectButton>
     </View>
   );
@@ -286,7 +269,7 @@ export default function HistoryScreen({ route }) {
       {/* Search bar */}
       <View style={styles.searchContainer}>
         <View style={styles.searchInputRow}>
-          <Text style={styles.searchIcon}>🔍</Text>
+          <Icon name="search" size={16} color={COLORS.text3} />
           <TextInput
             style={styles.searchInput}
             placeholder={t('history.searchPlaceholder')}
@@ -303,7 +286,7 @@ export default function HistoryScreen({ route }) {
           />
           {searchQuery.length > 0 && (
             <TouchableOpacity style={styles.clearBtn} onPress={handleClearSearch}>
-              <Text style={styles.clearBtnText}>✕</Text>
+              <Icon name="close" size={14} color={COLORS.text2} />
             </TouchableOpacity>
           )}
         </View>
@@ -317,7 +300,7 @@ export default function HistoryScreen({ route }) {
                 style={styles.suggestionItem}
                 onPress={() => handleSelectSuggestion(bb)}
               >
-                <Text style={styles.suggestionIcon}>📦</Text>
+                <Icon name="inventory" size={14} color={COLORS.text3} />
                 <Text style={styles.suggestionText}>{bb}</Text>
                 <Text style={styles.suggestionArrow}>→</Text>
               </TouchableOpacity>
