@@ -11,7 +11,6 @@ import {
   TextInput,
   TouchableOpacity,
   Alert,
-  SafeAreaView,
   KeyboardAvoidingView,
   Platform,
 } from 'react-native';
