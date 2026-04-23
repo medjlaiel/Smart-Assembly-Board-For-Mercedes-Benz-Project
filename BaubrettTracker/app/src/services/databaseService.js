@@ -167,3 +167,26 @@ export function searchDatabaseFuzzy(query, limit = 10) {
   
   return suggestions.slice(0, limit);
 }
+
+/**
+ * Get all Baubretts assigned to a specific zone
+ * @param {string} zoneKey - The zone key (e.g., 'ZONE_A', 'UFB01')
+ * @returns {Array} Array of baubrett records in the zone
+ */
+export function getBaubrettsByZone(zoneKey) {
+  try {
+    const zoneAssignments = require('../data/zoneAssignments.json');
+    const baubrettNumbers = zoneAssignments[zoneKey];
+
+    if (!baubrettNumbers || !Array.isArray(baubrettNumbers) || baubrettNumbers.length === 0) {
+      return [];
+    }
+
+    return baubrettNumbers
+      .map((bbNb) => getBaubrettByNumber(bbNb))
+      .filter((record) => record !== undefined);
+  } catch (err) {
+    console.error('getBaubrettsByZone error:', err);
+    return [];
+  }
+}
