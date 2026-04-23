@@ -178,7 +178,7 @@ export default function HomeScreen({ navigation }) {
 
           <ActionCard
             icon="search"
-            title={t('home.consultBaubrett.title')}
+            title={t('home.consult.title', 'Consult')}
             color={COLORS.accent}
             onPress={() => navigation.navigate('ConsultScan')}
           />
