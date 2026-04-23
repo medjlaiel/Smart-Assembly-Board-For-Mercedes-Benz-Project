@@ -204,7 +204,7 @@ export default function HomeScreen({ navigation }) {
 
           <ActionCard
             icon="build"
-            title={t('home.techChanges.title') || 'Technical Changes'}
+            title={t('home.approvalStatus.title') || 'Approval Status'}
             color={COLORS.info || '#2196F3'}
             onPress={() => navigation.navigate('TechChanges')}
           />
