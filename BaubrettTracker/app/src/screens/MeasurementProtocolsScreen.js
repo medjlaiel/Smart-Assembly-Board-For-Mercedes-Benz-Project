@@ -14,13 +14,11 @@ import {
   KeyboardAvoidingView,
   Platform,
 } from 'react-native';
-import { useTranslation } from 'react-i18next';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { COLORS } from '../assets/theme';
 import { searchFPNumbers, getProtocolByFPNO } from '../services/mesProtocolsService';
 
 export default function MeasurementProtocolsScreen({ navigation }) {
-  const { t } = useTranslation();
   const [query, setQuery] = useState('');
   const [suggestions, setSuggestions] = useState([]);
   const [selectedFP, setSelectedFP] = useState(null);
@@ -51,9 +49,9 @@ export default function MeasurementProtocolsScreen({ navigation }) {
       setProtocol(protocolData);
     } else {
       Alert.alert(
-        t('protocols.notFound') || 'Not Found',
-        t('protocols.noProtocolForFP', { fpNo }) || `No protocol found for FP-NO: ${fpNo}`,
-        [{ text: t('common.ok') }]
+        'Not Found',
+        `No protocol found for FP-NO: ${fpNo}`,
+        [{ text: 'OK' }]
       );
     }
   };
@@ -99,9 +97,9 @@ export default function MeasurementProtocolsScreen({ navigation }) {
         {/* Header */}
         <View style={styles.header}>
           <TouchableOpacity onPress={() => navigation.goBack()} style={styles.backButton}>
-            <Text style={styles.backButtonText}>‹ {t('common.back')}</Text>
+            <Text style={styles.backButtonText}>‹ Back</Text>
           </TouchableOpacity>
-          <Text style={styles.headerTitle}>{t('protocols.title') || 'Measurement Protocols'}</Text>
+          <Text style={styles.headerTitle}>Measurement Protocols</Text>
           <View style={styles.spacer} />
         </View>
 
@@ -109,7 +107,7 @@ export default function MeasurementProtocolsScreen({ navigation }) {
         <View style={styles.searchSection}>
           <TextInput
             style={styles.searchInput}
-            placeholder={t('protocols.searchPlaceholder') || 'Enter FP-NO to search...'}
+            placeholder="Enter FP-NO to search..."
             placeholderTextColor={COLORS.text3}
             value={query}
             onChangeText={handleSearch}
@@ -136,10 +134,10 @@ export default function MeasurementProtocolsScreen({ navigation }) {
           <View style={styles.resultsContainer}>
             <View style={styles.resultsHeader}>
               <Text style={styles.resultsTitle}>
-                {t('protocols.protocolFor', { fpNo: selectedFP }) || `Protocol for ${selectedFP}`}
+                Protocol for {selectedFP}
               </Text>
               <Text style={styles.lineCount}>
-                {t('protocols.totalLines', { count: protocol.totalLines }) || `${protocol.totalLines} lines`}
+                {protocol.totalLines} lines
               </Text>
             </View>
             
@@ -155,7 +153,7 @@ export default function MeasurementProtocolsScreen({ navigation }) {
           <View style={styles.emptyContainer}>
             <Text style={styles.emptyIcon}>🔍</Text>
             <Text style={styles.emptyText}>
-              {t('protocols.searchPrompt') || 'Search for an FP-NO to view its measurement protocol'}
+              Search for an FP-NO to view its measurement protocol
             </Text>
           </View>
         )}
