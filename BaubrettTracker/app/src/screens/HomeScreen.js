@@ -210,6 +210,13 @@ export default function HomeScreen({ navigation }) {
           />
 
           <ActionCard
+            icon="description"
+            title="Measurement Protocols"
+            color={COLORS.primaryDark}
+            onPress={() => navigation.navigate('MeasurementProtocols')}
+          />
+
+          <ActionCard
             icon="bar-chart"
             title={t('statistics.title')}
             color={COLORS.primaryDark}

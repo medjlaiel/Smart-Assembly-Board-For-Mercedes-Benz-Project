@@ -26,6 +26,7 @@ import BaubrettListScreen from '../screens/BaubrettListScreen';
 import DatabaseScreen from '../screens/DatabaseScreen';
 import UploadDocumentsScreen from '../screens/UploadDocumentsScreen';
 import ZoneContentsScreen from '../screens/ZoneContentsScreen';
+import MeasurementProtocolsScreen from '../screens/MeasurementProtocolsScreen';
 
 const Stack = createStackNavigator();
 
@@ -204,6 +205,14 @@ export default function AppNavigator() {
         component={ZoneContentsScreen}
         options={{ 
           title: 'Zone Contents',
+          cardStyleInterpolator: CardStyleInterpolators.forFadeFromBottomAndroid,
+        }}
+      />
+      <Stack.Screen
+        name="MeasurementProtocols"
+        component={MeasurementProtocolsScreen}
+        options={{ 
+          title: 'Measurement Protocols',
           cardStyleInterpolator: CardStyleInterpolators.forFadeFromBottomAndroid,
         }}
       />
