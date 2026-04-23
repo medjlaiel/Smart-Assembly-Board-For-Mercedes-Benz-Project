@@ -1,0 +1,2540 @@
+{
+  "DB3G613169": {
+    "lines": [
+      {
+        "index": 1,
+        "branche": "E20/25*1-B_V1",
+        "exigences": "50",
+        "deviation": "mm",
+        "faisceau": "57"
+      },
+      {
+        "index": 2,
+        "branche": "E20/26*1-B_V1",
+        "exigences": "50",
+        "deviation": "mm",
+        "faisceau": "57"
+      },
+      {
+        "index": 3,
+        "branche": "ID_FIX28--MP",
+        "exigences": "125",
+        "deviation": "mm",
+        "faisceau": "126"
+      },
+      {
+        "index": 4,
+        "branche": "ID_FIX27--MP",
+        "exigences": "45",
+        "deviation": "mm",
+        "faisceau": "47"
+      },
+      {
+        "index": 5,
+        "branche": "B8/4*1-B_V1",
+        "exigences": "110",
+        "deviation": "mm",
+        "faisceau": "115"
+      },
+      {
+        "index": 6,
+        "branche": "MP---MP",
+        "exigences": "480",
+        "deviation": "mm",
+        "faisceau": "480"
+      },
+      {
+        "index": 7,
+        "branche": "A3/2*1-B_V1",
+        "exigences": "",
+        "deviation": "mm",
+        "faisceau": ""
+      },
+      {
+        "index": 8,
+        "branche": "B29/12*1-B_V1",
+        "exigences": "185",
+        "deviation": "mm",
+        "faisceau": "185"
+      },
+      {
+        "index": 9,
+        "branche": "MP---MP",
+        "exigences": "135",
+        "deviation": "mm",
+        "faisceau": "137"
+      },
+      {
+        "index": 10,
+        "branche": "B8/6*1-B_V1",
+        "exigences": "265",
+        "deviation": "mm",
+        "faisceau": "268"
+      },
+      {
+        "index": 11,
+        "branche": "MP---MP",
+        "exigences": "60",
+        "deviation": "mm",
+        "faisceau": "62"
+      },
+      {
+        "index": 12,
+        "branche": "B4/44*1-B_V1",
+        "exigences": "125",
+        "deviation": "mm",
+        "faisceau": "125"
+      },
+      {
+        "index": 13,
+        "branche": "X26/38*1-S_V1",
+        "exigences": "65",
+        "deviation": "mm",
+        "faisceau": "67"
+      },
+      {
+        "index": 14,
+        "branche": "MP---MP",
+        "exigences": "80",
+        "deviation": "mm",
+        "faisceau": "83"
+      },
+      {
+        "index": 15,
+        "branche": "MP---MP",
+        "exigences": "70",
+        "deviation": "mm",
+        "faisceau": "72"
+      },
+      {
+        "index": 16,
+        "branche": "B8/5*1-B_V1",
+        "exigences": "95",
+        "deviation": "mm",
+        "faisceau": "98"
+      },
+      {
+        "index": 17,
+        "branche": "MP--ID_FIX18",
+        "exigences": "820+5",
+        "deviation": "mm",
+        "faisceau": "820"
+      },
+      {
+        "index": 18,
+        "branche": "REF1---ID_FIX18",
+        "exigences": "735+5",
+        "deviation": "mm",
+        "faisceau": "735"
+      },
+      {
+        "index": 19,
+        "branche": "FX.SF_V.0043--MP",
+        "exigences": "175",
+        "deviation": "mm",
+        "faisceau": "175"
+      },
+      {
+        "index": 20,
+        "branche": "FX.SF_V.0041--MP",
+        "exigences": "90",
+        "deviation": "mm",
+        "faisceau": "90"
+      },
+      {
+        "index": 21,
+        "branche": "B8/2*1-B_V1",
+        "exigences": "100",
+        "deviation": "mm",
+        "faisceau": "112"
+      },
+      {
+        "index": 22,
+        "branche": "FX.SF_V.0042--REF1",
+        "exigences": "130+5",
+        "deviation": "mm",
+        "faisceau": "132"
+      },
+      {
+        "index": 23,
+        "branche": "FX.SF_V.0042--MP",
+        "exigences": "45",
+        "deviation": "mm",
+        "faisceau": "46"
+      },
+      {
+        "index": 24,
+        "branche": "MP--MP",
+        "exigences": "30",
+        "deviation": "mm",
+        "faisceau": "30"
+      },
+      {
+        "index": 25,
+        "branche": "B4/43*1-B_V1",
+        "exigences": "125",
+        "deviation": "mm",
+        "faisceau": "130"
+      },
+      {
+        "index": 26,
+        "branche": "X26/28*1-S_V1--ID_FIX2",
+        "exigences": "30",
+        "deviation": "mm",
+        "faisceau": "32"
+      },
+      {
+        "index": 27,
+        "branche": "X26/28*1-S_V1-->MP",
+        "exigences": "100",
+        "deviation": "mm",
+        "faisceau": "102"
+      },
+      {
+        "index": 28,
+        "branche": "MP--MP",
+        "exigences": "65",
+        "deviation": "mm",
+        "faisceau": "68"
+      },
+      {
+        "index": 29,
+        "branche": "B29/11*1-B_V1",
+        "exigences": "245",
+        "deviation": "mm",
+        "faisceau": "248"
+      },
+      {
+        "index": 30,
+        "branche": "MP--MP",
+        "exigences": "110",
+        "deviation": "mm",
+        "faisceau": "110"
+      },
+      {
+        "index": 31,
+        "branche": "B8/1-1*B_V1---debut enrub",
+        "exigences": "10",
+        "deviation": "mm",
+        "faisceau": "10"
+      },
+      {
+        "index": 32,
+        "branche": "debut enrub--MP",
+        "exigences": "170",
+        "deviation": "mm",
+        "faisceau": "174"
+      },
+      {
+        "index": 33,
+        "branche": "A3/1*1-B_V1",
+        "exigences": "",
+        "deviation": "mm",
+        "faisceau": ""
+      },
+      {
+        "index": 34,
+        "branche": "MP--MP",
+        "exigences": "60",
+        "deviation": "mm",
+        "faisceau": "60"
+      },
+      {
+        "index": 35,
+        "branche": "E1/25*1-B_V1",
+        "exigences": "50",
+        "deviation": "mm",
+        "faisceau": "60"
+      },
+      {
+        "index": 36,
+        "branche": "E1/26*1-B_V1",
+        "exigences": "50",
+        "deviation": "mm",
+        "faisceau": "60"
+      },
+      {
+        "index": 37,
+        "branche": "ID_FIX26---MP",
+        "exigences": "125",
+        "deviation": "mm",
+        "faisceau": "125"
+      },
+      {
+        "index": 38,
+        "branche": "ID_FIX25--MP",
+        "exigences": "45",
+        "deviation": "mm",
+        "faisceau": "45"
+      },
+      {
+        "index": 39,
+        "branche": "B8/3*1-B_V1",
+        "exigences": "110",
+        "deviation": "mm",
+        "faisceau": "113"
+      },
+      {
+        "index": 40,
+        "branche": "MP---MP",
+        "exigences": "480",
+        "deviation": "mm",
+        "faisceau": "480"
+      }
+    ],
+    "totalLines": 40
+  },
+  "DB3G045172": {
+    "lines": [
+      {
+        "index": 1,
+        "branche": "N25/5*11-B_V1-->MP",
+        "exigences": "150",
+        "deviation": "mm",
+        "faisceau": "155"
+      },
+      {
+        "index": 2,
+        "branche": "M27/9*1-B_V2-->MP",
+        "exigences": "120",
+        "deviation": "mm",
+        "faisceau": "122"
+      },
+      {
+        "index": 3,
+        "branche": "M27/10*1-B_V1-->MP",
+        "exigences": "155",
+        "deviation": "mm",
+        "faisceau": "155"
+      },
+      {
+        "index": 4,
+        "branche": "X28/52*1-S_V1-->MP",
+        "exigences": "60",
+        "deviation": "mm",
+        "faisceau": "65"
+      },
+      {
+        "index": 5,
+        "branche": "Debut Enrub-->MP",
+        "exigences": "40",
+        "deviation": "mm",
+        "faisceau": "45"
+      },
+      {
+        "index": 6,
+        "branche": "MP-->FX.SITZ_F.0010",
+        "exigences": "50",
+        "deviation": "mm",
+        "faisceau": "50"
+      },
+      {
+        "index": 7,
+        "branche": "FX.SITZ_F.0010-->MP",
+        "exigences": "50",
+        "deviation": "mm",
+        "faisceau": "57"
+      },
+      {
+        "index": 8,
+        "branche": "E43/35*1-B_V1-->FX.SITZ_F.0032",
+        "exigences": "70",
+        "deviation": "mm",
+        "faisceau": "75"
+      },
+      {
+        "index": 9,
+        "branche": "FX.SITZ_F.0032-->MP",
+        "exigences": "160",
+        "deviation": "mm",
+        "faisceau": "165"
+      },
+      {
+        "index": 10,
+        "branche": "R13/3*1-S_V1-->MP",
+        "exigences": "75",
+        "deviation": "mm",
+        "faisceau": "78"
+      },
+      {
+        "index": 11,
+        "branche": "MP-->FX.SITZ_F.0001",
+        "exigences": "30",
+        "deviation": "mm",
+        "faisceau": "35"
+      },
+      {
+        "index": 12,
+        "branche": "FX.SITZ_F.0001-->MP",
+        "exigences": "135",
+        "deviation": "mm",
+        "faisceau": "140"
+      },
+      {
+        "index": 13,
+        "branche": "ID_FIX42-->MP",
+        "exigences": "50",
+        "deviation": "mm",
+        "faisceau": "50"
+      },
+      {
+        "index": 14,
+        "branche": "MP-->MP",
+        "exigences": "80",
+        "deviation": "mm",
+        "faisceau": "80"
+      },
+      {
+        "index": 15,
+        "branche": "MP-->REF1",
+        "exigences": "40",
+        "deviation": "mm",
+        "faisceau": "45"
+      },
+      {
+        "index": 16,
+        "branche": "REF1-->MP",
+        "exigences": "30+5",
+        "deviation": "mm",
+        "faisceau": "30"
+      },
+      {
+        "index": 17,
+        "branche": "X6/5*1-S_V1-->MP",
+        "exigences": "80",
+        "deviation": "mm",
+        "faisceau": "83"
+      },
+      {
+        "index": 18,
+        "branche": "X28/63*1-S_V1-->MP",
+        "exigences": "80",
+        "deviation": "mm",
+        "faisceau": "85"
+      },
+      {
+        "index": 19,
+        "branche": "REF1-->FX.SITZ_F.0002",
+        "exigences": "85+5",
+        "deviation": "mm",
+        "faisceau": "85"
+      },
+      {
+        "index": 20,
+        "branche": "REF1-->MP",
+        "exigences": "160+5",
+        "deviation": "mm",
+        "faisceau": "165"
+      },
+      {
+        "index": 21,
+        "branche": "X28/60*1-S_V1-->MP",
+        "exigences": "80+5",
+        "deviation": "mm",
+        "faisceau": "85"
+      },
+      {
+        "index": 22,
+        "branche": "M28/8*1-B_V2-->FX.SITZ_F.0141",
+        "exigences": "120",
+        "deviation": "mm",
+        "faisceau": "123"
+      },
+      {
+        "index": 23,
+        "branche": "FX.SITZ_F.0141-->MP",
+        "exigences": "170",
+        "deviation": "mm",
+        "faisceau": "175"
+      },
+      {
+        "index": 24,
+        "branche": "REF1-->REF2",
+        "exigences": "210+5",
+        "deviation": "mm",
+        "faisceau": "215"
+      },
+      {
+        "index": 25,
+        "branche": "REF2-->MP",
+        "exigences": "80+5",
+        "deviation": "mm",
+        "faisceau": "83"
+      },
+      {
+        "index": 26,
+        "branche": "S22/1*1-B_v2-->MP",
+        "exigences": "90",
+        "deviation": "mm",
+        "faisceau": "95"
+      },
+      {
+        "index": 27,
+        "branche": "S109/3*1-B_V1-->MP",
+        "exigences": "95",
+        "deviation": "mm",
+        "faisceau": "100"
+      },
+      {
+        "index": 28,
+        "branche": "MP-->FX.SITZ_F.0009",
+        "exigences": "40",
+        "deviation": "mm",
+        "faisceau": "40"
+      },
+      {
+        "index": 29,
+        "branche": "FX.SITZ_F.0009-->FX.SITZ_F.0004",
+        "exigences": "160",
+        "deviation": "mm",
+        "faisceau": "165"
+      },
+      {
+        "index": 30,
+        "branche": "FX.SITZ_F.0004-->MP",
+        "exigences": "95",
+        "deviation": "mm",
+        "faisceau": "95"
+      },
+      {
+        "index": 31,
+        "branche": "REF2-->FX.SITZ_F.0029",
+        "exigences": "505+5",
+        "deviation": "mm",
+        "faisceau": "510"
+      },
+      {
+        "index": 32,
+        "branche": "FX.SITZ_F.0029-->REF3",
+        "exigences": "65",
+        "deviation": "mm",
+        "faisceau": "65"
+      },
+      {
+        "index": 33,
+        "branche": "REF3-->MP",
+        "exigences": "50+5",
+        "deviation": "mm",
+        "faisceau": "55"
+      },
+      {
+        "index": 34,
+        "branche": "M25/5*1-B_V1-->MP",
+        "exigences": "140",
+        "deviation": "mm",
+        "faisceau": "145"
+      },
+      {
+        "index": 35,
+        "branche": "R13/4*1-B_V1-->MP",
+        "exigences": "160",
+        "deviation": "mm",
+        "faisceau": "165"
+      },
+      {
+        "index": 36,
+        "branche": "R12/10*1-B_V1-->FX.SITZ_F.0024",
+        "exigences": "120",
+        "deviation": "mm",
+        "faisceau": "125"
+      },
+      {
+        "index": 37,
+        "branche": "FX.SITZ_F.0024-->MP",
+        "exigences": "65",
+        "deviation": "mm",
+        "faisceau": "68"
+      },
+      {
+        "index": 38,
+        "branche": "R12/9*2-K_V1-->MP",
+        "exigences": "130",
+        "deviation": "mm",
+        "faisceau": "140"
+      },
+      {
+        "index": 39,
+        "branche": "REF3-->REF4",
+        "exigences": "165+5",
+        "deviation": "mm",
+        "faisceau": "170"
+      },
+      {
+        "index": 40,
+        "branche": "REF4-->MP",
+        "exigences": "45+5",
+        "deviation": "mm",
+        "faisceau": "45"
+      },
+      {
+        "index": 41,
+        "branche": "N32/23*1-B_V2-->MP",
+        "exigences": "95",
+        "deviation": "mm",
+        "faisceau": "95"
+      },
+      {
+        "index": 42,
+        "branche": "REF4-->FX.SITZ_F.0022",
+        "exigences": "90+5",
+        "deviation": "mm",
+        "faisceau": "92"
+      },
+      {
+        "index": 43,
+        "branche": "FX.SITZ_F.0022-->MP",
+        "exigences": "30",
+        "deviation": "mm",
+        "faisceau": "30"
+      },
+      {
+        "index": 44,
+        "branche": "MP-->MP",
+        "exigences": "90+5",
+        "deviation": "mm",
+        "faisceau": "90"
+      },
+      {
+        "index": 45,
+        "branche": "MP-->R12/80*2-K_V1",
+        "exigences": "130",
+        "deviation": "mm",
+        "faisceau": "135"
+      },
+      {
+        "index": 46,
+        "branche": "MP-->FX.SITZ_F.0025",
+        "exigences": "70",
+        "deviation": "mm",
+        "faisceau": "75"
+      },
+      {
+        "index": 47,
+        "branche": "MP-->R12/80*1-B_V1",
+        "exigences": "210",
+        "deviation": "mm",
+        "faisceau": "210"
+      },
+      {
+        "index": 48,
+        "branche": "MP-->X55/43*1-B_V1",
+        "exigences": "130",
+        "deviation": "mm",
+        "faisceau": "130"
+      }
+    ],
+    "totalLines": 48
+  },
+  "DB3G638163": {
+    "lines": [
+      {
+        "index": 1,
+        "branche": "B8/12*1-B_V1-->MP",
+        "exigences": "295",
+        "deviation": "mm",
+        "faisceau": "295"
+      },
+      {
+        "index": 2,
+        "branche": "FX.SF_H.0045-->MP",
+        "exigences": "100",
+        "deviation": "mm",
+        "faisceau": "110"
+      },
+      {
+        "index": 3,
+        "branche": "FX.SF_H.0054--->MP",
+        "exigences": "215",
+        "deviation": "mm",
+        "faisceau": "230"
+      },
+      {
+        "index": 4,
+        "branche": "B8/11*1-B_V1-->MP",
+        "exigences": "105",
+        "deviation": "mm",
+        "faisceau": "105"
+      },
+      {
+        "index": 5,
+        "branche": "N38/2*B_V1-->MP",
+        "exigences": "530",
+        "deviation": "mm",
+        "faisceau": "545"
+      },
+      {
+        "index": 6,
+        "branche": "FX.SF_H.0039-->MP",
+        "exigences": "370",
+        "deviation": "mm",
+        "faisceau": "375"
+      },
+      {
+        "index": 7,
+        "branche": "FX.SF_H.0038-->MP",
+        "exigences": "245",
+        "deviation": "mm",
+        "faisceau": "247"
+      },
+      {
+        "index": 8,
+        "branche": "FX.SF_H.0037-->MP",
+        "exigences": "180",
+        "deviation": "mm",
+        "faisceau": "192"
+      },
+      {
+        "index": 9,
+        "branche": "MP-->FX.SF_H.0036",
+        "exigences": "30",
+        "deviation": "mm",
+        "faisceau": "30"
+      },
+      {
+        "index": 10,
+        "branche": "MP-->MP(X26/40*1-B_V1)",
+        "exigences": "60",
+        "deviation": "mm",
+        "faisceau": "62"
+      },
+      {
+        "index": 11,
+        "branche": "X26/40*1-B_V1-->MP",
+        "exigences": "220",
+        "deviation": "mm",
+        "faisceau": "230"
+      },
+      {
+        "index": 12,
+        "branche": "MP-->MP(B8/10*1-B_V1)",
+        "exigences": "295",
+        "deviation": "mm",
+        "faisceau": "296"
+      },
+      {
+        "index": 13,
+        "branche": "FX.SF_H.0044-->MP",
+        "exigences": "235",
+        "deviation": "mm",
+        "faisceau": "236"
+      },
+      {
+        "index": 14,
+        "branche": "B8/10*1-B_V1-->MP",
+        "exigences": "105",
+        "deviation": "mm",
+        "faisceau": "115"
+      },
+      {
+        "index": 15,
+        "branche": "MP-->Z36/2*1-L_V1",
+        "exigences": "220",
+        "deviation": "mm",
+        "faisceau": "223"
+      },
+      {
+        "index": 16,
+        "branche": "Z36/2*1-L_V1-->Z36/1*1-L_V1",
+        "exigences": "260",
+        "deviation": "mm",
+        "faisceau": "261"
+      },
+      {
+        "index": 17,
+        "branche": "ID-FIX37-->Z36/1*1-L_V1",
+        "exigences": "130",
+        "deviation": "mm",
+        "faisceau": "133"
+      },
+      {
+        "index": 18,
+        "branche": "Z36/1*1-L_V1-->MP",
+        "exigences": "205",
+        "deviation": "mm",
+        "faisceau": "205"
+      },
+      {
+        "index": 19,
+        "branche": "B8/9*1-B_V1-->MP",
+        "exigences": "105",
+        "deviation": "mm",
+        "faisceau": "115"
+      },
+      {
+        "index": 20,
+        "branche": "MP-->ETIKETT",
+        "exigences": "45",
+        "deviation": "mm",
+        "faisceau": "45"
+      },
+      {
+        "index": 21,
+        "branche": "MP-->FX.SF_H.0046",
+        "exigences": "250",
+        "deviation": "mm",
+        "faisceau": "255"
+      },
+      {
+        "index": 22,
+        "branche": "MP-->FX.SF_H.0047",
+        "exigences": "340",
+        "deviation": "mm",
+        "faisceau": "342"
+      },
+      {
+        "index": 23,
+        "branche": "MP-->MP(B8/8*1-B_V1)",
+        "exigences": "370",
+        "deviation": "mm",
+        "faisceau": "372"
+      },
+      {
+        "index": 24,
+        "branche": "B8/8*1-B_V1-->MP",
+        "exigences": "105",
+        "deviation": "mm",
+        "faisceau": "110"
+      },
+      {
+        "index": 25,
+        "branche": "B8/7*1-B_V1-->MP",
+        "exigences": "295",
+        "deviation": "mm",
+        "faisceau": "300"
+      },
+      {
+        "index": 26,
+        "branche": "FX.SF_H.0055-->MP",
+        "exigences": "215",
+        "deviation": "mm",
+        "faisceau": "220"
+      },
+      {
+        "index": 27,
+        "branche": "FX.SF_H.0048-->MP",
+        "exigences": "100",
+        "deviation": "mm",
+        "faisceau": "102"
+      }
+    ],
+    "totalLines": 27
+  },
+  "DB3G815172": {
+    "lines": [
+      {
+        "index": 1,
+        "branche": "N32/2*2-B_V1-->MP",
+        "exigences": "85",
+        "deviation": "mm",
+        "faisceau": "90"
+      },
+      {
+        "index": 2,
+        "branche": "N32/2*3-B_V1-->MP",
+        "exigences": "85",
+        "deviation": "mm",
+        "faisceau": "90"
+      },
+      {
+        "index": 3,
+        "branche": "MP(N32/2*3-B_V1)-->FX.SITZ-F.0012",
+        "exigences": "110",
+        "deviation": "mm",
+        "faisceau": "112"
+      },
+      {
+        "index": 4,
+        "branche": "FX.SITZ-F.0012-->REF3",
+        "exigences": "35/(+5)",
+        "deviation": "mm",
+        "faisceau": "40"
+      },
+      {
+        "index": 5,
+        "branche": "M28/09*1-B_V1-->MP",
+        "exigences": "145",
+        "deviation": "mm",
+        "faisceau": "150"
+      },
+      {
+        "index": 6,
+        "branche": "X6/5*1-V1-->MP",
+        "exigences": "80",
+        "deviation": "mm",
+        "faisceau": "83"
+      },
+      {
+        "index": 7,
+        "branche": "X28/53*1-S_V1-->MP",
+        "exigences": "60",
+        "deviation": "mm",
+        "faisceau": "65"
+      },
+      {
+        "index": 8,
+        "branche": "WICKLUNG",
+        "exigences": "40",
+        "deviation": "mm",
+        "faisceau": "40"
+      },
+      {
+        "index": 9,
+        "branche": "M28/10*1-B_V1-->MP",
+        "exigences": "150",
+        "deviation": "mm",
+        "faisceau": "155"
+      },
+      {
+        "index": 10,
+        "branche": "MP-->FX.SITZ-F.0020",
+        "exigences": "30",
+        "deviation": "mm",
+        "faisceau": "35"
+      },
+      {
+        "index": 11,
+        "branche": "FX.SITZ-F.0020-->MP",
+        "exigences": "140",
+        "deviation": "mm",
+        "faisceau": "155"
+      },
+      {
+        "index": 12,
+        "branche": "KZ-ETIKETT-->MP",
+        "exigences": "60",
+        "deviation": "mm",
+        "faisceau": "65"
+      },
+      {
+        "index": 13,
+        "branche": "X55/65*1-S_V1-->MP",
+        "exigences": "90",
+        "deviation": "mm",
+        "faisceau": "95"
+      },
+      {
+        "index": 14,
+        "branche": "M18/11*1-B_V1-->MP",
+        "exigences": "70",
+        "deviation": "mm",
+        "faisceau": "75"
+      },
+      {
+        "index": 15,
+        "branche": "FX.SITZ-F.0031-->MP",
+        "exigences": "160",
+        "deviation": "mm",
+        "faisceau": "165"
+      },
+      {
+        "index": 16,
+        "branche": "E43/35*1-B_V1-->FX.SITZ-F.0031",
+        "exigences": "70",
+        "deviation": "mm",
+        "faisceau": "75"
+      },
+      {
+        "index": 17,
+        "branche": "FX.SITZ-F.0011-->MP",
+        "exigences": "30",
+        "deviation": "mm",
+        "faisceau": "33"
+      },
+      {
+        "index": 18,
+        "branche": "FX.SITZ-F.0011-->REF3",
+        "exigences": "195/(+5)",
+        "deviation": "mm",
+        "faisceau": "197"
+      },
+      {
+        "index": 19,
+        "branche": "FX.SITZ-F.0013-->REF3",
+        "exigences": "85/(+5)",
+        "deviation": "mm",
+        "faisceau": "85"
+      },
+      {
+        "index": 20,
+        "branche": "X26/60*1_S_V1-->REF3",
+        "exigences": "200/(+5)",
+        "deviation": "mm",
+        "faisceau": "203"
+      },
+      {
+        "index": 21,
+        "branche": "M28/8*1-B_V2-->FX.SITZ-F.0014",
+        "exigences": "120",
+        "deviation": "mm",
+        "faisceau": "125"
+      },
+      {
+        "index": 22,
+        "branche": "FX.SITZ-F.0014-->MP",
+        "exigences": "170",
+        "deviation": "mm",
+        "faisceau": "180"
+      },
+      {
+        "index": 23,
+        "branche": "X28/61*1_S-V1-->MP",
+        "exigences": "80",
+        "deviation": "mm",
+        "faisceau": "90"
+      },
+      {
+        "index": 24,
+        "branche": "FX.SITZ-F.0015-->REF3",
+        "exigences": "265/(+5)",
+        "deviation": "mm",
+        "faisceau": "267"
+      },
+      {
+        "index": 25,
+        "branche": "MP(M28/1*1-B_V1)--->REF4",
+        "exigences": "105/(+5)",
+        "deviation": "mm",
+        "faisceau": "110"
+      },
+      {
+        "index": 26,
+        "branche": "MP-->M86/2*1-S_V1",
+        "exigences": "70",
+        "deviation": "mm",
+        "faisceau": "74"
+      },
+      {
+        "index": 27,
+        "branche": "MP-->N32/38*1-S_V1",
+        "exigences": "120",
+        "deviation": "mm",
+        "faisceau": "125"
+      },
+      {
+        "index": 28,
+        "branche": "MP-->M28/1*1-B_V2",
+        "exigences": "120",
+        "deviation": "mm",
+        "faisceau": "125"
+      },
+      {
+        "index": 29,
+        "branche": "FX.SITZ-F.0029-->REF4",
+        "exigences": "515/(+10)",
+        "deviation": "mm",
+        "faisceau": "518"
+      },
+      {
+        "index": 30,
+        "branche": "FX.SITZ-F.0029-->FX.SITZ-F.0021",
+        "exigences": "65",
+        "deviation": "mm",
+        "faisceau": "65"
+      },
+      {
+        "index": 31,
+        "branche": "MP-->REF5",
+        "exigences": "50/(+5)",
+        "deviation": "mm",
+        "faisceau": "50"
+      },
+      {
+        "index": 32,
+        "branche": "MP-->R12/10*2-K_V1",
+        "exigences": "130",
+        "deviation": "mm",
+        "faisceau": "140"
+      },
+      {
+        "index": 33,
+        "branche": "R12/10*1-B_V1-->FX.SITZ-F.0024",
+        "exigences": "120",
+        "deviation": "mm",
+        "faisceau": "122"
+      },
+      {
+        "index": 34,
+        "branche": "FX.SITZ-F.0024-->REF5",
+        "exigences": "115/(+5)",
+        "deviation": "mm",
+        "faisceau": "115"
+      },
+      {
+        "index": 35,
+        "branche": "MP-->X55/67*1-B_V1",
+        "exigences": "160",
+        "deviation": "mm",
+        "faisceau": "170"
+      },
+      {
+        "index": 36,
+        "branche": "FX.SITZ-F.0023-->REF5",
+        "exigences": "210/(+10)",
+        "deviation": "mm",
+        "faisceau": "217"
+      },
+      {
+        "index": 37,
+        "branche": "FX.SITZ-F.0023-->MP",
+        "exigences": "30",
+        "deviation": "mm",
+        "faisceau": "32"
+      },
+      {
+        "index": 38,
+        "branche": "M18/12*1_B-V1-->MP",
+        "exigences": "95",
+        "deviation": "mm",
+        "faisceau": "100"
+      },
+      {
+        "index": 39,
+        "branche": "FX.SITZ-F.0023-->FX.SITZ-F.0026",
+        "exigences": "130",
+        "deviation": "mm",
+        "faisceau": "130"
+      },
+      {
+        "index": 40,
+        "branche": "REF1-->MP",
+        "exigences": "30",
+        "deviation": "mm",
+        "faisceau": "32"
+      },
+      {
+        "index": 41,
+        "branche": "X54/13*1B-B_V1-->MP",
+        "exigences": "30",
+        "deviation": "mm",
+        "faisceau": "31"
+      },
+      {
+        "index": 42,
+        "branche": "MP-->MP",
+        "exigences": "70",
+        "deviation": "mm",
+        "faisceau": "74"
+      },
+      {
+        "index": 44,
+        "branche": "REF3-->MP",
+        "exigences": "135+5",
+        "deviation": "mm",
+        "faisceau": "140"
+      },
+      {
+        "index": 45,
+        "branche": "REF3-->A77/3*1-B_V1",
+        "exigences": "110",
+        "deviation": "mm",
+        "faisceau": "115"
+      },
+      {
+        "index": 46,
+        "branche": "MP-->S68/20*1-B_V1",
+        "exigences": "120",
+        "deviation": "mm",
+        "faisceau": "125"
+      },
+      {
+        "index": 47,
+        "branche": "FX.SITZ-F.0027-->REF5",
+        "exigences": "165/(+5)",
+        "deviation": "mm",
+        "faisceau": "165"
+      },
+      {
+        "index": 48,
+        "branche": "FX.SITZ-F.0022-->REF6",
+        "exigences": "90/(+5)",
+        "deviation": "mm",
+        "faisceau": "90"
+      },
+      {
+        "index": 50,
+        "branche": "FX.SITZ-F.0022-->MP",
+        "exigences": "30",
+        "deviation": "mm",
+        "faisceau": "32"
+      },
+      {
+        "index": 51,
+        "branche": "X55/43*1_B_V1-->MP",
+        "exigences": "130",
+        "deviation": "mm",
+        "faisceau": "140"
+      },
+      {
+        "index": 52,
+        "branche": "MP-->MP",
+        "exigences": "50",
+        "deviation": "mm",
+        "faisceau": "52"
+      },
+      {
+        "index": 53,
+        "branche": "MP-->R12/66*2-B_V1",
+        "exigences": "45",
+        "deviation": "mm",
+        "faisceau": "50"
+      },
+      {
+        "index": 54,
+        "branche": "REF1-->R12/66*1-B_V1",
+        "exigences": "160+5",
+        "deviation": "mm",
+        "faisceau": "160"
+      },
+      {
+        "index": 55,
+        "branche": "MP-->N32/32*1-B_V1",
+        "exigences": "110",
+        "deviation": "mm",
+        "faisceau": "120"
+      },
+      {
+        "index": 56,
+        "branche": "MP-->MP",
+        "exigences": "70",
+        "deviation": "mm",
+        "faisceau": "70"
+      },
+      {
+        "index": 57,
+        "branche": "MP-->N164/2*3-B_V1",
+        "exigences": "75",
+        "deviation": "mm",
+        "faisceau": "77"
+      },
+      {
+        "index": 58,
+        "branche": "MP--> N164/2*1-B_V1",
+        "exigences": "55",
+        "deviation": "mm",
+        "faisceau": "60"
+      },
+      {
+        "index": 59,
+        "branche": "MP-->N164/2*2-B_V1",
+        "exigences": "60",
+        "deviation": "mm",
+        "faisceau": "65"
+      }
+    ],
+    "totalLines": 57
+  },
+  "DB3G679170": {
+    "lines": [
+      {
+        "index": 1,
+        "branche": "E17/3*1-B-V1---REF1",
+        "exigences": "150",
+        "deviation": "",
+        "faisceau": "mm"
+      },
+      {
+        "index": 2,
+        "branche": "REF1-->MP",
+        "exigences": "190",
+        "deviation": "",
+        "faisceau": "mm"
+      },
+      {
+        "index": 3,
+        "branche": "S62/20*1-B_V1-->MP",
+        "exigences": "90",
+        "deviation": "",
+        "faisceau": "mm"
+      },
+      {
+        "index": 4,
+        "branche": "S15/3*1-B_V1-->MP",
+        "exigences": "80",
+        "deviation": "",
+        "faisceau": "mm"
+      },
+      {
+        "index": 5,
+        "branche": "MP--->FX.TB-V.0014",
+        "exigences": "40",
+        "deviation": "",
+        "faisceau": "mm"
+      },
+      {
+        "index": 6,
+        "branche": "MP-->FX.TB_V.0010",
+        "exigences": "440",
+        "deviation": "",
+        "faisceau": "mm"
+      },
+      {
+        "index": 7,
+        "branche": "FX.TB-V.0010-->MP",
+        "exigences": "35",
+        "deviation": "",
+        "faisceau": "mm"
+      },
+      {
+        "index": 8,
+        "branche": "X8/25*1B_V1-->MP",
+        "exigences": "200",
+        "deviation": "",
+        "faisceau": "mm"
+      },
+      {
+        "index": 9,
+        "branche": "N69/1*TB1-B_V1-->MP",
+        "exigences": "200",
+        "deviation": "",
+        "faisceau": "mm"
+      },
+      {
+        "index": 10,
+        "branche": "N69/1*TB2-B_V1->MP",
+        "exigences": "200",
+        "deviation": "",
+        "faisceau": "mm"
+      },
+      {
+        "index": 11,
+        "branche": "N69/1*TB3-B_V1->MP",
+        "exigences": "200",
+        "deviation": "",
+        "faisceau": "mm"
+      },
+      {
+        "index": 12,
+        "branche": "MP---FX.TB-V:0019",
+        "exigences": "70",
+        "deviation": "",
+        "faisceau": "mm"
+      },
+      {
+        "index": 13,
+        "branche": "MP---MP",
+        "exigences": "95",
+        "deviation": "",
+        "faisceau": "mm"
+      },
+      {
+        "index": 14,
+        "branche": "E43/131*1-B-V1-->MP",
+        "exigences": "75",
+        "deviation": "",
+        "faisceau": "mm"
+      },
+      {
+        "index": 15,
+        "branche": "S22*1-B-V1-->MP",
+        "exigences": "170",
+        "deviation": "",
+        "faisceau": "mm"
+      },
+      {
+        "index": 16,
+        "branche": "E34/3*1-B_V1-->MP",
+        "exigences": "35+150",
+        "deviation": "",
+        "faisceau": "mm"
+      },
+      {
+        "index": 17,
+        "branche": "MP----MP",
+        "exigences": "200",
+        "deviation": "",
+        "faisceau": "mm"
+      },
+      {
+        "index": 18,
+        "branche": "MP-->ID_FIX1",
+        "exigences": "15+10",
+        "deviation": "",
+        "faisceau": "mm"
+      },
+      {
+        "index": 19,
+        "branche": "E43/132*1-B-V1-->MP",
+        "exigences": "55",
+        "deviation": "",
+        "faisceau": "mm"
+      },
+      {
+        "index": 20,
+        "branche": "E17/55*1-B-V1---MP",
+        "exigences": "50",
+        "deviation": "",
+        "faisceau": "mm"
+      },
+      {
+        "index": 21,
+        "branche": "S85/5*1-B_V1-->MP",
+        "exigences": "125",
+        "deviation": "",
+        "faisceau": "mm"
+      },
+      {
+        "index": 22,
+        "branche": "MP---MP",
+        "exigences": "285",
+        "deviation": "",
+        "faisceau": "mm"
+      },
+      {
+        "index": 23,
+        "branche": "MP---FX.TB-V:0007",
+        "exigences": "105",
+        "deviation": "",
+        "faisceau": "mm"
+      },
+      {
+        "index": 24,
+        "branche": "MP---MP",
+        "exigences": "135",
+        "deviation": "",
+        "faisceau": "mm"
+      },
+      {
+        "index": 25,
+        "branche": "E43/304*1-B-V1-->MP",
+        "exigences": "150",
+        "deviation": "",
+        "faisceau": "mm"
+      },
+      {
+        "index": 26,
+        "branche": "FX.TB-V.0017---MP",
+        "exigences": "80",
+        "deviation": "",
+        "faisceau": "mm"
+      },
+      {
+        "index": 27,
+        "branche": "E43/249*1-B-V1-->MP",
+        "exigences": "95",
+        "deviation": "",
+        "faisceau": "mm"
+      },
+      {
+        "index": 28,
+        "branche": "MP--MP",
+        "exigences": "100",
+        "deviation": "",
+        "faisceau": "mm"
+      },
+      {
+        "index": 29,
+        "branche": "E23/1*1-B-V1-->MP",
+        "exigences": "120",
+        "deviation": "",
+        "faisceau": "mm"
+      },
+      {
+        "index": 30,
+        "branche": "S20/1*1-B-V1-->MP",
+        "exigences": "130",
+        "deviation": "",
+        "faisceau": "mm"
+      }
+    ],
+    "totalLines": 30
+  },
+  "DB3G034169": {
+    "lines": [
+      {
+        "index": 1,
+        "branche": "160",
+        "exigences": "160",
+        "deviation": "",
+        "faisceau": "mm"
+      },
+      {
+        "index": 2,
+        "branche": "110",
+        "exigences": "110",
+        "deviation": "",
+        "faisceau": "mm"
+      },
+      {
+        "index": 3,
+        "branche": "35",
+        "exigences": "35",
+        "deviation": "",
+        "faisceau": "mm"
+      },
+      {
+        "index": 4,
+        "branche": "70",
+        "exigences": "70",
+        "deviation": "",
+        "faisceau": "mm"
+      },
+      {
+        "index": 5,
+        "branche": "80",
+        "exigences": "80",
+        "deviation": "",
+        "faisceau": "mm"
+      },
+      {
+        "index": 6,
+        "branche": "115",
+        "exigences": "115",
+        "deviation": "",
+        "faisceau": "mm"
+      },
+      {
+        "index": 7,
+        "branche": "90",
+        "exigences": "90",
+        "deviation": "",
+        "faisceau": "mm"
+      },
+      {
+        "index": 8,
+        "branche": "100",
+        "exigences": "100",
+        "deviation": "",
+        "faisceau": "mm"
+      },
+      {
+        "index": 9,
+        "branche": "150",
+        "exigences": "150",
+        "deviation": "",
+        "faisceau": "mm"
+      },
+      {
+        "index": 10,
+        "branche": "125",
+        "exigences": "125",
+        "deviation": "",
+        "faisceau": "mm"
+      },
+      {
+        "index": 11,
+        "branche": "30",
+        "exigences": "30",
+        "deviation": "",
+        "faisceau": "mm"
+      },
+      {
+        "index": 12,
+        "branche": "45",
+        "exigences": "45",
+        "deviation": "",
+        "faisceau": "mm"
+      },
+      {
+        "index": 13,
+        "branche": "70",
+        "exigences": "70",
+        "deviation": "",
+        "faisceau": "mm"
+      },
+      {
+        "index": 14,
+        "branche": "85",
+        "exigences": "85",
+        "deviation": "",
+        "faisceau": "mm"
+      },
+      {
+        "index": 15,
+        "branche": "50",
+        "exigences": "50",
+        "deviation": "",
+        "faisceau": "mm"
+      },
+      {
+        "index": 16,
+        "branche": "165",
+        "exigences": "165",
+        "deviation": "",
+        "faisceau": "mm"
+      },
+      {
+        "index": 17,
+        "branche": "40",
+        "exigences": "40",
+        "deviation": "",
+        "faisceau": "mm"
+      },
+      {
+        "index": 18,
+        "branche": "180",
+        "exigences": "180",
+        "deviation": "",
+        "faisceau": "mm"
+      },
+      {
+        "index": 19,
+        "branche": "50",
+        "exigences": "50",
+        "deviation": "",
+        "faisceau": "mm"
+      },
+      {
+        "index": 20,
+        "branche": "190",
+        "exigences": "190",
+        "deviation": "",
+        "faisceau": "mm"
+      },
+      {
+        "index": 21,
+        "branche": "460",
+        "exigences": "460",
+        "deviation": "",
+        "faisceau": "mm"
+      },
+      {
+        "index": 22,
+        "branche": "530",
+        "exigences": "530",
+        "deviation": "",
+        "faisceau": "mm"
+      },
+      {
+        "index": 23,
+        "branche": "670",
+        "exigences": "670",
+        "deviation": "",
+        "faisceau": "mm"
+      },
+      {
+        "index": 24,
+        "branche": "875",
+        "exigences": "875",
+        "deviation": "",
+        "faisceau": "mm"
+      }
+    ],
+    "totalLines": 24
+  },
+  "DB3G768164": {
+    "lines": [
+      {
+        "index": 1,
+        "branche": "H4/115*1-B_V1-->MP",
+        "exigences": "100",
+        "deviation": "",
+        "faisceau": ""
+      },
+      {
+        "index": 2,
+        "branche": "H4/116*1-B_V1-->MP",
+        "exigences": "60",
+        "deviation": "",
+        "faisceau": ""
+      },
+      {
+        "index": 3,
+        "branche": "MP(H4/116*1-B_V1)-->MP",
+        "exigences": "35",
+        "deviation": "",
+        "faisceau": ""
+      },
+      {
+        "index": 4,
+        "branche": "Wicklung",
+        "exigences": "35",
+        "deviation": "",
+        "faisceau": ""
+      },
+      {
+        "index": 5,
+        "branche": "X58/3*1-S_V1-->MP",
+        "exigences": "55",
+        "deviation": "",
+        "faisceau": ""
+      },
+      {
+        "index": 6,
+        "branche": "MP(X58/3*1-S_V1)-->MP",
+        "exigences": "115",
+        "deviation": "",
+        "faisceau": ""
+      },
+      {
+        "index": 7,
+        "branche": "N70*3-B-V1-->MP",
+        "exigences": "100",
+        "deviation": "",
+        "faisceau": ""
+      },
+      {
+        "index": 8,
+        "branche": "MP(N70*3-B-V1)-->MP",
+        "exigences": "140",
+        "deviation": "",
+        "faisceau": ""
+      },
+      {
+        "index": 9,
+        "branche": "MP--MP(E14/1*1-B_V1)",
+        "exigences": "50",
+        "deviation": "",
+        "faisceau": ""
+      },
+      {
+        "index": 10,
+        "branche": "E14/1*1-B_V1--MP",
+        "exigences": "190",
+        "deviation": "",
+        "faisceau": ""
+      },
+      {
+        "index": 11,
+        "branche": "S138/1*1-B_V1-->MP",
+        "exigences": "150",
+        "deviation": "",
+        "faisceau": ""
+      },
+      {
+        "index": 12,
+        "branche": "Z20/90*1-C_V1--MP",
+        "exigences": "55",
+        "deviation": "",
+        "faisceau": ""
+      },
+      {
+        "index": 13,
+        "branche": "MP(B25/36*1-B-V-->MP",
+        "exigences": "95",
+        "deviation": "",
+        "faisceau": ""
+      },
+      {
+        "index": 14,
+        "branche": "B25/36*1-B-V1-->MP",
+        "exigences": "35",
+        "deviation": "",
+        "faisceau": ""
+      },
+      {
+        "index": 15,
+        "branche": "E15/22*1-B_V1-01-->MP",
+        "exigences": "1175",
+        "deviation": "",
+        "faisceau": ""
+      },
+      {
+        "index": 16,
+        "branche": "E15/22*1-B_V1-01-->Fixation",
+        "exigences": "100",
+        "deviation": "",
+        "faisceau": ""
+      },
+      {
+        "index": 17,
+        "branche": "MP-->MP(S138/2*1-B_V1)",
+        "exigences": "410",
+        "deviation": "",
+        "faisceau": ""
+      },
+      {
+        "index": 18,
+        "branche": "S138/2*1-B_V1--MP",
+        "exigences": "150",
+        "deviation": "",
+        "faisceau": ""
+      },
+      {
+        "index": 19,
+        "branche": "MP-->ETIKETT",
+        "exigences": "25",
+        "deviation": "",
+        "faisceau": ""
+      },
+      {
+        "index": 20,
+        "branche": "B25/37*1-B-V1-->Z20/91*1-C_V1",
+        "exigences": "55",
+        "deviation": "",
+        "faisceau": ""
+      },
+      {
+        "index": 21,
+        "branche": "Z20/91*1-C_V1-->MP",
+        "exigences": "95",
+        "deviation": "",
+        "faisceau": ""
+      },
+      {
+        "index": 22,
+        "branche": "E14/2*1-B_V1--MP",
+        "exigences": "190",
+        "deviation": "",
+        "faisceau": ""
+      },
+      {
+        "index": 23,
+        "branche": "E15/23*1-B-V1-01-->MP",
+        "exigences": "1175",
+        "deviation": "",
+        "faisceau": ""
+      },
+      {
+        "index": 24,
+        "branche": "E15/23*1-B-V1-01-->Fixation",
+        "exigences": "100",
+        "deviation": "",
+        "faisceau": ""
+      },
+      {
+        "index": 25,
+        "branche": "B25/37*1-B-V1-->MP",
+        "exigences": "35",
+        "deviation": "",
+        "faisceau": ""
+      }
+    ],
+    "totalLines": 25
+  },
+  "DB3G819172": {
+    "lines": [
+      {
+        "index": 1,
+        "branche": "N32/1*3-B_V1",
+        "exigences": "70",
+        "deviation": "",
+        "faisceau": "mm"
+      },
+      {
+        "index": 2,
+        "branche": "N32/1*2-B_V1",
+        "exigences": "70",
+        "deviation": "",
+        "faisceau": "mm"
+      },
+      {
+        "index": 3,
+        "branche": "FX.SITZ-VF.0015>>MP",
+        "exigences": "120",
+        "deviation": "",
+        "faisceau": "mm"
+      },
+      {
+        "index": 4,
+        "branche": "M27/8*1-B_V1>>FX.SITZ-BF.0015",
+        "exigences": "120",
+        "deviation": "",
+        "faisceau": "mm"
+      },
+      {
+        "index": 5,
+        "branche": "FX.SITZ-VF.0015>>MP",
+        "exigences": "180",
+        "deviation": "",
+        "faisceau": "mm"
+      },
+      {
+        "index": 6,
+        "branche": "X6/4*1-S_V1",
+        "exigences": "80",
+        "deviation": "",
+        "faisceau": "mm"
+      },
+      {
+        "index": 7,
+        "branche": "X28/52*1-S_V1",
+        "exigences": "60",
+        "deviation": "",
+        "faisceau": "mm"
+      },
+      {
+        "index": 8,
+        "branche": "M27/10*1-B_V1",
+        "exigences": "140",
+        "deviation": "",
+        "faisceau": "mm"
+      },
+      {
+        "index": 9,
+        "branche": "FX.SITZ-BF.0020>>MP",
+        "exigences": "30",
+        "deviation": "",
+        "faisceau": "mm"
+      },
+      {
+        "index": 10,
+        "branche": "FX.SITZ-BF.0020>>MP",
+        "exigences": "150",
+        "deviation": "",
+        "faisceau": "mm"
+      },
+      {
+        "index": 11,
+        "branche": "E43/34*1-V1>>FX.SITZ_BF.0031",
+        "exigences": "70",
+        "deviation": "",
+        "faisceau": "mm"
+      },
+      {
+        "index": 12,
+        "branche": "FX-SITZ_BF.0031>>MP",
+        "exigences": "160",
+        "deviation": "",
+        "faisceau": "mm"
+      },
+      {
+        "index": 13,
+        "branche": "M27/1*1-B_V2",
+        "exigences": "170",
+        "deviation": "",
+        "faisceau": "mm"
+      },
+      {
+        "index": 14,
+        "branche": "FX-SITZ-BF.0014>>FX-SITZ.0013",
+        "exigences": "85+5",
+        "deviation": "",
+        "faisceau": "mm"
+      },
+      {
+        "index": 15,
+        "branche": "X28/60*1-S_V1",
+        "exigences": "110",
+        "deviation": "",
+        "faisceau": "mm"
+      },
+      {
+        "index": 16,
+        "branche": "M27/9*1-V2",
+        "exigences": "130",
+        "deviation": "",
+        "faisceau": "mm"
+      },
+      {
+        "index": 17,
+        "branche": "FX.SITZ-BF.0028>>FX.SITZ-BF.0023",
+        "exigences": "65",
+        "deviation": "",
+        "faisceau": "mm"
+      },
+      {
+        "index": 18,
+        "branche": "N32/31*1-B_V1",
+        "exigences": "80",
+        "deviation": "",
+        "faisceau": "mm"
+      },
+      {
+        "index": 19,
+        "branche": "M18/10-*1-B_V1",
+        "exigences": "95",
+        "deviation": "",
+        "faisceau": "mm"
+      },
+      {
+        "index": 20,
+        "branche": "FX-SITZ-BF.0021>>FX-SITZ-BF.0022",
+        "exigences": "130",
+        "deviation": "",
+        "faisceau": "mm"
+      },
+      {
+        "index": 21,
+        "branche": "R12/9*1-B_V1>>Fx.SITZ_BF.0024",
+        "exigences": "120",
+        "deviation": "",
+        "faisceau": "mm"
+      },
+      {
+        "index": 22,
+        "branche": "FX.SITZ_BF.0024>>MP",
+        "exigences": "85",
+        "deviation": "",
+        "faisceau": "mm"
+      },
+      {
+        "index": 23,
+        "branche": "FX.SITZ_BF.0024>>FX.SITZ_BF.0023",
+        "exigences": "165+5",
+        "deviation": "",
+        "faisceau": "mm"
+      },
+      {
+        "index": 24,
+        "branche": "FX.SITZ_BF.0027>>MP",
+        "exigences": "30",
+        "deviation": "",
+        "faisceau": "mm"
+      },
+      {
+        "index": 25,
+        "branche": "R12/80*2-K_V1",
+        "exigences": "130",
+        "deviation": "",
+        "faisceau": "mm"
+      },
+      {
+        "index": 26,
+        "branche": "R12/80*1-B_V1>>FX.SITZ-BF.0026",
+        "exigences": "140",
+        "deviation": "",
+        "faisceau": "mm"
+      },
+      {
+        "index": 27,
+        "branche": "X55/66*1-B-V1",
+        "exigences": "150",
+        "deviation": "",
+        "faisceau": "mm"
+      },
+      {
+        "index": 28,
+        "branche": "N164/1*1-B-V1",
+        "exigences": "55",
+        "deviation": "",
+        "faisceau": "mm"
+      },
+      {
+        "index": 29,
+        "branche": "N164/1*2-B-V1",
+        "exigences": "60",
+        "deviation": "",
+        "faisceau": "mm"
+      },
+      {
+        "index": 30,
+        "branche": "N164/1*3-B-V1",
+        "exigences": "75",
+        "deviation": "",
+        "faisceau": "mm"
+      },
+      {
+        "index": 31,
+        "branche": "MP===MP",
+        "exigences": "90",
+        "deviation": "",
+        "faisceau": "mm"
+      },
+      {
+        "index": 32,
+        "branche": "FX.SITZ-BF.0026>>MP",
+        "exigences": "70",
+        "deviation": "",
+        "faisceau": "mm"
+      },
+      {
+        "index": 33,
+        "branche": "R12/65*1-B-V2==FX.SITZ-BF.oo21",
+        "exigences": "160",
+        "deviation": "",
+        "faisceau": "mm"
+      },
+      {
+        "index": 34,
+        "branche": "R12/65*2-B-V1",
+        "exigences": "45",
+        "deviation": "",
+        "faisceau": "mm"
+      }
+    ],
+    "totalLines": 34
+  },
+  "DB3G759165": {
+    "lines": [
+      {
+        "index": 1,
+        "branche": "N83/1*2-B_V1-->FX.ADAP-LE_HY.0017",
+        "exigences": "400",
+        "deviation": "",
+        "faisceau": ""
+      },
+      {
+        "index": 2,
+        "branche": "ID_FIX9-->FX.ADAP-LE_HY.0017",
+        "exigences": "370",
+        "deviation": "",
+        "faisceau": ""
+      },
+      {
+        "index": 3,
+        "branche": "FX.ADAP_LE_HY_0001-->FX.ADAP-LE_HY.0017",
+        "exigences": "175",
+        "deviation": "",
+        "faisceau": ""
+      },
+      {
+        "index": 4,
+        "branche": "debut(FX.ADAP-LE_HY.0017)-->FIN(FX.ADAP-LE_HY.0017)",
+        "exigences": "260",
+        "deviation": "",
+        "faisceau": ""
+      },
+      {
+        "index": 5,
+        "branche": "FIN(FX.ADAP-LE_HY.0017)-->ID_FIX16",
+        "exigences": "30",
+        "deviation": "",
+        "faisceau": ""
+      },
+      {
+        "index": 6,
+        "branche": "ID_FIX16-->ID_FIX25",
+        "exigences": "85",
+        "deviation": "",
+        "faisceau": ""
+      },
+      {
+        "index": 7,
+        "branche": "FX.ADAP_LE_HY_0021-->ID_FIX25",
+        "exigences": "40",
+        "deviation": "",
+        "faisceau": ""
+      },
+      {
+        "index": 8,
+        "branche": "ID_FIX25-->FX.ADAP_LE_HY_0002",
+        "exigences": "265",
+        "deviation": "",
+        "faisceau": ""
+      },
+      {
+        "index": 9,
+        "branche": "ID_FIX25-->FX.ADAP_LE_HY_0003",
+        "exigences": "390",
+        "deviation": "",
+        "faisceau": ""
+      },
+      {
+        "index": 10,
+        "branche": "ID_FIX25-->FX.ADAP_LE_HY_0004",
+        "exigences": "645",
+        "deviation": "",
+        "faisceau": ""
+      },
+      {
+        "index": 11,
+        "branche": "ID_FIX25-->Etikett",
+        "exigences": "700",
+        "deviation": "",
+        "faisceau": ""
+      },
+      {
+        "index": 12,
+        "branche": "ID_FIX25-->ID_FIX17",
+        "exigences": "910",
+        "deviation": "",
+        "faisceau": ""
+      },
+      {
+        "index": 13,
+        "branche": "ID_FIX25-->F150/3*A7-K_V1",
+        "exigences": "995",
+        "deviation": "",
+        "faisceau": ""
+      }
+    ],
+    "totalLines": 13
+  },
+  "DB3G634168": {
+    "lines": [
+      {
+        "index": 1,
+        "branche": "X26/40*1-B_V1-->MP",
+        "exigences": "220",
+        "deviation": "",
+        "faisceau": "MM"
+      },
+      {
+        "index": 2,
+        "branche": "B8/11*1-B_V1-->MP",
+        "exigences": "110",
+        "deviation": "",
+        "faisceau": "MM"
+      },
+      {
+        "index": 3,
+        "branche": "FX.SF-H.0053-->MP",
+        "exigences": "80",
+        "deviation": "",
+        "faisceau": "MM"
+      },
+      {
+        "index": 4,
+        "branche": "ID_FIX45--->MP",
+        "exigences": "140",
+        "deviation": "",
+        "faisceau": "MM"
+      },
+      {
+        "index": 5,
+        "branche": "FX.SF-H.0052-->MP",
+        "exigences": "175",
+        "deviation": "",
+        "faisceau": "MM"
+      },
+      {
+        "index": 6,
+        "branche": "B8/10*1-B_V1-->MP",
+        "exigences": "345",
+        "deviation": "",
+        "faisceau": "MM"
+      },
+      {
+        "index": 7,
+        "branche": "MP-->MP(B8/12*1-B_V1)",
+        "exigences": "85",
+        "deviation": "",
+        "faisceau": "MM"
+      },
+      {
+        "index": 8,
+        "branche": "MP-->ID_FIX 50",
+        "exigences": "335",
+        "deviation": "",
+        "faisceau": "MM"
+      },
+      {
+        "index": 9,
+        "branche": "MP-->FX.SF-H.0034",
+        "exigences": "585",
+        "deviation": "",
+        "faisceau": "MM"
+      },
+      {
+        "index": 10,
+        "branche": "B8/12*1-B_V1-->MP",
+        "exigences": "680",
+        "deviation": "",
+        "faisceau": "MM"
+      },
+      {
+        "index": 11,
+        "branche": "MP(B8/12*1-B_V1)-->MP",
+        "exigences": "275",
+        "deviation": "",
+        "faisceau": "MM"
+      },
+      {
+        "index": 13,
+        "branche": "KZ-Etikett-->MP",
+        "exigences": "70",
+        "deviation": "",
+        "faisceau": "MM"
+      },
+      {
+        "index": 14,
+        "branche": "MP-->Z36/2_L_V1",
+        "exigences": "315",
+        "deviation": "",
+        "faisceau": "MM"
+      },
+      {
+        "index": 15,
+        "branche": "MP-->ID_FIX 47",
+        "exigences": "365",
+        "deviation": "",
+        "faisceau": "MM"
+      },
+      {
+        "index": 16,
+        "branche": "MP-->Z36/1_1_L_V1",
+        "exigences": "435",
+        "deviation": "",
+        "faisceau": "MM"
+      },
+      {
+        "index": 17,
+        "branche": "MP-->MP(B8/7*1-B_V1)",
+        "exigences": "1025",
+        "deviation": "",
+        "faisceau": "MM"
+      },
+      {
+        "index": 18,
+        "branche": "ID_FIX51--->MP",
+        "exigences": "335",
+        "deviation": "",
+        "faisceau": "MM"
+      },
+      {
+        "index": 19,
+        "branche": "MP-->FX.SF-H.0035",
+        "exigences": "585",
+        "deviation": "",
+        "faisceau": "MM"
+      },
+      {
+        "index": 20,
+        "branche": "B8/7*1-B_V1-->MP",
+        "exigences": "680",
+        "deviation": "",
+        "faisceau": "MM"
+      },
+      {
+        "index": 21,
+        "branche": "MP---->MP(B8/8*1-B_V1)",
+        "exigences": "65",
+        "deviation": "",
+        "faisceau": "MM"
+      },
+      {
+        "index": 22,
+        "branche": "B8/8*1-B_V1-->MP",
+        "exigences": "125",
+        "deviation": "",
+        "faisceau": "MM"
+      },
+      {
+        "index": 23,
+        "branche": "FX.SF-H.0050-->MP",
+        "exigences": "80",
+        "deviation": "",
+        "faisceau": "MM"
+      },
+      {
+        "index": 24,
+        "branche": "MP--ID_FIX48",
+        "exigences": "140",
+        "deviation": "",
+        "faisceau": "MM"
+      },
+      {
+        "index": 25,
+        "branche": "FX.SF-H.0051-->MP",
+        "exigences": "175",
+        "deviation": "",
+        "faisceau": "MM"
+      },
+      {
+        "index": 26,
+        "branche": "B8/9*1-B-V1-->MP",
+        "exigences": "345",
+        "deviation": "",
+        "faisceau": "MM"
+      }
+    ],
+    "totalLines": 25
+  },
+  "DB3G763168": {
+    "lines": [
+      {
+        "index": 1,
+        "branche": "fx.SITZ_LEHN_LI_H.0009",
+        "exigences": "80",
+        "deviation": "",
+        "faisceau": "mm"
+      },
+      {
+        "index": 2,
+        "branche": "S54/7*1-B_V2->FX.SITZ_LEHN_LI_H.0012",
+        "exigences": "205",
+        "deviation": "",
+        "faisceau": "mm"
+      },
+      {
+        "index": 3,
+        "branche": "S54/7*1-B_V2-->FX.SITZ_LEHN_LI_H.0011",
+        "exigences": "350",
+        "deviation": "",
+        "faisceau": "mm"
+      },
+      {
+        "index": 4,
+        "branche": "S54/7*1-B_V2-->FX.SITZ_LEHN-LI-H.0010",
+        "exigences": "485",
+        "deviation": "",
+        "faisceau": "mm"
+      },
+      {
+        "index": 5,
+        "branche": "S54/7*1-B_V2---ID-FIX78",
+        "exigences": "525",
+        "deviation": "",
+        "faisceau": "mm"
+      },
+      {
+        "index": 6,
+        "branche": "S54/7*1-B_V2-->FX.SITZ_LEHN-LI-H.0015",
+        "exigences": "670",
+        "deviation": "",
+        "faisceau": "mm"
+      },
+      {
+        "index": 7,
+        "branche": "S54/7*1-B_V2---ID-FIX98",
+        "exigences": "745",
+        "deviation": "",
+        "faisceau": "mm"
+      },
+      {
+        "index": 8,
+        "branche": "S54/7*1-B_V2---X77/1*1-B-V1",
+        "exigences": "810",
+        "deviation": "",
+        "faisceau": "mm"
+      },
+      {
+        "index": 9,
+        "branche": "ID-FIX79---X77/1*1-B-V1",
+        "exigences": "30",
+        "deviation": "",
+        "faisceau": "mm"
+      }
+    ],
+    "totalLines": 9
+  },
+  "DB3G617169": {
+    "lines": [
+      {
+        "index": 1,
+        "branche": "X26/40*1-B-V1",
+        "exigences": "250",
+        "deviation": "",
+        "faisceau": "mm"
+      },
+      {
+        "index": 2,
+        "branche": "MP-->FX.SF_H.0007",
+        "exigences": "175",
+        "deviation": "",
+        "faisceau": "mm"
+      },
+      {
+        "index": 3,
+        "branche": "B8/10*1-B_V1--->MP",
+        "exigences": "375",
+        "deviation": "",
+        "faisceau": "mm"
+      },
+      {
+        "index": 4,
+        "branche": "MP--->FX.SF_H.0001",
+        "exigences": "30",
+        "deviation": "",
+        "faisceau": "mm"
+      },
+      {
+        "index": 5,
+        "branche": "MP-->MP",
+        "exigences": "60",
+        "deviation": "",
+        "faisceau": "mm"
+      },
+      {
+        "index": 6,
+        "branche": "B8/11*1-B_V1--->MP",
+        "exigences": "80",
+        "deviation": "",
+        "faisceau": "mm"
+      },
+      {
+        "index": 7,
+        "branche": "MP--->MP",
+        "exigences": "130",
+        "deviation": "",
+        "faisceau": "mm"
+      },
+      {
+        "index": 8,
+        "branche": "FX.SF_H.0003--->MP",
+        "exigences": "115",
+        "deviation": "",
+        "faisceau": "mm"
+      },
+      {
+        "index": 9,
+        "branche": "ID_FIX15-->MP",
+        "exigences": "260",
+        "deviation": "",
+        "faisceau": "mm"
+      },
+      {
+        "index": 10,
+        "branche": "B8/12*1-B_V1",
+        "exigences": "580",
+        "deviation": "",
+        "faisceau": "mm"
+      },
+      {
+        "index": 11,
+        "branche": "MP-->MP",
+        "exigences": "240",
+        "deviation": "",
+        "faisceau": "mm"
+      },
+      {
+        "index": 12,
+        "branche": "N38*2-B_V1",
+        "exigences": "145",
+        "deviation": "",
+        "faisceau": "mm"
+      },
+      {
+        "index": 13,
+        "branche": "MP-->ID_FIX2",
+        "exigences": "80+-30",
+        "deviation": "",
+        "faisceau": "mm"
+      },
+      {
+        "index": 14,
+        "branche": "MP---I>D-FIX37",
+        "exigences": "405",
+        "deviation": "",
+        "faisceau": "mm"
+      },
+      {
+        "index": 15,
+        "branche": "B8/7*1-B_V1",
+        "exigences": "580",
+        "deviation": "",
+        "faisceau": "mm"
+      },
+      {
+        "index": 16,
+        "branche": "ID_FIX24-->MP",
+        "exigences": "260",
+        "deviation": "",
+        "faisceau": "mm"
+      },
+      {
+        "index": 17,
+        "branche": "FX.SF_H.0004--->MP",
+        "exigences": "115",
+        "deviation": "",
+        "faisceau": "mm"
+      },
+      {
+        "index": 18,
+        "branche": "MP-->MP",
+        "exigences": "130",
+        "deviation": "",
+        "faisceau": "mm"
+      },
+      {
+        "index": 19,
+        "branche": "B8/8*1-B_V1",
+        "exigences": "80",
+        "deviation": "",
+        "faisceau": "mm"
+      },
+      {
+        "index": 20,
+        "branche": "MP-->FX.SF_H.0002",
+        "exigences": "30",
+        "deviation": "",
+        "faisceau": "mm"
+      },
+      {
+        "index": 21,
+        "branche": "MP--->FX.SF_H.0008",
+        "exigences": "225",
+        "deviation": "",
+        "faisceau": "mm"
+      },
+      {
+        "index": 22,
+        "branche": "B8/9*1-B-V1",
+        "exigences": "425",
+        "deviation": "",
+        "faisceau": "mm"
+      }
+    ],
+    "totalLines": 22
+  }
+}
