@@ -25,6 +25,7 @@ import ChangePasswordScreen from '../screens/ChangePasswordScreen';
 import BaubrettListScreen from '../screens/BaubrettListScreen';
 import DatabaseScreen from '../screens/DatabaseScreen';
 import UploadDocumentsScreen from '../screens/UploadDocumentsScreen';
+import ZoneContentsScreen from '../screens/ZoneContentsScreen';
 
 const Stack = createStackNavigator();
 
@@ -195,6 +196,14 @@ export default function AppNavigator() {
         component={UploadDocumentsScreen}
         options={{ 
           title: 'Upload Documents',
+          cardStyleInterpolator: CardStyleInterpolators.forFadeFromBottomAndroid,
+        }}
+      />
+      <Stack.Screen
+        name="ZoneContents"
+        component={ZoneContentsScreen}
+        options={{ 
+          title: 'Zone Contents',
           cardStyleInterpolator: CardStyleInterpolators.forFadeFromBottomAndroid,
         }}
       />
