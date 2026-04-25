@@ -1,0 +1,231 @@
+{
+  "app": {
+    "name": "Baubrett Tracker"
+  },
+  "login": {
+    "title": "مرحباً بعودتك",
+    "subtitle": "تسجيل الدخول إلى حسابك",
+    "email": "البريد الإلكتروني",
+    "emailPlaceholder": "أدخل بريدك الإلكتروني",
+    "password": "كلمة المرور",
+    "passwordPlaceholder": "أدخل كلمة المرور",
+    "forgotPassword": "نسيت كلمة المرور؟",
+    "loginButton": "تسجيل الدخول",
+    "noAccount": "ليس لديك حساب؟ ",
+    "signUpLink": "إنشاء حساب",
+    "language": "اللغة"
+  },
+  "signup": {
+    "title": "إنشاء حساب",
+    "subtitle": "انضم إلينا اليوم،它是 مجاني",
+    "fullName": "الاسم الكامل",
+    "fullNamePlaceholder": "أدخل اسمك الكامل",
+    "email": "البريد الإلكتروني",
+    "emailPlaceholder": "أدخل بريدك الإلكتروني",
+    "password": "كلمة المرور",
+    "passwordPlaceholder": "إنشاء كلمة مرور",
+    "confirmPassword": "تأكيد كلمة المرور",
+    "confirmPasswordPlaceholder": "تأكيد كلمة المرور",
+    "termsAgree": "أوافق على ",
+    "termsOfService": "شروط الخدمة",
+    "and": " و ",
+    "privacyPolicy": "سياسة الخصوصية",
+    "createAccountButton": "إنشاء حساب",
+    "orSignUpWith": "أو سجل باستخدام",
+    "haveAccount": "هل لديك حساب بالفعل؟ ",
+    "signInLink": "دخول",
+    "errors": {
+      "nameRequired": "الاسم الكامل مطلوب",
+      "nameTooShort": "يجب أن يكون الاسم على الأقل حرفين",
+      "emailRequired": "البريد الإلكتروني مطلوب",
+      "emailInvalid": "يرجى إدخال عنوان بريد إلكتروني صالح",
+      "passwordRequired": "كلمة المرور مطلوبة",
+      "passwordTooShort": "يجب أن تتكون كلمة المرور من 8 أحرف على الأقل",
+      "passwordWeak": "يرجى إنشاء كلمة مرور أقوى",
+      "confirmPasswordRequired": "يرجى تأكيد كلمة المرور",
+      "passwordsDoNotMatch": "كلمات المرور غير متطابقة",
+      "termsRequired": "يجب الموافقة على الشروط",
+      "usernameExists": "اسم المستخدم مستخدم بالفعل، يرجى تجربة آخر."
+    }
+  },
+  "common": {
+    "success": "نجاح",
+    "error": "خطأ",
+    "ok": "موافق",
+    "cancel": "إلغاء",
+    "close": "إغلاق"
+  },
+  "auth": {
+    "invalidCredentials": "بريد إلكتروني أو كلمة مرور غير صالحة",
+    "signUpError": "حدث خطأ أثناء التسجيل. يرجى المحاولة مرة أخرى.",
+    "signInError": "حدث خطأ أثناء تسجيل الدخول. يرجى المحاولة مرة أخرى.",
+    "accountCreated": "تم إنشاء الحساب بنجاح",
+    "welcome": "مرحباً"
+  },
+  "home": {
+    "title": "Baubrett Tracker",
+    "subtitle": "امسح أكواد QR لحفظ أو استشارة مواقع Baubrett",
+    "primaryActions": "الإجراءات الأساسية",
+    "actions": "الإجراءات",
+    "saveBaubrett": {
+      "title": "حفظ Baubrett",
+      "subtitle": "مسح Baubrett + المنطقة → تسجيل الموقع"
+    },
+    "consultBaubrett": {
+      "title": "استشارة Baubrett",
+      "subtitle": "مسح Baubrett → عرض SOM، الملحقات، FP-NO"
+    },
+    "search": {
+      "title": "بحث في قاعدة البيانات",
+      "subtitle": "البحث حسب SOM، BB_Nb أو FP-NO"
+    },
+    "records": "السجلات",
+    "history": {
+      "title": "سجل المواقع",
+      "subtitle": "عرض وتصدير جميع الإدخالات"
+    },
+    "techChanges": {
+      "title": "التغييرات التقنية",
+      "subtitle": "عرض التعديلات التقنية للـ Baubretts"
+    },
+    "statistics": {
+      "subtitle": "عرض إحصائيات المسحات والمواقع"
+    },
+    "logout": "تسجيل الخروج"
+  },
+  "saveScanBaubrett": {
+    "title": "مسح Baubrett",
+    "subtitle": "امسح رمز QR الخاص بـ Baubrett للبدء",
+    "instructions": "ضع رمز QR داخل الإطار",
+    "unknownTitle": "Baubrett غير معروف",
+    "unknownMessage": "\"{{value}}\" لم يتم العثور عليه في قاعدة البيانات.\n\nتأكد من أنك تقوم بمسح رمز QR Baubrett صالح.",
+    "stepLabel": "الخطوة 1 من 3 — امسح رمز QR الخاص بـ Baubrett"
+  },
+  "saveScanZone": {
+    "title": "مسح المنطقة",
+    "subtitle": "امسح رمز QR الخاص بالمنطقة",
+    "instructions": "ضع رمز QR الخاص بالمنطقة داخل الإطار",
+    "wrongQRTitle": "رمز QR خاطئ",
+    "wrongQRMessage": "يبدو أن هذا رمز QR لـ Baubrett، وليس رمز QR للمنطقة.\n\nيرجى مسح رمز QR للمنطقة بدلاً من ذلك.",
+    "unknownTitle": "منطقة غير معروفة",
+    "unknownMessage": "\"{{value}}\" ليس رمز منطقة معترفًا به.\n\nالأكواد الصالحة تشمل: ZONE_A, UFB01, EAP1، إلخ.",
+    "stepLabel": "الخطوة 2 من 3 — امسح رمز QR الخاص بالمنطقة",
+    "infoHint": "الآن امسح رمز QR الخاص بالمنطقة"
+  },
+  "saveConfirm": {
+    "title": "تأكيد وحفظ",
+    "baubrett": "Baubrett",
+    "zone": "المنطقة",
+    "location": "الموقع",
+    "save": "حفظ",
+    "cancel": "إلغاء",
+    "stepLabel": "الخطوة 3 من 3 — تأكيد وحفظ",
+    "cardHeader": "الإدخال للتسجيل",
+    "date": "التاريخ",
+    "time": "الوقت",
+    "hint": "سيتم حفظ هذا الإدخال في baubrett_tracking.xlsx علىجهازك.",
+    "saveButton": "تأكيد وحفظ",
+    "rescan": "إعادة مسح المنطقة",
+    "backHome": "العودة إلى الصفحة الرئيسية",
+    "scanAnother": "مسح Baubrett آخر",
+    "savedTitle": "تم الحفظ بنجاح!",
+    "savedSub": "تم تسجيل Baubrett {{bbNb}} في {{zoneLabel}}.",
+    "saveFailed": "فشل الحفظ",
+    "saveFailedMessage": "تعذر الكتابة في ملف التتبع. يرجى المحاولة مرة أخرى."
+  },
+  "consultScan": {
+    "title": "مسح Baubrett",
+    "subtitle": "امسح للاستعلام عن تفاصيل Baubrett",
+    "instructions": "ضع رمز QR داخل الإطار",
+    "bannerText": "امسح Baubrett لعرض تفاصيله",
+    "notFoundTitle": "غير موجود",
+    "notFoundMessage": "Baubrett \"{{value}}\" لم يتم العثور عليه في قاعدة البيانات.\n\nتأكد من أنك قمت بمسح رمز QR Baubrett صالح."
+  },
+  "consultResult": {
+    "title": "تفاصيل Baubrett",
+    "som": "SOM",
+    "accessories": "الملحقات",
+    "fpNo": "FP-NO",
+    "noData": "لا توجد بيانات متاحة لهذا Baubrett",
+    "lastLocation": "آخر موقع",
+    "at": "في",
+    "scannedBy": "تم المسح بواسطة"
+  },
+  "history": {
+    "title": "سجل المواقع",
+    "subtitle": "عرض وتصدير جميع الإدخالات",
+    "empty": "لا توجد إدخالات محفوظة",
+    "export": "تصدير إلى Excel",
+    "delete": "حذف الإدخال",
+    "confirmDelete": "هل أنت متأكد من حذف هذا الإدخال؟",
+    "date": "التاريخ",
+    "baubrett": "Baubrett",
+    "zone": "المنطقة",
+    "emptyTitle": "لا توجد مدخلات",
+    "emptyTextNoSearch": "احفظ Baubrett لبدء تتبع المواقع.",
+    "emptyTextWithSearch": "لم يتم العثور على سجلات مواقع لـ \"{{query}}\"",
+    "clearFilter": "عرض جميع المدخلات",
+    "searchPlaceholder": "البحث عن رقم Baubrett…",
+    "headerAllEntries": "جميع المدخلات",
+    "headerFiltered": "BB {{bb}}",
+    "recordCount": "{{count}} مدخلة",
+    "recordCount_plural": "{{count}} مدخلة",
+    "exportFailed": "فشل التصدير",
+    "exportFailedMessage": "تعذر تصدير الملف."
+  },
+  "search": {
+    "placeholder": "أدخل SOM أو BB_Nb أو FP-NO...",
+    "searchButton": "بحث",
+    "searching": "جاري البحث...",
+    "initialTitle": "بحث في قاعدة البيانات",
+    "initialMessage": "أدخل SOM أو BB_Nb أو FP-NO للعثور على السجلات المطابقة في قاعدة البيانات.",
+    "emptyTitle": "أدخل مصطلح البحث",
+    "emptyMessage": "يرجى كتابة SOM أو BB_Nb أو FP-NO للبحث.",
+    "noResultsTitle": "لا توجد نتائج",
+    "noResultsMessage": "لم يتم العثور على سجلات مطابقة. جرب مصطلح بحث آخر.",
+    "resultsCount": "{{count}} نتيجة تم العثور عليها",
+    "resultsCount_plural": "{{count}} نتائج تم العثور عليها",
+    "matchBB": "مطابقة BB",
+    "matchSOM": "مطابقة SOM",
+    "matchFPNO": "مطابقة FP-NO",
+    "som": "SOM",
+    "baubrett": "Baubrett",
+    "fpNo": "FP-NO",
+    "accessories": "الملحقات",
+    "noAccessories": "لا توجد ملحقات مدرجة"
+  },
+  "statistics": {
+    "title": "إحصائيات",
+    "subtitle": "توزيع المسحات حسب Baubrett",
+    "totalScans": "إجمالي المسحات",
+    "uniqueBaubretts": "Baubretts فريدة",
+    "unscannedBaubretts": "Baubretts غير ممسوحة",
+    "chartTitle": "المسحات لكل Baubrett",
+    "others": "آخرون",
+    "emptyTitle": "لا توجد بيانات",
+    "emptyText": "لا توجد سجلات مسح متاحة. ابدأ في مسح Baubretts لرؤية الإحصائيات.",
+    "refresh": "تحديث",
+    "allScannedTitle": "تم مسح جميع Baubretts!",
+    "allScannedMessage": "تهانينا! تم مسح جميع Baubretts في قاعدة البيانات.",
+    "close": "إغلاق"
+  },
+  "techChanges": {
+    "title": "التغييرات التقنية",
+    "subtitle": "عرض الصيانة والتعديلات التقنية",
+    "inputPlaceholder": "أدخل رقم Baubrett...",
+    "search": "بحث",
+    "enterBaubrett": "أدخل رقم Baubrett",
+    "description": "ابحث عن Baubrett لعرض جميع التغييرات التقنية ومعلومات الصيانة.",
+    "baubrettNumber": "Baubrett #",
+    "maintenanceTable": "معلومات الصيانة",
+    "allChanges": "جميع التغييرات التقنية",
+    "changes": "التغييرات التقنية",
+    "notFound": "غير موجود",
+    "invalidBaubrett": "Baubrett غير موجود",
+    "notInDatabase": "ليس رقم Baubrett صحيح",
+    "noChangesRecord": "لا توجد تغييرات تقنية مسجلة.",
+    "newSearch": "بحث جديد",
+    "tryAnotherNumber": "يرجى إدخال رقم Baubrett صحيح",
+    "error": "خطأ"
+  }
+}

@@ -1,0 +1,231 @@
+{
+  "app": {
+    "name": "Baubrett Tracker"
+  },
+  "login": {
+    "title": "Bon retour",
+    "subtitle": "connectez-vous à votre compte",
+    "email": "Email",
+    "emailPlaceholder": "Entrez votre email",
+    "password": "Mot de passe",
+    "passwordPlaceholder": "Entrez votre mot de passe",
+    "forgotPassword": "Mot de passe oublié?",
+    "loginButton": "Connexion",
+    "noAccount": "Vous n'avez pas de compte? ",
+    "signUpLink": "S'inscrire",
+    "language": "Langue"
+  },
+  "signup": {
+    "title": "Créer un compte",
+    "subtitle": "Rejoignez-nous aujourd'hui, c'est gratuit",
+    "fullName": "Nom complet",
+    "fullNamePlaceholder": "Entrez votre nom complet",
+    "email": "Email",
+    "emailPlaceholder": "Entrez votre email",
+    "password": "Mot de passe",
+    "passwordPlaceholder": "Créez un mot de passe",
+    "confirmPassword": "Confirmer le mot de passe",
+    "confirmPasswordPlaceholder": "Confirmez votre mot de passe",
+    "termsAgree": "J'accepte les ",
+    "termsOfService": "Conditions d'utilisation",
+    "and": " et la ",
+    "privacyPolicy": "Politique de confidentialité",
+    "createAccountButton": "Créer un compte",
+    "orSignUpWith": "ou inscrivez-vous avec",
+    "haveAccount": "Vous avez déjà un compte? ",
+    "signInLink": "Connexion",
+    "errors": {
+      "nameRequired": "Le nom complet est requis",
+      "nameTooShort": "Le nom doit contenir au moins 2 caractères",
+      "emailRequired": "L'email est requis",
+      "emailInvalid": "Veuillez entrer une adresse email valide",
+      "passwordRequired": "Le mot de passe est requis",
+      "passwordTooShort": "Le mot de passe doit contenir au moins 8 caractères",
+      "passwordWeak": "Veuillez créer un mot de passe plus fort",
+      "confirmPasswordRequired": "Veuillez confirmer votre mot de passe",
+      "passwordsDoNotMatch": "Les mots de passe ne correspondent pas",
+      "termsRequired": "Vous devez accepter les conditions",
+      "usernameExists": "Le nom d'utilisateur est déjà utilisé, veuillez en essayer un autre."
+    }
+  },
+  "common": {
+    "success": "Succès",
+    "error": "Erreur",
+    "ok": "OK",
+    "cancel": "Annuler",
+    "close": "Fermer"
+  },
+  "auth": {
+    "invalidCredentials": "Email ou mot de passe invalide",
+    "signUpError": "Une erreur s'est produite lors de l'inscription. Veuillez réessayer.",
+    "signInError": "Une erreur s'est produite lors de la connexion. Veuillez réessayer.",
+    "accountCreated": "Compte créé avec succès",
+    "welcome": "Bienvenue"
+  },
+  "home": {
+    "title": "Baubrett Tracker",
+    "subtitle": "Scannez des codes QR pour enregistrer ou consulter des emplacements Baubrett",
+    "primaryActions": "ACTIONS PRINCIPALES",
+    "actions": "ACTIONS",
+    "saveBaubrett": {
+      "title": "Enregistrer un Baubrett",
+      "subtitle": "Scanner Baubrett + Zone → enregistrer l'emplacement"
+    },
+    "consultBaubrett": {
+      "title": "Consulter un Baubrett",
+      "subtitle": "Scanner Baubrett → voir SOM, accessoires, FP-NO"
+    },
+    "search": {
+      "title": "Rechercher dans la base",
+      "subtitle": "Rechercher par SOM, BB_Nb ou FP-NO"
+    },
+    "records": "ENREGISTREMENTS",
+    "history": {
+      "title": "Historique des emplacements",
+      "subtitle": "Voir et exporter toutes les entrées"
+    },
+    "techChanges": {
+      "title": "Changements techniques",
+      "subtitle": "Afficher les modifications techniques pour les Baubretts"
+    },
+    "statistics": {
+      "subtitle": "Afficher les statistiques des scans et des emplacements"
+    },
+    "logout": "Déconnexion"
+  },
+  "saveScanBaubrett": {
+    "title": "Scanner Baubrett",
+    "subtitle": "Scannez le code QR du Baubrett pour commencer",
+    "instructions": "Placez le code QR dans le cadre",
+    "unknownTitle": "Baubrett inconnu",
+    "unknownMessage": "\"{{value}}\" n'a pas été trouvé dans la base de données.\n\nAssurez-vous de scanner un code QR Baubrett valide.",
+    "stepLabel": "Étape 1 sur 3 — Scannez le code QR du Baubrett"
+  },
+  "saveScanZone": {
+    "title": "Scanner Zone",
+    "subtitle": "Scannez le code QR de la Zone",
+    "instructions": "Placez le code QR de la zone dans le cadre",
+    "wrongQRTitle": "Mauvais QR Code",
+    "wrongQRMessage": "Cela ressemble à un code QR Baubrett, pas à un code QR Zone.\n\nVeuillez scanner un code QR Zone à la place.",
+    "unknownTitle": "Zone inconnue",
+    "unknownMessage": "\"{{value}}\" n'est pas un code zone reconnu.\n\nLes codes valides incluent : ZONE_A, UFB01, EAP1, etc.",
+    "stepLabel": "Étape 2 sur 3 — Scannez le code QR de la Zone",
+    "infoHint": "Maintenant, scannez le code QR de la zone"
+  },
+  "saveConfirm": {
+    "title": "Confirmer & Enregistrer",
+    "baubrett": "Baubrett",
+    "zone": "Zone",
+    "location": "Emplacement",
+    "save": "Enregistrer",
+    "cancel": "Annuler",
+    "stepLabel": "Étape 3 sur 3 — Confirmer & Enregistrer",
+    "cardHeader": "Entrée à enregistrer",
+    "date": "Date",
+    "time": "Heure",
+    "hint": "Cette entrée sera enregistrée dans baubrett_tracking.xlsx sur votre appareil.",
+    "saveButton": "Confirmer & Enregistrer",
+    "rescan": "Ré-scanner la Zone",
+    "backHome": "Retour à l'accueil",
+    "scanAnother": "Scanner un autre Baubrett",
+    "savedTitle": "Enregistré avec succès!",
+    "savedSub": "Baubrett {{bbNb}} a été enregistré dans {{zoneLabel}}.",
+    "saveFailed": "Échec de l'enregistrement",
+    "saveFailedMessage": "Impossible d'écrire dans le fichier de suivi. Veuillez réessayer."
+  },
+  "consultScan": {
+    "title": "Scanner Baubrett",
+    "subtitle": "Scannez pour consulter les détails du Baubrett",
+    "instructions": "Placez le code QR dans le cadre",
+    "bannerText": "Scannez un Baubrett pour voir ses détails",
+    "notFoundTitle": "Non trouvé",
+    "notFoundMessage": "Baubrett \"{{value}}\" n'a pas été trouvé dans la base de données.\n\nAssurez-vous d'avoir scanné un code QR Baubrett valide."
+  },
+  "consultResult": {
+    "title": "Détails du Baubrett",
+    "som": "SOM",
+    "accessories": "Accessoires",
+    "fpNo": "FP-NO",
+    "noData": "Aucune donnée disponible pour ce Baubrett",
+    "lastLocation": "Dernier Emplacement",
+    "at": "à",
+    "scannedBy": "Scanné par"
+  },
+  "history": {
+    "title": "Historique des emplacements",
+    "subtitle": "Voir et exporter toutes les entrées",
+    "empty": "Aucune entrée enregistrée",
+    "export": "Exporter vers Excel",
+    "delete": "Supprimer l'entrée",
+    "confirmDelete": "Êtes-vous sûr de vouloir supprimer cette entrée?",
+    "date": "Date",
+    "baubrett": "Baubrett",
+    "zone": "Zone",
+    "emptyTitle": "Aucune entrée trouvée",
+    "emptyTextNoSearch": "Enregistrez un Baubrett pour commencer le suivi des emplacements.",
+    "emptyTextWithSearch": "Aucun enregistrement d'emplacement trouvé pour \"{{query}}\"",
+    "clearFilter": "Afficher toutes les entrées",
+    "searchPlaceholder": "Rechercher un numéro de Baubrett…",
+    "headerAllEntries": "Toutes les entrées",
+    "headerFiltered": "BB {{bb}}",
+    "recordCount": "{{count}} entrée",
+    "recordCount_plural": "{{count}} entrées",
+    "exportFailed": "Échec de l'exportation",
+    "exportFailedMessage": "Impossible d'exporter le fichier."
+  },
+  "search": {
+    "placeholder": "Entrez un SOM, BB_Nb ou FP-NO...",
+    "searchButton": "Rechercher",
+    "searching": "Recherche en cours...",
+    "initialTitle": "Recherche dans la base",
+    "initialMessage": "Entrez un SOM, BB_Nb ou FP-NO pour trouver les enregistrements correspondants dans la base de données.",
+    "emptyTitle": "Entrez un terme de recherche",
+    "emptyMessage": "Veuillez taper un SOM, BB_Nb ou FP-NO pour rechercher.",
+    "noResultsTitle": "Aucun résultat",
+    "noResultsMessage": "Aucun enregistrement correspondant trouvé. Essayez un autre terme.",
+    "resultsCount": "{{count}} résultat trouvé",
+    "resultsCount_plural": "{{count}} résultats trouvés",
+    "matchBB": "Correspondance BB",
+    "matchSOM": "Correspondance SOM",
+    "matchFPNO": "Correspondance FP-NO",
+    "som": "SOM",
+    "baubrett": "Baubrett",
+    "fpNo": "FP-NO",
+    "accessories": "Accessoires",
+    "noAccessories": "Aucun accessoire listé"
+  },
+  "statistics": {
+    "title": "Statistiques",
+    "subtitle": "Répartition des scans par Baubrett",
+    "totalScans": "Scans totaux",
+    "uniqueBaubretts": "Baubretts uniques",
+    "unscannedBaubretts": "Baubretts non scannés",
+    "chartTitle": "Scans par Baubrett",
+    "others": "Autres",
+    "emptyTitle": "Aucune donnée",
+    "emptyText": "Aucun enregistrement de scan disponible. Commencez à scanner des Baubretts pour voir les statistiques.",
+    "refresh": "Actualiser",
+    "allScannedTitle": "Tous les Baubretts ont été scannés!",
+    "allScannedMessage": "Félicitations! Tous les Baubretts de la base de données ont été scannés.",
+    "close": "Fermer"
+  },
+  "techChanges": {
+    "title": "Changements techniques",
+    "subtitle": "Afficher la maintenance et les modifications techniques",
+    "inputPlaceholder": "Entrez le numéro de Baubrett...",
+    "search": "Rechercher",
+    "enterBaubrett": "Entrez le numéro de Baubrett",
+    "description": "Recherchez un Baubrett pour afficher tous les changements techniques et informations de maintenance.",
+    "baubrettNumber": "Baubrett #",
+    "maintenanceTable": "Informations de maintenance",
+    "allChanges": "Tous les changements techniques",
+    "changes": "Changements techniques",
+    "notFound": "Non trouvé",
+    "invalidBaubrett": "Baubrett non trouvé",
+    "notInDatabase": "n'est pas un numéro de Baubrett valide",
+    "noChangesRecord": "Aucun changement technique enregistré.",
+    "newSearch": "Nouvelle recherche",
+    "tryAnotherNumber": "Veuillez entrer un numéro de Baubrett valide",
+    "error": "Erreur"
+  }
+}
