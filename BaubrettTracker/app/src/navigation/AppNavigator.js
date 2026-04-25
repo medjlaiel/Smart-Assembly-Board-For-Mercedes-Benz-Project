@@ -28,6 +28,7 @@ import DatabasePickerScreen from '../screens/DatabasePickerScreen';
 import UploadDocumentsScreen from '../screens/UploadDocumentsScreen';
 import ZoneContentsScreen from '../screens/ZoneContentsScreen';
 import MeasurementProtocolsScreen from '../screens/MeasurementProtocolsScreen';
+import ForgotPasswordScreen from '../screens/ForgotPasswordScreen';
 
 const Stack = createStackNavigator();
 
@@ -62,6 +63,14 @@ export default function AppNavigator() {
         component={SignUpScreen}
         options={{ 
           headerShown: false,
+          cardStyleInterpolator: CardStyleInterpolators.forFadeFromBottomAndroid,
+        }}
+      />
+      <Stack.Screen
+        name="ForgotPassword"
+        component={ForgotPasswordScreen}
+        options={{
+          title: 'Forgot Password',
           cardStyleInterpolator: CardStyleInterpolators.forFadeFromBottomAndroid,
         }}
       />

@@ -233,3 +233,93 @@ export async function clearCurrentUser() {
     console.error('Error clearing current user:', error);
   }
 }
+
+/**
+ * Password reset flow (simulated email)
+ * - sendResetCode(email): generates a 6-digit code and stores it with expiry
+ * - verifyResetCode(email, code): verifies code and expiry
+ * - resetPasswordWithCode(email, code, newPassword): verifies then updates password
+ */
+const RESET_CODES_KEY = 'baubrett_tracker_reset_codes';
+
+const saveResetCodes = async (map) => {
+  try {
+    await AsyncStorage.setItem(RESET_CODES_KEY, JSON.stringify(map));
+  } catch (error) {
+    console.error('Error saving reset codes:', error);
+  }
+};
+
+const loadResetCodes = async () => {
+  try {
+    const json = await AsyncStorage.getItem(RESET_CODES_KEY);
+    return json ? JSON.parse(json) : {};
+  } catch (error) {
+    console.error('Error loading reset codes:', error);
+    return {};
+  }
+};
+
+export async function sendResetCode(email) {
+  try {
+    const users = await getUsers();
+    const user = users.find(u => u.email.toLowerCase() === (email || '').toLowerCase());
+    if (!user) {
+      return { success: false, message: 'Email not found' };
+    }
+
+    const code = Math.floor(100000 + Math.random() * 900000).toString(); // 6-digit
+    const expiresAt = Date.now() + 1000 * 60 * 15; // 15 minutes
+
+    const map = await loadResetCodes();
+    map[user.email] = { code, expiresAt };
+    await saveResetCodes(map);
+
+    // NOTE: In a production app you would send the code via email.
+    // For this local/demo app we return the code so the developer can see it.
+    console.log(`Password reset code for ${user.email}: ${code}`);
+
+    return { success: true, message: 'Reset code sent', code };
+  } catch (error) {
+    console.error('sendResetCode error:', error);
+    return { success: false, message: 'Error sending code' };
+  }
+}
+
+export async function verifyResetCode(email, code) {
+  try {
+    const map = await loadResetCodes();
+    const entry = map[(email || '').toLowerCase()];
+    if (!entry) return { success: false, message: 'No code found' };
+    if (Date.now() > entry.expiresAt) return { success: false, message: 'Code expired' };
+    if (entry.code !== String(code).trim()) return { success: false, message: 'Code mismatch' };
+    return { success: true };
+  } catch (error) {
+    console.error('verifyResetCode error:', error);
+    return { success: false, message: 'Verification error' };
+  }
+}
+
+export async function resetPasswordWithCode(email, code, newPassword) {
+  try {
+    const verify = await verifyResetCode(email, code);
+    if (!verify.success) return verify;
+
+    const users = await getUsers();
+    const idx = users.findIndex(u => u.email.toLowerCase() === (email || '').toLowerCase());
+    if (idx === -1) return { success: false, message: 'User not found' };
+
+    users[idx].password = newPassword;
+    await saveUsers(users);
+
+    // Remove the used code
+    const map = await loadResetCodes();
+    delete map[users[idx].email];
+    await saveResetCodes(map);
+
+    return { success: true, message: 'Password updated' };
+  } catch (error) {
+    console.error('resetPasswordWithCode error:', error);
+    return { success: false, message: 'Reset error' };
+  }
+}

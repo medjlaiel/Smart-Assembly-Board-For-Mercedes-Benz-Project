@@ -128,7 +128,7 @@ export default function LoginScreen({ navigation }) {
     };
 
   const handleForgotPassword = () => {
-    Alert.alert('Forgot Password', 'Password reset functionality would go here');
+    navigation.navigate('ForgotPassword');
   };
 
   const handleRoleSwitch = (role) => {
