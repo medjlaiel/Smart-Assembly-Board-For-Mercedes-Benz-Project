@@ -1,14 +1,13 @@
 /**
  * ConsultScanScreen.js  (Consult Flow — Step 1 of 2)
- * Scans a Baubrett or Zone QR code and looks it up in the local database.
- * If found, navigates to the detail screen or zone contents screen.
+ * * Scans a Baubrett QR code and looks it up in the local database.
+ * If found, navigates to the detail screen.
  */
 import React, { useState } from 'react';
 import { View, Text, StyleSheet, Alert } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import QRScannerView from '../components/QRScannerView';
-import { getBaubrettByNumber, getBaubrettsByZone } from '../services/databaseService';
-import { getZoneByKey } from '../data/zones';
+import { getBaubrettByNumber } from '../services/databaseService';
 import { COLORS } from '../assets/theme';
 
 export default function ConsultScanScreen({ navigation }) {
@@ -20,44 +19,19 @@ export default function ConsultScanScreen({ navigation }) {
     setProcessing(true);
 
     const trimmed = data.trim().replace(/^'+/, '');
+    const record = getBaubrettByNumber(trimmed);
 
-    // Check if it's a 9-digit baubrett number
-    if (/^\d{9}$/.test(trimmed)) {
-      const record = getBaubrettByNumber(trimmed);
-      if (!record) {
-        Alert.alert(
-          t('consultScan.notFoundTitle'),
-          t('consultScan.notFoundMessage', { value: trimmed }),
-          [{ text: t('common.ok'), onPress: () => setProcessing(false) }]
-        );
-        return;
-      }
-      navigation.navigate('ConsultResult', { record });
+    if (!record) {
+      Alert.alert(
+        t('consultScan.notFoundTitle'),
+        t('consultScan.notFoundMessage', { value: trimmed }),
+        [{ text: t('common.ok'), onPress: () => setProcessing(false) }]
+      );
       return;
     }
 
-    // Check if it's a zone code
-    const zone = getZoneByKey(trimmed);
-    if (zone) {
-      const baubretts = getBaubrettsByZone(trimmed);
-      if (baubretts.length === 0) {
-        Alert.alert(
-          t('consultScan.emptyZoneTitle'),
-          t('consultScan.emptyZoneMessage', { zone: zone.label }),
-          [{ text: t('common.ok'), onPress: () => setProcessing(false) }]
-        );
-        return;
-      }
-      navigation.navigate('ZoneContents', { zone, baubretts });
-      return;
-    }
-
-    // Unknown QR code
-    Alert.alert(
-      t('consultScan.unknownQRTitle'),
-      t('consultScan.unknownQRMessage', { value: trimmed }),
-      [{ text: t('common.ok'), onPress: () => setProcessing(false) }]
-    );
+    // Navigate to result screen carrying the full record
+    navigation.navigate('ConsultResult', { record });
   };
 
   return (

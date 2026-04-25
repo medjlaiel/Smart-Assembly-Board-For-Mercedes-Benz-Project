@@ -112,7 +112,7 @@ export default function DrawerMenu({ visible, onClose, navigation }) {
 
   const handleDatabase = () => {
     onClose(); // Close drawer
-    navigation.navigate('Database');
+    navigation.navigate('DatabasePicker');
   };
 
   const handleAdminDashboard = () => {

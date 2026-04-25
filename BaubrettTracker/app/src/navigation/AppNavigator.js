@@ -24,6 +24,7 @@ import TechChangesScreen from '../screens/TechChangesScreen';
 import ChangePasswordScreen from '../screens/ChangePasswordScreen';
 import BaubrettListScreen from '../screens/BaubrettListScreen';
 import DatabaseScreen from '../screens/DatabaseScreen';
+import DatabasePickerScreen from '../screens/DatabasePickerScreen';
 import UploadDocumentsScreen from '../screens/UploadDocumentsScreen';
 import ZoneContentsScreen from '../screens/ZoneContentsScreen';
 import MeasurementProtocolsScreen from '../screens/MeasurementProtocolsScreen';
@@ -185,10 +186,18 @@ export default function AppNavigator() {
         }}
       />
       <Stack.Screen
+        name="DatabasePicker"
+        component={DatabasePickerScreen}
+        options={{ 
+          title: 'Database',
+          cardStyleInterpolator: CardStyleInterpolators.forFadeFromBottomAndroid,
+        }}
+      />
+      <Stack.Screen
         name="Database"
         component={DatabaseScreen}
         options={{ 
-          title: 'Database',
+          title: 'MyDataBase',
           cardStyleInterpolator: CardStyleInterpolators.forFadeFromBottomAndroid,
         }}
       />
