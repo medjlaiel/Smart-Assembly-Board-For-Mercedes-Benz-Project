@@ -29,6 +29,7 @@ import UploadDocumentsScreen from '../screens/UploadDocumentsScreen';
 import ZoneContentsScreen from '../screens/ZoneContentsScreen';
 import MeasurementProtocolsScreen from '../screens/MeasurementProtocolsScreen';
 import ForgotPasswordScreen from '../screens/ForgotPasswordScreen';
+import ZoneResultsScreen from '../screens/ZoneResultsScreen';
 
 const Stack = createStackNavigator();
 
@@ -71,6 +72,14 @@ export default function AppNavigator() {
         component={ForgotPasswordScreen}
         options={{
           title: 'Forgot Password',
+          cardStyleInterpolator: CardStyleInterpolators.forFadeFromBottomAndroid,
+        }}
+      />
+      <Stack.Screen
+        name="ZoneResults"
+        component={ZoneResultsScreen}
+        options={{
+          title: 'Zone Results',
           cardStyleInterpolator: CardStyleInterpolators.forFadeFromBottomAndroid,
         }}
       />

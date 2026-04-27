@@ -135,6 +135,26 @@ export async function exportTrackingFile() {
 }
 
 /**
+ * Get all baubretts scanned in a specific zone (with their latest scan info).
+ * @param {string} zone - Zone key (e.g. "ZONE_A", "UFB03")
+ * @returns {Array} Array of unique baubretts scanned in zone, with latest scan timestamp
+ */
+export async function getBaubrettsScannedInZone(zone) {
+  const all = await loadTrackingRecords();
+  const filtered = all.filter(r => String(r.Zone || '').trim() === String(zone || '').trim());
+  
+  // Get unique BB_Nb with latest scan info
+  const map = new Map();
+  filtered.forEach(r => {
+    const key = String(r.BB_Nb).trim();
+    if (!map.has(key) || new Date(`${r.Date} ${r.Time}`) > new Date(`${map.get(key).Date} ${map.get(key).Time}`)) {
+      map.set(key, r);
+    }
+  });
+  return Array.from(map.values());
+}
+
+/**
  * Delete a specific tracking entry.
  * @param {object} entry - The entry to delete with BB_Nb, Zone, Date, Time
  * @returns {boolean} true on success
