@@ -136,6 +136,12 @@ export async function exportTrackingFile() {
 
 /**
  * Get all baubretts scanned in a specific zone (with their latest scan info).
+ * 
+ * DATA PERSISTENCE:
+ * This function queries the persistent baubrett_tracking.xlsx file stored in
+ * FileSystem.documentDirectory. The file persists across app sessions and is
+ * updated whenever a new scan is recorded in HistoryScreen.
+ * 
  * @param {string} zone - Zone key (e.g. "ZONE_A", "UFB03")
  * @returns {Array} Array of unique baubretts scanned in zone, with latest scan timestamp
  */

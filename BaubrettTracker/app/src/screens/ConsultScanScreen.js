@@ -1,8 +1,16 @@
 /**
  * ConsultScanScreen.js  (Consult Flow — Step 1 of 2)
- * * Scans a Baubrett QR code and looks it up in the local database.
+ * Scans a Baubrett QR code and looks it up in the local database.
  * If found, navigates to the detail screen.
  * Also supports zone scanning to show all baubretts scanned in that zone.
+ *
+ * DATA PERSISTENCE:
+ * - Baubrett lookups: Use database.json (static data)
+ * - Zone scanning: Queries baubrett_tracking.xlsx (persisted via FileSystem.documentDirectory)
+ *   The tracking file is updated whenever a baubrett is scanned in HistoryScreen.
+ *   All zone queries automatically use the latest tracking history stored on device.
+ *   This means zone scanning will always show the current scanned baubretts, even
+ *   after app is closed and reopened.
  */
 import React, { useState } from 'react';
 import { View, Text, StyleSheet, Alert, ActivityIndicator } from 'react-native';

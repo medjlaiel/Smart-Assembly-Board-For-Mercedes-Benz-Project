@@ -1,6 +1,17 @@
 /**
  * ZoneResultsScreen.js
  * Displays all Baubrett records that have been scanned in a specific zone.
+ *
+ * DATA FLOW & PERSISTENCE:
+ * 1. ConsultScanScreen triggers zone scan → calls getBaubrettsScannedInZone()
+ * 2. getBaubrettsScannedInZone() loads the persistent baubrett_tracking.xlsx file
+ *    (stored in FileSystem.documentDirectory, survives app restarts)
+ * 3. Tracking file contains all scan records: { BB_Nb, Zone, Date, Time, UserName, UserEmail }
+ * 4. This screen enriches tracking records by looking up each baubrett in database.json
+ * 5. Display shows: Baubrett # + SOM + Last scan date/time + Who scanned
+ *
+ * IMPORTANT: The data is permanently persisted on device via FileSystem.documentDirectory.
+ * Zone scanning will always show the latest scanned baubretts, even after app is closed/reopened.
  */
 import React, { useState, useEffect } from 'react';
 import { View, Text, StyleSheet, FlatList, TouchableOpacity, ActivityIndicator } from 'react-native';
