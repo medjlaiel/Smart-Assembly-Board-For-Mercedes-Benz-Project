@@ -14,9 +14,11 @@
  * Zone scanning will always show the latest scanned baubretts, even after app is closed/reopened.
  */
 import React, { useState, useEffect } from 'react';
-import { View, Text, StyleSheet, FlatList, TouchableOpacity, ActivityIndicator } from 'react-native';
+import { View, Text, StyleSheet, FlatList, TouchableOpacity, ActivityIndicator, Alert } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 import { getBaubrettByNumber } from '../services/databaseService';
+import { deleteTrackingEntry } from '../services/trackingService';
 import { COLORS, RADIUS, SHADOW } from '../assets/theme';
 
 export default function ZoneResultsScreen({ route, navigation }) {
@@ -46,22 +48,61 @@ export default function ZoneResultsScreen({ route, navigation }) {
     })();
   }, [scanRecords]);
 
+  const handleDelete = (item) => {
+    Alert.alert(
+      'Delete Scan Record',
+      `Remove ${item.BB_Nb} from scan history?`,
+      [
+        { text: 'Cancel', onPress: () => {}, style: 'cancel' },
+        {
+          text: 'Delete',
+          onPress: async () => {
+            try {
+              const success = await deleteTrackingEntry(item);
+              if (success) {
+                // Remove from list
+                setBaubretts(baubretts.filter((b, idx) => !(b.BB_Nb === item.BB_Nb && b.Date === item.Date && b.Time === item.Time)));
+              } else {
+                Alert.alert('Error', 'Failed to delete scan record');
+              }
+            } catch (error) {
+              console.error('Delete error:', error);
+              Alert.alert('Error', 'Failed to delete scan record');
+            }
+          },
+          style: 'destructive',
+        },
+      ]
+    );
+  };
+
   const renderItem = ({ item }) => (
-    <TouchableOpacity
-      style={[styles.card, SHADOW.small]}
-      onPress={() => item.bbRecord && navigation.navigate('ConsultResult', { record: item.bbRecord })}
-      activeOpacity={0.8}
-      disabled={!item.bbRecord}
-    >
-      <View style={styles.cardHeader}>
-        <Text style={styles.bb}>{item.BB_Nb}</Text>
-        {item.bbRecord && <Text style={styles.som}>{item.bbRecord.SOM}</Text>}
-      </View>
-      <View style={styles.meta}>
-        <Text style={styles.metaText}>Last scanned: {item.Date} at {item.Time}</Text>
-        {item.UserName && <Text style={styles.metaText}>By: {item.UserName}</Text>}
-      </View>
-    </TouchableOpacity>
+    <View>
+      <TouchableOpacity
+        style={[styles.card, SHADOW.small]}
+        onPress={() => item.bbRecord && navigation.navigate('ConsultResult', { record: item.bbRecord })}
+        activeOpacity={0.8}
+        disabled={!item.bbRecord}
+      >
+        <View style={styles.cardHeader}>
+          <View style={{ flex: 1 }}>
+            <Text style={styles.bb}>{item.BB_Nb}</Text>
+            {item.bbRecord && <Text style={styles.som}>{item.bbRecord.SOM}</Text>}
+          </View>
+          <TouchableOpacity
+            style={styles.deleteBtn}
+            onPress={() => handleDelete(item)}
+            hitSlop={{ top: 8, bottom: 8, left: 8, right: 8 }}
+          >
+            <MaterialIcons name="delete" size={20} color={COLORS.error || '#EF4444'} />
+          </TouchableOpacity>
+        </View>
+        <View style={styles.meta}>
+          <Text style={styles.metaText}>Last scanned: {item.Date} at {item.Time}</Text>
+          {item.UserName && <Text style={styles.metaText}>By: {item.UserName}</Text>}
+        </View>
+      </TouchableOpacity>
+    </View>
   );
 
   if (loading) {
@@ -104,7 +145,8 @@ const styles = StyleSheet.create({
   subtitle: { fontSize: 12, color: 'rgba(255,255,255,0.9)', marginTop: 4 },
   list: { padding: 12, paddingBottom: 20 },
   card: { backgroundColor: COLORS.surface, padding: 14, borderRadius: RADIUS.md, marginBottom: 12, borderLeftWidth: 4, borderLeftColor: COLORS.primary },
-  cardHeader: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginBottom: 8 },
+  cardHeader: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 8 },
+  deleteBtn: { padding: 6, marginRight: -6, marginTop: -6 },
   bb: { fontSize: 16, fontWeight: '800', color: COLORS.primary },
   som: { fontSize: 12, color: COLORS.text2 },
   meta: { gap: 4 },
