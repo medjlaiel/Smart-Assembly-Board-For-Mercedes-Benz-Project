@@ -4,7 +4,8 @@
  * User picks one to view its contents.
  */
 import React from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, SafeAreaView } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import { useTranslation } from 'react-i18next';
 import { COLORS, RADIUS, SHADOW } from '../assets/theme';
 import Icon from 'react-native-vector-icons/MaterialIcons';
