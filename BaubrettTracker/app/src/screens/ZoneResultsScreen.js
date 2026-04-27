@@ -2,13 +2,16 @@
  * ZoneResultsScreen.js
  * Displays all Baubrett records that have been scanned in a specific zone.
  *
+ * Simplified view shows only: Baubrett # + Delete button
+ * Full details are available by tapping the card (navigates to ConsultResult).
+ *
  * DATA FLOW & PERSISTENCE:
  * 1. ConsultScanScreen triggers zone scan → calls getBaubrettsScannedInZone()
  * 2. getBaubrettsScannedInZone() loads the persistent baubrett_tracking.xlsx file
  *    (stored in FileSystem.documentDirectory, survives app restarts)
  * 3. Tracking file contains all scan records: { BB_Nb, Zone, Date, Time, UserName, UserEmail }
  * 4. This screen enriches tracking records by looking up each baubrett in database.json
- * 5. Display shows: Baubrett # + SOM + Last scan date/time + Who scanned
+ * 5. Simplified display: Baubrett # + delete button only (tap card for full details)
  *
  * IMPORTANT: The data is permanently persisted on device via FileSystem.documentDirectory.
  * Zone scanning will always show the latest scanned baubretts, even after app is closed/reopened.
@@ -61,7 +64,7 @@ export default function ZoneResultsScreen({ route, navigation }) {
               const success = await deleteTrackingEntry(item);
               if (success) {
                 // Remove from list
-                setBaubretts(baubretts.filter((b, idx) => !(b.BB_Nb === item.BB_Nb && b.Date === item.Date && b.Time === item.Time)));
+                setBaubretts(baubretts.filter((b) => !(b.BB_Nb === item.BB_Nb && b.Date === item.Date && b.Time === item.Time)));
               } else {
                 Alert.alert('Error', 'Failed to delete scan record');
               }
@@ -77,32 +80,21 @@ export default function ZoneResultsScreen({ route, navigation }) {
   };
 
   const renderItem = ({ item }) => (
-    <View>
+    <TouchableOpacity
+      style={[styles.card, SHADOW.small]}
+      onPress={() => item.bbRecord && navigation.navigate('ConsultResult', { record: item.bbRecord })}
+      activeOpacity={0.8}
+      disabled={!item.bbRecord}
+    >
+      <Text style={styles.bbNumber}>{item.BB_Nb}</Text>
       <TouchableOpacity
-        style={[styles.card, SHADOW.small]}
-        onPress={() => item.bbRecord && navigation.navigate('ConsultResult', { record: item.bbRecord })}
-        activeOpacity={0.8}
-        disabled={!item.bbRecord}
+        style={styles.deleteBtn}
+        onPress={() => handleDelete(item)}
+        hitSlop={{ top: 8, bottom: 8, left: 8, right: 8 }}
       >
-        <View style={styles.cardHeader}>
-          <View style={{ flex: 1 }}>
-            <Text style={styles.bb}>{item.BB_Nb}</Text>
-            {item.bbRecord && <Text style={styles.som}>{item.bbRecord.SOM}</Text>}
-          </View>
-          <TouchableOpacity
-            style={styles.deleteBtn}
-            onPress={() => handleDelete(item)}
-            hitSlop={{ top: 8, bottom: 8, left: 8, right: 8 }}
-          >
-            <MaterialIcons name="delete" size={20} color={COLORS.error || '#EF4444'} />
-          </TouchableOpacity>
-        </View>
-        <View style={styles.meta}>
-          <Text style={styles.metaText}>Last scanned: {item.Date} at {item.Time}</Text>
-          {item.UserName && <Text style={styles.metaText}>By: {item.UserName}</Text>}
-        </View>
+        <MaterialIcons name="delete" size={20} color={COLORS.error || '#EF4444'} />
       </TouchableOpacity>
-    </View>
+    </TouchableOpacity>
   );
 
   if (loading) {
@@ -144,13 +136,27 @@ const styles = StyleSheet.create({
   title: { fontSize: 20, fontWeight: '800', color: '#FFF' },
   subtitle: { fontSize: 12, color: 'rgba(255,255,255,0.9)', marginTop: 4 },
   list: { padding: 12, paddingBottom: 20 },
-  card: { backgroundColor: COLORS.surface, padding: 14, borderRadius: RADIUS.md, marginBottom: 12, borderLeftWidth: 4, borderLeftColor: COLORS.primary },
-  cardHeader: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 8 },
-  deleteBtn: { padding: 6, marginRight: -6, marginTop: -6 },
-  bb: { fontSize: 16, fontWeight: '800', color: COLORS.primary },
-  som: { fontSize: 12, color: COLORS.text2 },
-  meta: { gap: 4 },
-  metaText: { fontSize: 12, color: COLORS.text3 },
+  card: {
+    backgroundColor: COLORS.surface,
+    padding: 14,
+    borderRadius: RADIUS.md,
+    marginBottom: 12,
+    borderLeftWidth: 4,
+    borderLeftColor: COLORS.primary,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+  },
+  bbNumber: {
+    fontSize: 16,
+    fontWeight: '800',
+    color: COLORS.primary,
+    flex: 1,
+  },
+  deleteBtn: {
+    padding: 6,
+    marginLeft: 8,
+  },
   empty: { flex: 1, justifyContent: 'center', alignItems: 'center', paddingVertical: 40 },
   emptyText: { fontSize: 14, color: COLORS.text2, fontStyle: 'italic' },
 });
