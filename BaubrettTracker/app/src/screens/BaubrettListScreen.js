@@ -1,9 +1,8 @@
 /**
  * BaubrettListScreen.js
- * Displays all Baubrett numbers that have been scanned (from tracking history).
- * Each baubrett has a delete button to remove it from scan history.
+ * Displays all Baubrett numbers in the database.
  */
-import React, { useMemo, useState, useEffect } from 'react';
+import React, { useMemo } from 'react';
 import {
   View,
   Text,
@@ -11,140 +10,68 @@ import {
   FlatList,
   TouchableOpacity,
   SafeAreaView,
-  Alert,
-  ActivityIndicator,
 } from 'react-native';
-import { SafeAreaView as SafeAreaViewContext } from 'react-native-safe-area-context';
 import { useTranslation } from 'react-i18next';
-import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 import { COLORS, RADIUS, SHADOW, FONT_SIZES } from '../assets/theme';
-import { loadTrackingRecords, deleteTrackingEntry } from '../services/trackingService';
-import { getBaubrettByNumber } from '../services/databaseService';
+import Icon from 'react-native-vector-icons/MaterialIcons';
+import { getAllBaubrettNumbers } from '../services/techChangesService';
 
 export default function BaubrettListScreen({ navigation }) {
   const { t } = useTranslation();
-  const [baubretts, setBaubretts] = useState([]);
-  const [loading, setLoading] = useState(true);
 
-  // Load scanned baubretts from tracking history
-  useEffect(() => {
-    (async () => {
-      try {
-        const records = await loadTrackingRecords();
-        // Get unique baubrett numbers with their latest scan info
-        const map = new Map();
-        records.forEach(r => {
-          const key = String(r.BB_Nb).trim();
-          if (!map.has(key) || new Date(`${r.Date} ${r.Time}`) > new Date(`${map.get(key).Date} ${map.get(key).Time}`)) {
-            map.set(key, r);
-          }
-        });
-        const uniqueBaubretts = Array.from(map.values());
-        setBaubretts(uniqueBaubretts);
-      } catch (error) {
-        console.error('Error loading baubretts:', error);
-        setBaubretts([]);
-      } finally {
-        setLoading(false);
-      }
-    })();
-  }, []);
-
-  const handleDelete = (item) => {
-    Alert.alert(
-      t('common.delete', 'Delete'),
-      `Remove ${item.BB_Nb} from scan history?`,
-      [
-        { text: t('common.cancel', 'Cancel'), onPress: () => {}, style: 'cancel' },
-        {
-          text: t('common.delete', 'Delete'),
-          onPress: async () => {
-            try {
-              const success = await deleteTrackingEntry(item);
-              if (success) {
-                // Remove from list
-                setBaubretts(baubretts.filter(b => !(b.BB_Nb === item.BB_Nb && b.Date === item.Date && b.Time === item.Time)));
-              } else {
-                Alert.alert(t('common.error', 'Error'), t('common.deleteFailed', 'Failed to delete'));
-              }
-            } catch (error) {
-              console.error('Delete error:', error);
-              Alert.alert(t('common.error', 'Error'), t('common.deleteFailed', 'Failed to delete'));
-            }
-          },
-          style: 'destructive',
-        },
-      ]
-    );
-  };
+  // Get all baubrett numbers from the service
+  const baubrettNumbers = useMemo(() => getAllBaubrettNumbers(), []);
 
   // Render each baubrett number item
-  const renderItem = ({ item, index }) => {
-    const bbRecord = getBaubrettByNumber(item.BB_Nb);
-    return (
-      <View style={styles.itemContainer}>
-        <View style={styles.itemContent}>
-          <View style={styles.itemHeader}>
-            <View style={styles.numberContainer}>
-              <MaterialIcons name="confirmation-number" size={20} color={COLORS.primary} />
-              <View>
-                <Text style={styles.baubrettNumber}>{item.BB_Nb}</Text>
-                {bbRecord && <Text style={styles.som}>{bbRecord.SOM}</Text>}
-              </View>
-            </View>
-            <Text style={styles.indexText}>#{index + 1}</Text>
-          </View>
-          <View style={styles.metaInfo}>
-            <Text style={styles.metaText}>Last scanned: {item.Date} at {item.Time}</Text>
-            {item.Zone && <Text style={styles.metaText}>Zone: {item.Zone}</Text>}
-          </View>
+  const renderItem = ({ item, index }) => (
+    <TouchableOpacity
+      style={styles.itemContainer}
+      activeOpacity={0.7}
+      onPress={() => {
+        // Optional: Navigate to consult screen with this baubrett pre-filled?
+        // For now, just show an alert or do nothing
+      }}
+    >
+      <View style={styles.itemHeader}>
+        <View style={styles.numberContainer}>
+          <Icon name="confirmation-number" size={20} color={COLORS.primary} />
+          <Text style={styles.baubrettNumber}>{item}</Text>
         </View>
-        <TouchableOpacity
-          style={styles.deleteBtn}
-          onPress={() => handleDelete(item)}
-          hitSlop={{ top: 8, bottom: 8, left: 8, right: 8 }}
-        >
-          <MaterialIcons name="delete" size={20} color={COLORS.error || '#EF4444'} />
-        </TouchableOpacity>
+        <Text style={styles.indexText}>#{index + 1}</Text>
       </View>
-    );
-  };
+      <View style={styles.divider} />
+    </TouchableOpacity>
+  );
 
   // Key extractor for FlatList
-  const keyExtractor = (item, idx) => `${item.BB_Nb}-${item.Date}-${item.Time}-${idx}`;
+  const keyExtractor = (item) => item;
 
   return (
-    <SafeAreaViewContext style={styles.safe}>
+    <SafeAreaView style={styles.safe}>
       <View style={styles.headerContainer}>
-        <Text style={styles.headerTitle}>{t('baubrettList.title', 'Scanned Baubretts')}</Text>
+        <Text style={styles.headerTitle}>{t('baubrettList.title', 'All Baubretts')}</Text>
         <Text style={styles.headerSubtitle}>
-          {t('baubrettList.subtitle', { count: baubretts.length })} baubretts scanned
+          {t('baubrettList.subtitle', { count: baubrettNumbers.length })}
         </Text>
       </View>
 
-      {loading ? (
-        <View style={styles.loadingContainer}>
-          <ActivityIndicator size="large" color={COLORS.primary} />
-        </View>
-      ) : (
-        <FlatList
-          data={baubretts}
-          renderItem={renderItem}
-          keyExtractor={keyExtractor}
-          contentContainerStyle={styles.listContent}
-          showsVerticalScrollIndicator={false}
-          ItemSeparatorComponent={() => <View style={styles.separator} />}
-          ListEmptyComponent={
-            <View style={styles.emptyContainer}>
-              <MaterialIcons name="inbox" size={64} color={COLORS.text3} />
-              <Text style={styles.emptyText}>
-                {t('baubrettList.empty', 'No scanned baubretts yet')}
-              </Text>
-            </View>
-          }
-        />
-      )}
-    </SafeAreaViewContext>
+      <FlatList
+        data={baubrettNumbers}
+        renderItem={renderItem}
+        keyExtractor={keyExtractor}
+        contentContainerStyle={styles.listContent}
+        showsVerticalScrollIndicator={false}
+        ItemSeparatorComponent={() => <View style={styles.separator} />}
+        ListEmptyComponent={
+          <View style={styles.emptyContainer}>
+            <Icon name="inbox" size={64} color={COLORS.text3} />
+            <Text style={styles.emptyText}>
+              {t('baubrettList.empty', 'No baubrett numbers found')}
+            </Text>
+          </View>
+        }
+      />
+    </SafeAreaView>
   );
 }
 
@@ -152,11 +79,6 @@ const styles = StyleSheet.create({
   safe: {
     flex: 1,
     backgroundColor: COLORS.background,
-  },
-  loadingContainer: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
   },
   headerContainer: {
     paddingHorizontal: 20,
@@ -182,59 +104,38 @@ const styles = StyleSheet.create({
   itemContainer: {
     backgroundColor: COLORS.surface,
     borderRadius: RADIUS.md,
-    padding: 14,
+    padding: 16,
     ...SHADOW.small,
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'flex-start',
-  },
-  itemContent: {
-    flex: 1,
-    marginRight: 12,
   },
   itemHeader: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    marginBottom: 8,
   },
   numberContainer: {
     flexDirection: 'row',
     alignItems: 'center',
-    gap: 10,
-    flex: 1,
+    gap: 12,
   },
   baubrettNumber: {
-    fontSize: 16,
+    fontSize: 18,
     fontWeight: '700',
-    color: COLORS.primary,
+    color: COLORS.text,
     fontFamily: 'monospace',
   },
-  som: {
-    fontSize: 12,
-    color: COLORS.text2,
-    marginTop: 2,
-  },
   indexText: {
-    fontSize: 12,
+    fontSize: 14,
     fontWeight: '600',
     color: COLORS.primary,
     backgroundColor: COLORS.primary + '15',
-    paddingHorizontal: 8,
-    paddingVertical: 3,
+    paddingHorizontal: 10,
+    paddingVertical: 4,
     borderRadius: RADIUS.sm,
   },
-  metaInfo: {
-    gap: 4,
-  },
-  metaText: {
-    fontSize: 12,
-    color: COLORS.text3,
-  },
-  deleteBtn: {
-    padding: 6,
-    justifyContent: 'center',
-    alignItems: 'center',
+  divider: {
+    height: 1,
+    backgroundColor: COLORS.border + '60',
+    marginTop: 12,
   },
   separator: {
     height: 12,
@@ -247,10 +148,6 @@ const styles = StyleSheet.create({
   },
   emptyText: {
     fontSize: 16,
-    color: COLORS.text2,
-    fontStyle: 'italic',
-  },
-});
     color: COLORS.text3,
     fontWeight: '500',
   },
