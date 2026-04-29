@@ -30,6 +30,7 @@ import ZoneContentsScreen from '../screens/ZoneContentsScreen';
 import MeasurementProtocolsScreen from '../screens/MeasurementProtocolsScreen';
 import ForgotPasswordScreen from '../screens/ForgotPasswordScreen';
 import ZoneResultsScreen from '../screens/ZoneResultsScreen';
+import ChatbotScreen from '../screens/ChatbotScreen';
 
 const Stack = createStackNavigator();
 
@@ -240,6 +241,14 @@ export default function AppNavigator() {
         component={MeasurementProtocolsScreen}
         options={{ 
           title: 'Measurement Protocols',
+          cardStyleInterpolator: CardStyleInterpolators.forFadeFromBottomAndroid,
+        }}
+      />
+      <Stack.Screen
+        name="Chatbot"
+        component={ChatbotScreen}
+        options={{
+          title: 'Assistant',
           cardStyleInterpolator: CardStyleInterpolators.forFadeFromBottomAndroid,
         }}
       />

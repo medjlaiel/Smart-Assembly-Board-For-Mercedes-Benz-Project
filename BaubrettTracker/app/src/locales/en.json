@@ -243,5 +243,21 @@
     "message": "{{current}}/{{target}} Baubretts scanned — {{remaining}} remaining",
     "allCompleteTitle": "All UFBs are full",
     "allCompleteMessage": "All UFBs have reached the required 8 scans. Nothing to report."
+  },
+  "chatbot": {
+    "title": "Assistant",
+    "subtitle": "Powered by Claude AI",
+    "placeholder": "Type your question...",
+    "quickActions": {
+      "unscanned": "Unscanned Baubretts",
+      "statistics": "Statistics",
+      "search": "Search Baubrett",
+      "help": "Help"
+    },
+    "errors": {
+      "apiNotConfigured": "The AI assistant is not configured. Please contact your administrator.",
+      "networkError": "Network error. Please check your connection and try again.",
+      "genericError": "Sorry, I encountered an error. Please try again."
+    }
   }
 }

@@ -1,6 +1,6 @@
 /**
  * DrawerMenu.js
- * Left side drawer with accordion/expandable sections: Profile, Baubrett, Database, About, Logout
+ * Left side drawer with accordion/expandable sections: Profile, Baubrett, Assistant, Database, About, Logout
  */
 import React, { useEffect, useState } from 'react';
 import {
@@ -110,6 +110,11 @@ export default function DrawerMenu({ visible, onClose, navigation }) {
     navigation.navigate('BaubrettList');
   };
 
+  const handleChatbot = () => {
+    onClose(); // Close drawer
+    navigation.navigate('Chatbot');
+  };
+
   const handleDatabase = () => {
     onClose(); // Close drawer
     navigation.navigate('DatabasePicker');
@@ -152,7 +157,7 @@ export default function DrawerMenu({ visible, onClose, navigation }) {
             showsVerticalScrollIndicator={false}
             keyboardShouldPersistTaps="handled"
           >
-            {/* ── PROFILE SECTION ───────────────────────────────────── */}
+            {/* ── PROFILE SECTION ───────────────────────────────────── */} 
             <View style={styles.sectionContainer}>
               <TouchableOpacity
                 style={styles.sectionHeader}
@@ -187,7 +192,7 @@ export default function DrawerMenu({ visible, onClose, navigation }) {
               )}
             </View>
 
-            {/* ── BAUBRETT SECTION ─────────────────────────────────── */}
+            {/* ── BAUBRETT SECTION ─────────────────────────────────── */} 
             <View style={styles.sectionContainer}>
               <TouchableOpacity
                 style={styles.sectionHeader}
@@ -199,7 +204,20 @@ export default function DrawerMenu({ visible, onClose, navigation }) {
               </TouchableOpacity>
             </View>
 
-            {/* ── DATABASE SECTION ─────────────────────────────────── */}
+            {/* ── ASSISTANT SECTION ─────────────────────────────────── */} 
+            <View style={styles.sectionContainer}>
+              <TouchableOpacity
+                style={styles.sectionHeader}
+                onPress={handleChatbot}
+                activeOpacity={0.7}
+              >
+                <Icon name="smart-toy" size={20} color={COLORS.primary} />
+                <Text style={styles.sectionTitle}>Assistant</Text>
+                <Icon name="chevron-right" size={20} color={COLORS.primary} />
+              </TouchableOpacity>
+            </View>
+
+            {/* ── DATABASE SECTION ─────────────────────────────────── */} 
             <View style={styles.sectionContainer}>
               <TouchableOpacity
                 style={styles.sectionHeader}
@@ -211,7 +229,7 @@ export default function DrawerMenu({ visible, onClose, navigation }) {
               </TouchableOpacity>
             </View>
 
-            {/* ── ADMIN DASHBOARD SECTION (ADMIN ONLY) ─────────────── */}
+            {/* ── ADMIN DASHBOARD SECTION (ADMIN ONLY) ─────────────── */} 
             {currentUser?.role === 'admin' && (
               <View style={styles.sectionContainer}>
                 <TouchableOpacity
@@ -226,7 +244,7 @@ export default function DrawerMenu({ visible, onClose, navigation }) {
               </View>
             )}
 
-            {/* ── ABOUT SECTION ────────────────────────────────────── */}
+            {/* ── ABOUT SECTION ────────────────────────────────────── */} 
             <View style={styles.sectionContainer}>
               <TouchableOpacity
                 style={styles.sectionHeader}
@@ -243,7 +261,7 @@ export default function DrawerMenu({ visible, onClose, navigation }) {
 
               {expandedSection === 'about' && (
                 <View style={[styles.sectionContent, styles.aboutContent]}>
-                  {/* App Version - expandable */}
+                  {/* App Version - expandable */} 
                   <TouchableOpacity
                     style={styles.aboutItemHeader}
                     onPress={() => toggleAboutItem('version')}
@@ -264,7 +282,7 @@ export default function DrawerMenu({ visible, onClose, navigation }) {
                     </View>
                   )}
 
-                  {/* Contact - expandable */}
+                  {/* Contact - expandable */} 
                   <TouchableOpacity
                     style={styles.aboutItemHeader}
                     onPress={() => toggleAboutItem('contact')}
@@ -284,7 +302,7 @@ export default function DrawerMenu({ visible, onClose, navigation }) {
                     </View>
                   )}
 
-                  {/* How to Use - navigates to separate screen */}
+                  {/* How to Use - navigates to separate screen */} 
                   <TouchableOpacity
                     style={styles.aboutItemHeader}
                     onPress={() => toggleAboutItem('howto')}
@@ -301,7 +319,7 @@ export default function DrawerMenu({ visible, onClose, navigation }) {
               )}
             </View>
 
-            {/* ── LOGOUT BUTTON ────────────────────────────────────── */}
+            {/* ── LOGOUT BUTTON ────────────────────────────────────── */} 
             <View style={styles.logoutSection}>
               <TouchableOpacity style={styles.logoutButton} onPress={handleLogout}>
                 <Icon name="logout" size={20} color={COLORS.error} />
