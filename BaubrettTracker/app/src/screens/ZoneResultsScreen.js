@@ -22,6 +22,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 import { getBaubrettByNumber } from '../services/databaseService';
 import { deleteTrackingEntry } from '../services/trackingService';
+import { deleteBaubrett } from '../services/deletedBaubrettService';
 import { COLORS, RADIUS, SHADOW } from '../assets/theme';
 
 export default function ZoneResultsScreen({ route, navigation }) {
@@ -63,6 +64,8 @@ export default function ZoneResultsScreen({ route, navigation }) {
             try {
               const success = await deleteTrackingEntry(item);
               if (success) {
+                // Also mark the baubrett as deleted so it shows in unscanned count
+                await deleteBaubrett(item.BB_Nb);
                 // Remove from list
                 setBaubretts(baubretts.filter((b) => !(b.BB_Nb === item.BB_Nb && b.Date === item.Date && b.Time === item.Time)));
               } else {
