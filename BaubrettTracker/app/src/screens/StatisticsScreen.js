@@ -83,17 +83,19 @@ export default function StatisticsScreen({ navigation }) {
   }, []);
 
   // Calculate unscanned Baubretts count (including deleted)
+  // Fix: Only count scanned Baubretts that are NOT deleted
   const unscannedCount = useMemo(() => {
-    const scannedBBs = new Set();
+    const scannedSet = new Set();
     allRecords.forEach((record) => {
-      scannedBBs.add(String(record.BB_Nb).trim());
+      scannedSet.add(String(record.BB_Nb).trim());
     });
     
-    // Count: deleted baubretts + baubretts never scanned
-    const deletedCount = deletedBaubretts.size;
-    const neverScannedCount = totalBaubretts - deletedCount - scannedBBs.size;
+    // Count only scanned Baubretts that are NOT deleted (active scanned)
+    const activeScannedCount = Array.from(scannedSet).filter(bb => !deletedBaubretts.has(bb)).length;
     
-    return deletedCount + Math.max(0, neverScannedCount);
+    // Unscanned = total Baubretts - active scanned
+    // This includes: deleted Baubretts + never-scanned Baubretts
+    return totalBaubretts - activeScannedCount;
   }, [allRecords, totalBaubretts, deletedBaubretts]);
 
   // Get list of unscanned Baubretts (including deleted)
@@ -112,7 +114,7 @@ export default function StatisticsScreen({ navigation }) {
       unscanned.push({ bbNb: bb, isDeleted: true });
     });
     
-    // Add never-scanned baubretts
+    // Add never-scanned baubretts (not in scanned set AND not deleted)
     allBaubretts.forEach((record) => {
       const bbNb = String(record.BB_Nb).trim();
       if (!scannedBBs.has(bbNb) && !deletedBaubretts.has(bbNb)) {

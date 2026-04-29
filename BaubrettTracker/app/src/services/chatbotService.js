@@ -33,15 +33,15 @@ const buildSystemPrompt = async () => {
   const deletedArray = Array.from(deletedBaubretts);
   const deletedCount = deletedArray.length;
 
-  // Calculate scanned vs unscanned
+  // Calculate scanned vs unscanned (FIXED: exclude deleted from scanned count)
   const scannedSet = new Set();
   trackingRecords.forEach(record => {
     scannedSet.add(String(record.BB_Nb).trim());
   });
 
-  const scannedCount = scannedSet.size;
-  const neverScannedCount = totalBaubretts - deletedCount - scannedCount;
-  const unscannedCount = deletedCount + Math.max(0, neverScannedCount);
+  // Only count scanned Baubretts that are NOT deleted
+  const activeScannedCount = Array.from(scannedSet).filter(bb => !deletedBaubretts.has(bb)).length;
+  const unscannedCount = totalBaubretts - activeScannedCount;
 
   // Build list of all baubretts with status
   const baubrettStatusList = allBaubretts.map(bb => {
@@ -69,7 +69,7 @@ LIVE DATA (current as of this message):
 =====================================
 
 Total Baubretts in database: ${totalBaubretts}
-Total scanned (unique): ${scannedCount}
+Total scanned (unique, excluding deleted): ${activeScannedCount}
 Total unscanned (including deleted): ${unscannedCount}
 Deleted Baubretts count: ${deletedCount}
 Deleted Baubretts: ${deletedArray.length > 0 ? deletedArray.map(d => '#' + d).join(', ') : 'None'}
@@ -136,9 +136,12 @@ export async function getUnscannedCount() {
   const scannedSet = new Set();
   trackingRecords.forEach(r => scannedSet.add(String(r.BB_Nb).trim()));
 
-  const deletedCount = deletedBaubretts.size;
-  const neverScannedCount = allBaubretts.length - deletedCount - scannedSet.size;
-  return deletedCount + Math.max(0, neverScannedCount);
+  // Only count scanned Baubretts that are NOT deleted (active scanned)
+  const activeScannedCount = Array.from(scannedSet).filter(bb => !deletedBaubretts.has(bb)).length;
+  
+  // Unscanned = total Baubretts - active scanned
+  // This includes: deleted Baubretts + never-scanned Baubretts
+  return allBaubretts.length - activeScannedCount;
 }
 
 /**
