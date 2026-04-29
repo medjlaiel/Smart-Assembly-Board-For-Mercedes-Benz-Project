@@ -2,8 +2,9 @@
  * StatisticsScreen.js
  * Shows statistics about Baubrett scans with a bar chart.
  * Displays percentage of scans for each Baubrett based on tracking data.
+ * Also shows permanently deleted Baubretts as "unscanned".
  */
-import React, { useEffect, useState, useMemo } from 'react';
+import React, { useEffect, useState, useMemo, useCallback } from 'react';
 import {
   View,
   Text,
@@ -17,8 +18,10 @@ import {
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useTranslation } from 'react-i18next';
+import { useFocusEffect } from '@react-navigation/native';
 import { loadTrackingRecords } from '../services/trackingService';
 import { getAll } from '../services/databaseService';
+import { getDeletedBaubretts } from '../services/deletedBaubrettService';
 import { COLORS, RADIUS, SHADOW, FONT_SIZES } from '../assets/theme';
 import Svg, { Circle, G, Path, Text as SvgText } from 'react-native-svg';
 
@@ -27,15 +30,27 @@ export default function StatisticsScreen({ navigation }) {
   const [allRecords, setAllRecords] = useState([]);
   const [loading, setLoading] = useState(true);
   const [showUnscannedSheet, setShowUnscannedSheet] = useState(false);
+  const [deletedBaubretts, setDeletedBaubretts] = useState(new Set());
 
   useEffect(() => {
     loadData();
   }, []);
 
+  // Reload data whenever screen comes into focus
+  useFocusEffect(
+    useCallback(() => {
+      loadData();
+    }, [])
+  );
+
   const loadData = async () => {
     setLoading(true);
-    const data = await loadTrackingRecords();
-    setAllRecords(data);
+    const [records, deleted] = await Promise.all([
+      loadTrackingRecords(),
+      getDeletedBaubretts()
+    ]);
+    setAllRecords(records);
+    setDeletedBaubretts(deleted);
     setLoading(false);
   };
 
@@ -61,25 +76,27 @@ export default function StatisticsScreen({ navigation }) {
     return stats;
   }, [allRecords]);
 
-  // Get total number of Baubretts from database
+  // Get total number of Baubretts from database (including deleted)
   const totalBaubretts = useMemo(() => {
     const allBaubretts = getAll();
     return allBaubretts.length;
   }, []);
 
-  // Calculate unscanned Baubretts count
+  // Calculate unscanned Baubretts count (including deleted)
   const unscannedCount = useMemo(() => {
-    if (allRecords.length === 0) return totalBaubretts;
-    
     const scannedBBs = new Set();
     allRecords.forEach((record) => {
       scannedBBs.add(String(record.BB_Nb).trim());
     });
     
-    return totalBaubretts - scannedBBs.size;
-  }, [allRecords, totalBaubretts]);
+    // Count: deleted baubretts + baubretts never scanned
+    const deletedCount = deletedBaubretts.size;
+    const neverScannedCount = totalBaubretts - deletedCount - scannedBBs.size;
+    
+    return deletedCount + Math.max(0, neverScannedCount);
+  }, [allRecords, totalBaubretts, deletedBaubretts]);
 
-  // Get list of unscanned Baubretts
+  // Get list of unscanned Baubretts (including deleted)
   const unscannedBaubretts = useMemo(() => {
     const allBaubretts = getAll();
     const scannedBBs = new Set();
@@ -87,12 +104,25 @@ export default function StatisticsScreen({ navigation }) {
       scannedBBs.add(String(record.BB_Nb).trim());
     });
 
-    // Filter to get only unscanned Baubretts, sorted by BB_Nb
-    return allBaubretts
-      .filter((record) => !scannedBBs.has(String(record.BB_Nb).trim()))
-      .map((record) => String(record.BB_Nb).trim())
-      .sort();
-  }, [allRecords]);
+    // Get all baubretts that are either deleted or never scanned
+    const unscanned = [];
+    
+    // Add deleted baubretts first (marked as deleted)
+    deletedBaubretts.forEach((bb) => {
+      unscanned.push({ bbNb: bb, isDeleted: true });
+    });
+    
+    // Add never-scanned baubretts
+    allBaubretts.forEach((record) => {
+      const bbNb = String(record.BB_Nb).trim();
+      if (!scannedBBs.has(bbNb) && !deletedBaubretts.has(bbNb)) {
+        unscanned.push({ bbNb, isDeleted: false });
+      }
+    });
+
+    // Sort by BB_Nb
+    return unscanned.sort((a, b) => a.bbNb.localeCompare(b.bbNb));
+  }, [allRecords, deletedBaubretts]);
 
   // Color palette for pie chart slices
   const getColorForIndex = (index) => {
@@ -358,13 +388,20 @@ export default function StatisticsScreen({ navigation }) {
               ) : (
                 <FlatList
                   data={unscannedBaubretts}
-                  keyExtractor={(item) => item}
+                  keyExtractor={(item) => item.bbNb}
                   showsVerticalScrollIndicator={false}
                   contentContainerStyle={styles.bottomSheetList}
                   renderItem={({ item, index }) => (
                     <View style={[styles.bottomSheetItem, index % 2 === 0 && styles.bottomSheetItemEven]}>
                       <Text style={styles.bottomSheetItemNumber}>{index + 1}.</Text>
-                      <Text style={styles.bottomSheetItemText}>{item}</Text>
+                      <View style={styles.bottomSheetItemContent}>
+                        <Text style={styles.bottomSheetItemText}>{item.bbNb}</Text>
+                        {item.isDeleted && (
+                          <View style={styles.deletedBadge}>
+                            <Text style={styles.deletedBadgeText}>{t('statistics.deleted', 'Removed')}</Text>
+                          </View>
+                        )}
+                      </View>
                     </View>
                   )}
                 />
@@ -659,11 +696,28 @@ const styles = StyleSheet.create({
     marginRight: 12,
     minWidth: 30,
   },
+  bottomSheetItemContent: {
+    flex: 1,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+  },
   bottomSheetItemText: {
     fontSize: 16,
     fontWeight: '600',
     color: COLORS.text,
     fontFamily: 'monospace',
+  },
+  deletedBadge: {
+    backgroundColor: COLORS.error + '20',
+    paddingHorizontal: 8,
+    paddingVertical: 4,
+    borderRadius: RADIUS.sm,
+  },
+  deletedBadgeText: {
+    fontSize: 12,
+    fontWeight: '600',
+    color: COLORS.error,
   },
   closeButton: {
     backgroundColor: COLORS.primary,
