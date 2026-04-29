@@ -53,7 +53,16 @@
     "error": "Error",
     "ok": "OK",
     "cancel": "Cancel",
+    "delete": "Delete",
     "close": "Close"
+  },
+  "baubrettList": {
+    "title": "All Baubretts",
+    "subtitle": "{{count}} Baubretts in database",
+    "empty": "No baubrett numbers found",
+    "deleteConfirmTitle": "Remove Baubrett",
+    "deleteConfirmMessage": "Are you sure you want to remove Baubrett #{{bbNb}} from the active list? It will be moved to the unscanned list in Statistics.",
+    "deleteError": "Failed to delete Baubrett. Please try again."
   },
   "auth": {
     "invalidCredentials": "Invalid email or password",
@@ -207,6 +216,7 @@
     "refresh": "Refresh",
     "allScannedTitle": "All Baubretts Scanned!",
     "allScannedMessage": "Congratulations! All Baubretts in the database have been scanned.",
+    "deleted": "Removed",
     "close": "Close"
   },
   "techChanges": {
