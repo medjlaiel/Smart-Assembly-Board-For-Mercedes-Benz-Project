@@ -1,27 +1,19 @@
 /**
  * chatbotService.js
  * Handles communication with Anthropic Claude API for the AI Assistant.
+ * Uses direct HTTP requests to avoid SDK bundling issues in Expo.
  * Fetches live data from various services to provide context-aware answers.
  */
-import Anthropic from '@anthropic-ai/sdk';
-import { getAllBaubrettNumbers } from './techChangesService';
-import { getDeletedBaubretts } from './deletedBaubrettService';
-import { loadTrackingRecords } from './trackingService';
-import { getAll } from './databaseService';
-
-// Initialize Anthropic client with API key from environment
-const getAnthropicClient = () => {
-  const apiKey = process.env.EXPO_PUBLIC_ANTHROPIC_API_KEY;
-  if (!apiKey) {
-    throw new Error('Anthropic API key not configured. Set EXPO_PUBLIC_ANTHROPIC_API_KEY in your environment.');
-  }
-  return new Anthropic({ apiKey });
-};
 
 /**
  * Build system prompt with live data context
  */
-const buildSystemPrompt = async () => {
+export async function buildSystemPrompt() {
+  const { getAllBaubrettNumbers } = await import('./techChangesService');
+  const { getDeletedBaubretts } = await import('./deletedBaubrettService');
+  const { loadTrackingRecords } = await import('./trackingService');
+  const { getAll } = await import('./databaseService');
+
   const [allBaubretts, deletedBaubretts, trackingRecords, databaseEntries] = await Promise.all([
     getAllBaubrettNumbers(),
     getDeletedBaubretts(),
@@ -33,7 +25,7 @@ const buildSystemPrompt = async () => {
   const deletedArray = Array.from(deletedBaubretts);
   const deletedCount = deletedArray.length;
 
-  // Calculate scanned vs unscanned (FIXED: exclude deleted from scanned count)
+  // Calculate scanned vs unscanned (exclude deleted from scanned count)
   const scannedSet = new Set();
   trackingRecords.forEach(record => {
     scannedSet.add(String(record.BB_Nb).trim());
@@ -89,31 +81,47 @@ INSTRUCTIONS:
 - Be concise and helpful. If you don't have enough information, say so.
 - Always use the live data provided, do not make up numbers.
 - When showing Baubrett numbers, always prefix with # (e.g., #4711)`;
-};
+}
 
 /**
- * Send a message to Claude and get a response
+ * Send a message to Claude and get a response using direct HTTP API
  * @param {Array} conversationHistory - Array of {role: 'user'|'assistant', content: string}
  * @returns {Promise<string>} Bot response
  */
 export async function sendChatMessage(conversationHistory) {
   try {
-    const client = getAnthropicClient();
+    const apiKey = process.env.EXPO_PUBLIC_ANTHROPIC_API_KEY;
+    if (!apiKey) {
+      throw new Error('Anthropic API key not configured. Set EXPO_PUBLIC_ANTHROPIC_API_KEY in your environment.');
+    }
+
     const systemPrompt = await buildSystemPrompt();
 
-    const messages = conversationHistory.map(msg => ({
-      role: msg.role,
-      content: msg.content
-    }));
-
-    const response = await client.messages.create({
-      model: 'claude-sonnet-4-20250514',
-      max_tokens: 1024,
-      system: systemPrompt,
-      messages: messages,
+    const response = await fetch('https://api.anthropic.com/v1/messages', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'x-api-key': apiKey,
+        'anthropic-version': '2023-06-01',
+      },
+      body: JSON.stringify({
+        model: 'claude-sonnet-4-20250514',
+        max_tokens: 1024,
+        system: systemPrompt,
+        messages: conversationHistory.map(msg => ({
+          role: msg.role,
+          content: msg.content
+        })),
+      }),
     });
 
-    return response.content[0].text;
+    if (!response.ok) {
+      const errorData = await response.json().catch(() => ({}));
+      throw new Error(`API error ${response.status}: ${errorData.error?.message || 'Unknown error'}`);
+    }
+
+    const data = await response.json();
+    return data.content[0].text;
   } catch (error) {
     console.error('Chatbot API error:', error);
     if (error.message.includes('API key')) {
@@ -127,6 +135,10 @@ export async function sendChatMessage(conversationHistory) {
  * Quick action: Get unscanned Baubretts count
  */
 export async function getUnscannedCount() {
+  const { getAllBaubrettNumbers } = await import('./techChangesService');
+  const { getDeletedBaubretts } = await import('./deletedBaubrettService');
+  const { loadTrackingRecords } = await import('./trackingService');
+
   const [allBaubretts, deletedBaubretts, trackingRecords] = await Promise.all([
     getAllBaubrettNumbers(),
     getDeletedBaubretts(),
@@ -148,6 +160,7 @@ export async function getUnscannedCount() {
  * Quick action: Check if a specific Baubrett is scanned
  */
 export async function isBaubrettScanned(bbNb) {
+  const { loadTrackingRecords } = await import('./trackingService');
   const trackingRecords = await loadTrackingRecords();
   const scannedSet = new Set(trackingRecords.map(r => String(r.BB_Nb).trim()));
   return scannedSet.has(String(bbNb).trim());
@@ -157,6 +170,7 @@ export async function isBaubrettScanned(bbNb) {
  * Quick action: Get list of deleted Baubretts
  */
 export async function getDeletedList() {
+  const { getDeletedBaubretts } = await import('./deletedBaubrettService');
   const deleted = await getDeletedBaubretts();
   return Array.from(deleted).sort();
 }

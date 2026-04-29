@@ -3,7 +3,7 @@
  * AI Assistant screen for Baubrett workers.
  * Uses Claude Sonnet to answer questions about Baubretts with live data context.
  */
-import React, { useState, useRef, useEffect, useCallback } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import {
   View,
   Text,
@@ -14,12 +14,11 @@ import {
   ActivityIndicator,
   KeyboardAvoidingView,
   Platform,
-  Alert,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useTranslation } from 'react-i18next';
 import Icon from 'react-native-vector-icons/MaterialIcons';
-import { COLORS, RADIUS, SHADOW, FONT_SIZES } from '../assets/theme';
+import { COLORS, RADIUS, SHADOW } from '../assets/theme';
 import { sendChatMessage, getUnscannedCount, isBaubrettScanned, getDeletedList } from '../services/chatbotService';
 
 // Quick action chips configuration

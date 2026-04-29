@@ -244,6 +244,12 @@
     "allCompleteTitle": "All UFBs are full",
     "allCompleteMessage": "All UFBs have reached the required 8 scans. Nothing to report."
   },
+  "drawer": {
+    "changePassword": "Change Password",
+    "unknownUser": "User",
+    "logoutConfirmTitle": "Logout",
+    "logoutConfirmMessage": "Are you sure you want to logout?"
+  },
   "chatbot": {
     "title": "Assistant",
     "subtitle": "Powered by Claude AI",
