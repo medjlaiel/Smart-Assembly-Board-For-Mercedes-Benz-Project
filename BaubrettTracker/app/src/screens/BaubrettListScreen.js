@@ -1,8 +1,9 @@
 /**
  * BaubrettListScreen.js
  * Displays all Baubrett numbers in the database.
+ * Allows permanent deletion of Baubrett entries with confirmation.
  */
-import React, { useMemo } from 'react';
+import React, { useMemo, useState, useEffect } from 'react';
 import {
   View,
   Text,
@@ -10,17 +11,75 @@ import {
   FlatList,
   TouchableOpacity,
   SafeAreaView,
+  Alert,
 } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import { COLORS, RADIUS, SHADOW, FONT_SIZES } from '../assets/theme';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import { getAllBaubrettNumbers } from '../services/techChangesService';
+import { getDeletedBaubretts, deleteBaubrett as markDeleted } from '../services/deletedBaubrettService';
 
 export default function BaubrettListScreen({ navigation }) {
   const { t } = useTranslation();
+  const [deletedBaubretts, setDeletedBaubretts] = useState(new Set());
+  const [refreshing, setRefreshing] = useState(false);
 
-  // Get all baubrett numbers from the service
-  const baubrettNumbers = useMemo(() => getAllBaubrettNumbers(), []);
+  // Load deleted baubretts on mount
+  useEffect(() => {
+    loadDeletedBaubretts();
+  }, []);
+
+  const loadDeletedBaubretts = async () => {
+    const deleted = await getDeletedBaubretts();
+    setDeletedBaubretts(deleted);
+  };
+
+  // Get all baubrett numbers and filter out deleted ones
+  const baubrettNumbers = useMemo(() => {
+    const all = getAllBaubrettNumbers();
+    return all.filter((bb) => !deletedBaubretts.has(String(bb).trim()));
+  }, [deletedBaubretts]);
+
+  // Handle delete with confirmation
+  const handleDelete = (bbNb) => {
+    Alert.alert(
+      t('baubrettList.deleteConfirmTitle', 'Remove Baubrett'),
+      t('baubrettList.deleteConfirmMessage', { bbNb }),
+      [
+        {
+          text: t('common.cancel', 'Cancel'),
+          style: 'cancel',
+        },
+        {
+          text: t('common.delete', 'Delete'),
+          style: 'destructive',
+          onPress: async () => {
+            const success = await markDeleted(bbNb);
+            if (success) {
+              // Update local state to reflect deletion
+              setDeletedBaubretts((prev) => {
+                const newSet = new Set(prev);
+                newSet.add(bbNb);
+                return newSet;
+              });
+            } else {
+              Alert.alert(
+                t('common.error', 'Error'),
+                t('baubrettList.deleteError', 'Failed to delete Baubrett')
+              );
+            }
+          },
+        },
+      ]
+    );
+  };
+
+  // Refresh handler
+  const onRefresh = async () => {
+    setRefreshing(true);
+    await loadDeletedBaubretts();
+    setRefreshing(false);
+  };
 
   // Render each baubrett number item
   const renderItem = ({ item, index }) => (
@@ -37,7 +96,16 @@ export default function BaubrettListScreen({ navigation }) {
           <Icon name="confirmation-number" size={20} color={COLORS.primary} />
           <Text style={styles.baubrettNumber}>{item}</Text>
         </View>
-        <Text style={styles.indexText}>#{index + 1}</Text>
+        <View style={styles.rightContainer}>
+          <Text style={styles.indexText}>#{index + 1}</Text>
+          <TouchableOpacity
+            style={styles.deleteButton}
+            onPress={() => handleDelete(item)}
+            hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}
+          >
+            <Icon name="delete" size={22} color={COLORS.error} />
+          </TouchableOpacity>
+        </View>
       </View>
       <View style={styles.divider} />
     </TouchableOpacity>
@@ -62,6 +130,8 @@ export default function BaubrettListScreen({ navigation }) {
         contentContainerStyle={styles.listContent}
         showsVerticalScrollIndicator={false}
         ItemSeparatorComponent={() => <View style={styles.separator} />}
+        refreshing={refreshing}
+        onRefresh={onRefresh}
         ListEmptyComponent={
           <View style={styles.emptyContainer}>
             <Icon name="inbox" size={64} color={COLORS.text3} />
@@ -116,6 +186,14 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     gap: 12,
+  },
+  rightContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 12,
+  },
+  deleteButton: {
+    padding: 4,
   },
   baubrettNumber: {
     fontSize: 18,
