@@ -216,7 +216,6 @@ export default function ChatbotScreen({ navigation }) {
             <Icon name="smart-toy" size={28} color={COLORS.white} />
             <View style={styles.headerText}>
               <Text style={styles.headerTitle}>Assistant</Text>
-              <Text style={styles.headerSubtitle}>Powered by Claude AI</Text>
             </View>
           </View>
         </View>

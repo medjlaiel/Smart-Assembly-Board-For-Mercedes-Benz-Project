@@ -4,17 +4,19 @@
  * Positioned at bottom-right, stays visible on scroll
  */
 import React from 'react';
-import { TouchableOpacity, StyleSheet } from 'react-native';
+import { TouchableOpacity, StyleSheet, View, Text } from 'react-native';
 import Svg, { Circle, Rect, Path, Text as SvgText } from 'react-native-svg';
-import { SHADOW } from '../assets/theme';
+import { SHADOW, COLORS } from '../assets/theme';
 
 export default function ChatbotFAB({ onPress }) {
   return (
-    <TouchableOpacity
-      style={[styles.fab, SHADOW.medium]}
-      onPress={onPress}
-      activeOpacity={0.8}
-    >
+    <View style={styles.fabContainer}>
+      <Text style={styles.fabLabel}>Ask AI</Text>
+      <TouchableOpacity
+        style={[styles.fab, SHADOW.medium]}
+        onPress={onPress}
+        activeOpacity={0.8}
+      >
       <Svg width={60} height={60} viewBox="0 0 60 60">
         {/* Outer circle outline */}
         <Circle
@@ -74,22 +76,36 @@ export default function ChatbotFAB({ onPress }) {
           fill="#66CDAA"
         />
       </Svg>
-    </TouchableOpacity>
+      </TouchableOpacity>
+    </View>
   );
 }
 
 const styles = StyleSheet.create({
-  fab: {
+  fabContainer: {
     position: 'absolute',
     bottom: 30,
     right: 20,
+    alignItems: 'center',
+    zIndex: 999,
+  },
+  fabLabel: {
+    fontSize: 12,
+    fontWeight: '600',
+    color: COLORS.text2,
+    marginBottom: 6,
+    backgroundColor: COLORS.surface,
+    paddingHorizontal: 8,
+    paddingVertical: 2,
+    borderRadius: 4,
+  },
+  fab: {
     width: 60,
     height: 60,
     borderRadius: 30,
     backgroundColor: '#66CDAA',
     justifyContent: 'center',
     alignItems: 'center',
-    zIndex: 999,
     elevation: 8,
   },
 });
