@@ -370,7 +370,8 @@ export default function HomeScreen({ navigation }) {
           onClose={() => setShowDrawer(false)}
           navigation={navigation}
         />
-      </SafeAreaView>
+      </View>
+    </SafeAreaView>
   );
 }
 
