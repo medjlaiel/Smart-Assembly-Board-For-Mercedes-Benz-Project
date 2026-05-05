@@ -1,6 +1,6 @@
 /**
  * DrawerMenu.js
- * Left side drawer with accordion/expandable sections: Profile, Baubrett, Assistant, Database, About, Logout
+ * Left side drawer with accordion/expandable sections: Profile, Baubrett, Database, About, Logout
  */
 import React, { useEffect, useState } from 'react';
 import {
@@ -110,11 +110,6 @@ export default function DrawerMenu({ visible, onClose, navigation }) {
     navigation.navigate('BaubrettList');
   };
 
-  const handleChatbot = () => {
-    onClose(); // Close drawer
-    navigation.navigate('Chatbot');
-  };
-
   const handleDatabase = () => {
     onClose(); // Close drawer
     navigation.navigate('DatabasePicker');
@@ -201,19 +196,6 @@ export default function DrawerMenu({ visible, onClose, navigation }) {
               >
                 <Text style={styles.sectionTitle}>Baubrett</Text>
                 <Icon name="chevron-right" size={20} color={COLORS.text3} />
-              </TouchableOpacity>
-            </View>
-
-            {/* ── ASSISTANT SECTION ─────────────────────────────────── */} 
-            <View style={styles.sectionContainer}>
-              <TouchableOpacity
-                style={styles.sectionHeader}
-                onPress={handleChatbot}
-                activeOpacity={0.7}
-              >
-                <Icon name="smart-toy" size={20} color={COLORS.primary} />
-                <Text style={styles.sectionTitle}>Assistant</Text>
-                <Icon name="chevron-right" size={20} color={COLORS.primary} />
               </TouchableOpacity>
             </View>
 

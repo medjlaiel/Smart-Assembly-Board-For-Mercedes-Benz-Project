@@ -19,7 +19,6 @@ import { COLORS, RADIUS, SHADOW } from '../assets/theme';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import NotificationCenter from '../components/NotificationCenter';
 import DrawerMenu from '../components/DrawerMenu';
-import ChatbotFAB from '../components/ChatbotFAB';
 import { loadTrackingRecords } from '../services/trackingService';
 import { getValidZoneKeys } from '../data/zones';
 
