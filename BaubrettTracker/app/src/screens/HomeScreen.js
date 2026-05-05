@@ -18,6 +18,7 @@ import { COLORS, RADIUS, SHADOW, FONT_SIZES } from '../assets/theme';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import NotificationCenter from '../components/NotificationCenter';
 import DrawerMenu from '../components/DrawerMenu';
+import ChatbotFAB from '../components/ChatbotFAB';
 import { loadTrackingRecords } from '../services/trackingService';
 import { getValidZoneKeys } from '../data/zones';
 
@@ -153,89 +154,94 @@ export default function HomeScreen({ navigation }) {
 
   return (
     <SafeAreaView style={styles.safe}>
-      <Animated.ScrollView
-        contentContainerStyle={styles.scrollContent}
-        showsVerticalScrollIndicator={false}
-        onScroll={Animated.event(
-          [{ nativeEvent: { contentOffset: { y: scrollY } } }],
-          { useNativeDriver: false }
-        )}
-        scrollEventThrottle={16}
-      >
-        <Header scrollY={scrollY} />
+      <View style={styles.container}>
+        <Animated.ScrollView
+          contentContainerStyle={styles.scrollContent}
+          showsVerticalScrollIndicator={false}
+          onScroll={Animated.event(
+            [{ nativeEvent: { contentOffset: { y: scrollY } } }],
+            { useNativeDriver: false }
+          )}
+          scrollEventThrottle={16}
+        >
+          <Header scrollY={scrollY} />
 
-        {/* Main Actions */}
-        <View style={styles.section}>
-          <Text style={styles.sectionTitle}>{t('home.primaryActions')}</Text>
+          {/* Main Actions */}
+          <View style={styles.section}>
+            <Text style={styles.sectionTitle}>{t('home.primaryActions')}</Text>
 
-          <ActionCard
-            icon="save-alt"
-            title={t('home.saveBaubrett.title')}
-            color={COLORS.primary}
-            onPress={() => navigation.navigate('SaveScanBaubrett')}
-            badge="NEW"
-          />
+            <ActionCard
+              icon="save-alt"
+              title={t('home.saveBaubrett.title')}
+              color={COLORS.primary}
+              onPress={() => navigation.navigate('SaveScanBaubrett')}
+              badge="NEW"
+            />
 
-          <ActionCard
-            icon="search"
-            title={t('home.consult.title', 'Consult')}
-            color={COLORS.accent}
-            onPress={() => navigation.navigate('ConsultScan')}
-          />
+            <ActionCard
+              icon="search"
+              title={t('home.consult.title', 'Consult')}
+              color={COLORS.accent}
+              onPress={() => navigation.navigate('ConsultScan')}
+            />
 
-          <ActionCard
-            icon="find-in-page"
-            title={t('home.search.title')}
-            color={COLORS.success}
-            onPress={() => navigation.navigate('Search')}
-          />
-        </View>
+            <ActionCard
+              icon="find-in-page"
+              title={t('home.search.title')}
+              color={COLORS.success}
+              onPress={() => navigation.navigate('Search')}
+            />
+          </View>
 
-        {/* Records Section */}
-        <View style={styles.section}>
-          <Text style={styles.sectionTitle}>{t('home.records')}</Text>
+          {/* Records Section */}
+          <View style={styles.section}>
+            <Text style={styles.sectionTitle}>{t('home.records')}</Text>
 
-          <ActionCard
-            icon="history"
-            title={t('home.history.title')}
-            color={COLORS.warning}
-            onPress={() => navigation.navigate('History')}
-          />
+            <ActionCard
+              icon="history"
+              title={t('home.history.title')}
+              color={COLORS.warning}
+              onPress={() => navigation.navigate('History')}
+            />
 
-          <ActionCard
-            icon="build"
-            title="Approval Status"
-            color={COLORS.info || '#2196F3'}
-            onPress={() => navigation.navigate('TechChanges')}
-          />
+            <ActionCard
+              icon="build"
+              title="Approval Status"
+              color={COLORS.info || '#2196F3'}
+              onPress={() => navigation.navigate('TechChanges')}
+            />
 
-          <ActionCard
-            icon="description"
-            title="Measurement Protocols"
-            color={COLORS.primaryDark}
-            onPress={() => navigation.navigate('MeasurementProtocols')}
-          />
+            <ActionCard
+              icon="description"
+              title="Measurement Protocols"
+              color={COLORS.primaryDark}
+              onPress={() => navigation.navigate('MeasurementProtocols')}
+            />
 
-          <ActionCard
-            icon="bar-chart"
-            title={t('statistics.title')}
-            color={COLORS.primaryDark}
-            onPress={() => navigation.navigate('Statistics')}
-          />
+            <ActionCard
+              icon="bar-chart"
+              title={t('statistics.title')}
+              color={COLORS.primaryDark}
+              onPress={() => navigation.navigate('Statistics')}
+            />
 
-          <ActionCard
-            icon="file-upload"
-            title="Upload Documents"
-            color={COLORS.secondary || '#FF9800'}
-            onPress={() => navigation.navigate('UploadXlsx')}
-          />
-        </View>
+            <ActionCard
+              icon="file-upload"
+              title="Upload Documents"
+              color={COLORS.secondary || '#FF9800'}
+              onPress={() => navigation.navigate('UploadXlsx')}
+            />
+          </View>
 
-        <View style={styles.footer}>
-          <Text style={styles.footerText}>© 2025 Baubrett Tracker</Text>
-          <Text style={styles.footerVersion}>Version 1.0.0</Text>
-        </View>
-      </Animated.ScrollView>
+          <View style={styles.footer}>
+            <Text style={styles.footerText}>© 2025 Baubrett Tracker</Text>
+            <Text style={styles.footerVersion}>Version 1.0.0</Text>
+          </View>
+        </Animated.ScrollView>
+
+        {/* Floating Chatbot Button - stays visible on scroll */}
+        <ChatbotFAB onPress={() => navigation.navigate('Chatbot')} />
+      </View>
 
       {/* Notification Center Modal */}
       <NotificationCenter
@@ -256,6 +262,8 @@ export default function HomeScreen({ navigation }) {
 
 const styles = StyleSheet.create({
   safe: { flex: 1, backgroundColor: COLORS.background },
+
+  container: { flex: 1, position: 'relative' },
 
   scrollContent: {
     paddingBottom: 40,
