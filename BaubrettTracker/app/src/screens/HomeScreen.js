@@ -11,10 +11,11 @@ import {
   ScrollView,
   Animated,
   Dimensions,
+  useColorScheme,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useTranslation } from 'react-i18next';
-import { COLORS, RADIUS, SHADOW, FONT_SIZES } from '../assets/theme';
+import { COLORS, RADIUS, SHADOW } from '../assets/theme';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import NotificationCenter from '../components/NotificationCenter';
 import DrawerMenu from '../components/DrawerMenu';
@@ -22,7 +23,13 @@ import ChatbotFAB from '../components/ChatbotFAB';
 import { loadTrackingRecords } from '../services/trackingService';
 import { getValidZoneKeys } from '../data/zones';
 
-const { width } = Dimensions.get('window');
+const { width: SCREEN_WIDTH } = Dimensions.get('window');
+
+// Colored Carousel constants
+const COLOR_CARD_WIDTH = 200;
+const COLOR_CARD_HEIGHT = 130;
+const COLOR_CARD_GAP = 12;
+const CAROUSEL_SNAP_INTERVAL = COLOR_CARD_WIDTH + COLOR_CARD_GAP;
 
 // ── Animated Header Component ──────────────────────────────────────
 function Header({ scrollY }) {
@@ -49,26 +56,66 @@ function Header({ scrollY }) {
   );
 }
 
-// ── Action Card Component ──────────────────────────────────────────
-function ActionCard({ icon, title, color, onPress, badge }) {
+// ── Colored Carousel Card ──────────────────────────────────────────
+function ColoredCarouselCard({ item }) {
   return (
     <TouchableOpacity
-      style={[styles.actionCard, { borderLeftColor: color }, SHADOW.small]}
-      onPress={onPress}
-      activeOpacity={0.85}
+      style={[styles.colorCard, { backgroundColor: item.color }]}
+      onPress={item.onPress}
+      activeOpacity={0.9}
     >
-      <View style={[styles.actionIconContainer, { backgroundColor: color + '15' }]}>
-        <Icon name={icon} size={28} color={color} />
-      </View>
-      <View style={styles.actionContent}>
-        <View style={styles.actionHeader}>
-          <Text style={styles.actionTitle}>{title}</Text>
-          {badge && <View style={[styles.actionBadge, { backgroundColor: color }]}>
-            <Text style={styles.actionBadgeText}>{badge}</Text>
-          </View>}
+      <Icon name={item.icon} size={28} color="white" />
+      <View style={styles.colorCardBottom}>
+        <View>
+          <Text style={styles.colorCardTitle} numberOfLines={1}>
+            {item.title}
+          </Text>
+          {item.badge && (
+            <Text style={styles.colorCardSubtitle}>{item.badge}</Text>
+          )}
         </View>
+        <Icon name="chevron-right" size={20} color="white" />
       </View>
-      <Icon name="chevron-right" size={24} color={COLORS.text3} />
+    </TouchableOpacity>
+  );
+}
+
+// ── Bento Wide Card ─────────────────────────────────────────────────
+function BentoWideCard({ item, borderColor, iconBgColor }) {
+  return (
+    <TouchableOpacity
+      style={[styles.bentoCard, styles.bentoWide, { borderColor }]}
+      onPress={item.onPress}
+      activeOpacity={0.7}
+    >
+      <View style={[styles.bentoIconBox, { backgroundColor: iconBgColor }, styles.bentoWideIcon]}>
+        <Icon name={item.icon} size={28} color={item.color} />
+      </View>
+      <View style={{ flex: 1 }}>
+        <Text style={styles.bentoTitle} numberOfLines={1}>
+          {item.title}
+        </Text>
+      </View>
+    </TouchableOpacity>
+  );
+}
+
+// ── Bento Small Card ────────────────────────────────────────────────
+function BentoSmallCard({ item, borderColor, iconBgColor }) {
+  return (
+    <TouchableOpacity
+      style={[styles.bentoCard, styles.bentoSmall, { borderColor }]}
+      onPress={item.onPress}
+      activeOpacity={0.7}
+    >
+      <View style={[styles.bentoIconBox, { backgroundColor: iconBgColor }, styles.bentoSmallIcon]}>
+        <Icon name={item.icon} size={28} color={item.color} />
+      </View>
+      <View style={{ alignItems: 'center' }}>
+        <Text style={[styles.bentoTitle, { textAlign: 'center' }]} numberOfLines={2}>
+          {item.title}
+        </Text>
+      </View>
     </TouchableOpacity>
   );
 }
@@ -76,15 +123,90 @@ function ActionCard({ icon, title, color, onPress, badge }) {
 // ── Main Component ────────────────────────────────────────────────
 export default function HomeScreen({ navigation }) {
   const { t } = useTranslation();
+  const colorScheme = useColorScheme();
+  const isDark = colorScheme === 'dark';
   const scrollY = useRef(new Animated.Value(0)).current;
   const [showNotifications, setShowNotifications] = useState(false);
   const [showDrawer, setShowDrawer] = useState(false);
   const [allRecords, setAllRecords] = useState([]);
 
+  // All action items for carousel
+  const allActions = useMemo(() => [
+    {
+      id: 'save',
+      icon: 'save-alt',
+      title: t('home.saveBaubrett.title'),
+      color: COLORS.primary,
+      onPress: () => navigation.navigate('SaveScanBaubrett'),
+      badge: 'NEW',
+    },
+    {
+      id: 'consult',
+      icon: 'search',
+      title: t('home.consult.title', 'Consult'),
+      color: COLORS.accent,
+      onPress: () => navigation.navigate('ConsultScan'),
+    },
+    {
+      id: 'search',
+      icon: 'find-in-page',
+      title: t('home.search.title'),
+      color: COLORS.success,
+      onPress: () => navigation.navigate('Search'),
+    },
+    {
+      id: 'history',
+      icon: 'history',
+      title: t('home.history.title'),
+      color: COLORS.warning,
+      onPress: () => navigation.navigate('History'),
+    },
+    {
+      id: 'approval',
+      icon: 'build',
+      title: 'Approval Status',
+      color: COLORS.info || '#2196F3',
+      onPress: () => navigation.navigate('TechChanges'),
+    },
+    {
+      id: 'protocols',
+      icon: 'description',
+      title: 'Measurement Protocols',
+      color: COLORS.primaryDark,
+      onPress: () => navigation.navigate('MeasurementProtocols'),
+    },
+    {
+      id: 'statistics',
+      icon: 'bar-chart',
+      title: t('statistics.title'),
+      color: COLORS.primaryDark,
+      onPress: () => navigation.navigate('Statistics'),
+    },
+    {
+      id: 'upload',
+      icon: 'file-upload',
+      title: 'Upload Documents',
+      color: COLORS.secondary || '#FF9800',
+      onPress: () => navigation.navigate('UploadXlsx'),
+    },
+  ], [t, navigation]);
+
+  // Split actions: first 4 for colored carousel, rest for bento grid
+  const carouselActions = useMemo(() => {
+    const colors = ['#1D9E75', '#534AB7', '#D85A30', '#BA7517'];
+    return allActions.slice(0, 4).map((item, idx) => ({ ...item, color: colors[idx] }));
+  }, [allActions]);
+
+  const bentoActions = useMemo(() => allActions.slice(4), [allActions]);
+
+  // Dynamic colors for bento cards based on theme
+  const bentoBorderColor = isDark ? 'rgba(255,255,255,0.15)' : 'rgba(0,0,0,0.15)';
+  const iconBgColor = isDark ? 'rgba(255,255,255,0.15)' : 'rgba(0,0,0,0.07)';
+
   // Load tracking records for notification count
   useEffect(() => {
     loadData();
-    const interval = setInterval(loadData, 30000); // Refresh every 30 seconds
+    const interval = setInterval(loadData, 30000);
     return () => clearInterval(interval);
   }, []);
 
@@ -117,14 +239,11 @@ export default function HomeScreen({ navigation }) {
     return incomplete;
   }, [allRecords]);
 
-  // Set header options with hamburger menu on left, notification and statistics on right
+  // Set header options
   useEffect(() => {
     navigation.setOptions({
       headerLeft: () => (
-        <TouchableOpacity
-          style={styles.headerActionBtn}
-          onPress={() => setShowDrawer(true)}
-        >
+        <TouchableOpacity style={styles.headerActionBtn} onPress={() => setShowDrawer(true)}>
           <Icon name="menu" size={24} color={COLORS.white} />
         </TouchableOpacity>
       ),
@@ -152,6 +271,12 @@ export default function HomeScreen({ navigation }) {
     });
   }, [navigation, incompleteUFBCount]);
 
+  // Prepare bento items for layout
+  const bentoWide1 = bentoActions[0];
+  const bentoSmall1 = bentoActions[1];
+  const bentoSmall2 = bentoActions[2];
+  const bentoWide2 = bentoActions[3];
+
   return (
     <SafeAreaView style={styles.safe}>
       <View style={styles.container}>
@@ -166,71 +291,65 @@ export default function HomeScreen({ navigation }) {
         >
           <Header scrollY={scrollY} />
 
-          {/* Main Actions */}
+          {/* Section 1: Quick Actions */}
           <View style={styles.section}>
-            <Text style={styles.sectionTitle}>{t('home.primaryActions')}</Text>
-
-            <ActionCard
-              icon="save-alt"
-              title={t('home.saveBaubrett.title')}
-              color={COLORS.primary}
-              onPress={() => navigation.navigate('SaveScanBaubrett')}
-              badge="NEW"
-            />
-
-            <ActionCard
-              icon="search"
-              title={t('home.consult.title', 'Consult')}
-              color={COLORS.accent}
-              onPress={() => navigation.navigate('ConsultScan')}
-            />
-
-            <ActionCard
-              icon="find-in-page"
-              title={t('home.search.title')}
-              color={COLORS.success}
-              onPress={() => navigation.navigate('Search')}
-            />
+            <Text style={styles.sectionHeader}>Quick Actions</Text>
           </View>
 
-          {/* Records Section */}
+          {/* Colored Carousel */}
+          <View style={styles.carouselContainer}>
+            <ScrollView
+              horizontal
+              showsHorizontalScrollIndicator={false}
+              snapToInterval={CAROUSEL_SNAP_INTERVAL}
+              decelerationRate="fast"
+              contentContainerStyle={{ paddingHorizontal: 16 }}
+            >
+              {carouselActions.map((item) => (
+                <ColoredCarouselCard key={item.id} item={item} />
+              ))}
+            </ScrollView>
+          </View>
+
+          {/* Section 2: Explore */}
           <View style={styles.section}>
-            <Text style={styles.sectionTitle}>{t('home.records')}</Text>
+            <Text style={styles.sectionHeader}>Explore</Text>
+          </View>
 
-            <ActionCard
-              icon="history"
-              title={t('home.history.title')}
-              color={COLORS.warning}
-              onPress={() => navigation.navigate('History')}
-            />
-
-            <ActionCard
-              icon="build"
-              title="Approval Status"
-              color={COLORS.info || '#2196F3'}
-              onPress={() => navigation.navigate('TechChanges')}
-            />
-
-            <ActionCard
-              icon="description"
-              title="Measurement Protocols"
-              color={COLORS.primaryDark}
-              onPress={() => navigation.navigate('MeasurementProtocols')}
-            />
-
-            <ActionCard
-              icon="bar-chart"
-              title={t('statistics.title')}
-              color={COLORS.primaryDark}
-              onPress={() => navigation.navigate('Statistics')}
-            />
-
-            <ActionCard
-              icon="file-upload"
-              title="Upload Documents"
-              color={COLORS.secondary || '#FF9800'}
-              onPress={() => navigation.navigate('UploadXlsx')}
-            />
+          {/* Bento Grid */}
+          <View style={styles.bentoGrid}>
+            {bentoWide1 && (
+              <View style={styles.bentoRow}>
+                <BentoWideCard
+                  item={bentoWide1}
+                  borderColor={bentoBorderColor}
+                  iconBgColor={iconBgColor}
+                />
+              </View>
+            )}
+            {bentoSmall1 && bentoSmall2 && (
+              <View style={styles.bentoRow}>
+                <BentoSmallCard
+                  item={bentoSmall1}
+                  borderColor={bentoBorderColor}
+                  iconBgColor={iconBgColor}
+                />
+                <BentoSmallCard
+                  item={bentoSmall2}
+                  borderColor={bentoBorderColor}
+                  iconBgColor={iconBgColor}
+                />
+              </View>
+            )}
+            {bentoWide2 && (
+              <View style={styles.bentoRow}>
+                <BentoWideCard
+                  item={bentoWide2}
+                  borderColor={bentoBorderColor}
+                  iconBgColor={iconBgColor}
+                />
+              </View>
+            )}
           </View>
 
           <View style={styles.footer}>
@@ -239,7 +358,7 @@ export default function HomeScreen({ navigation }) {
           </View>
         </Animated.ScrollView>
 
-        {/* Floating Chatbot Button - stays visible on scroll */}
+        {/* Floating Chatbot Button */}
         <ChatbotFAB onPress={() => navigation.navigate('Chatbot')} />
       </View>
 
@@ -260,14 +379,11 @@ export default function HomeScreen({ navigation }) {
   );
 }
 
+// ── Styles ───────────────────────────────────────────────────────────
 const styles = StyleSheet.create({
   safe: { flex: 1, backgroundColor: COLORS.background },
-
   container: { flex: 1, position: 'relative' },
-
-  scrollContent: {
-    paddingBottom: 40,
-  },
+  scrollContent: { paddingBottom: 40 },
 
   // Header
   header: {
@@ -324,58 +440,95 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16,
     marginTop: 24,
   },
-  sectionTitle: {
-    fontSize: 14,
-    fontWeight: '700',
-    color: COLORS.text3,
-    letterSpacing: 0.8,
-    textTransform: 'uppercase',
-    marginBottom: 12,
-    marginLeft: 4,
-  },
-
-  // Action Cards
-  actionCard: {
-    backgroundColor: COLORS.surface,
-    borderRadius: RADIUS.md,
-    borderLeftWidth: 4,
-    padding: 18,
-    flexDirection: 'row',
-    alignItems: 'center',
-    marginBottom: 12,
-    ...SHADOW.small,
-  },
-  actionIconContainer: {
-    width: 56,
-    height: 56,
-    borderRadius: RADIUS.md,
-    alignItems: 'center',
-    justifyContent: 'center',
-    marginRight: 16,
-  },
-  actionContent: {
-    flex: 1,
-  },
-  actionHeader: {
-    flexDirection: 'row',
-    alignItems: 'center',
-  },
-  actionTitle: {
+  sectionHeader: {
     fontSize: 16,
     fontWeight: '700',
     color: COLORS.text,
-    marginRight: 8,
+    marginBottom: 12,
   },
-  actionBadge: {
-    paddingHorizontal: 8,
-    paddingVertical: 2,
+
+  // Colored Carousel
+  carouselContainer: {
+    marginVertical: 10,
+  },
+  colorCard: {
+    width: COLOR_CARD_WIDTH,
+    height: COLOR_CARD_HEIGHT,
+    borderRadius: 20,
+    padding: 12,
+    justifyContent: 'space-between',
+    alignItems: 'flex-start',
+    marginRight: COLOR_CARD_GAP,
+    ...SHADOW.small,
+  },
+  colorCardBottom: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'flex-end',
+    width: '100%',
+  },
+  colorCardTitle: {
+    color: 'white',
+    fontWeight: 'bold',
+    fontSize: 16,
+    flexShrink: 1,
+  },
+  colorCardSubtitle: {
+    color: 'rgba(255,255,255,0.6)',
+    fontSize: 12,
+    marginTop: 2,
+  },
+
+  // Bento Grid
+  bentoGrid: {
+    paddingHorizontal: 16,
+    marginTop: 8,
+    marginBottom: 20,
+  },
+  bentoRow: {
+    flexDirection: 'row',
+    gap: 10,
+    marginBottom: 10,
+  },
+  bentoCard: {
+    borderWidth: 1,
+    borderRadius: 18,
+    backgroundColor: COLORS.surface,
+    overflow: 'hidden',
+  },
+  bentoWide: {
+    flex: 1,
+    height: 90,
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingHorizontal: 12,
+    paddingVertical: 10,
+  },
+  bentoSmall: {
+    flex: 1,
+    height: 100,
+    flexDirection: 'column',
+    alignItems: 'center',
+    justifyContent: 'center',
+    padding: 12,
+  },
+  bentoIconBox: {
+    width: 40,
+    height: 40,
     borderRadius: 10,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
-  actionBadgeText: {
-    fontSize: 10,
-    fontWeight: '700',
-    color: COLORS.white,
-    letterSpacing: 0.3,
+  bentoWideIcon: {
+    marginRight: 12,
+  },
+  bentoSmallIcon: {
+    marginBottom: 8,
+  },
+  bentoTitle: {
+    fontSize: 14,
+    fontWeight: '600',
+    color: COLORS.text,
   },
 
   // Notification Badge
