@@ -357,24 +357,20 @@ export default function HomeScreen({ navigation }) {
           </View>
         </Animated.ScrollView>
 
-        {/* Floating Chatbot Button */}
-        <ChatbotFAB onPress={() => navigation.navigate('Chatbot')} />
-      </View>
+        {/* Notification Center Modal */}
+        <NotificationCenter
+          visible={showNotifications}
+          onClose={() => setShowNotifications(false)}
+          badgeCount={incompleteUFBCount}
+        />
 
-      {/* Notification Center Modal */}
-      <NotificationCenter
-        visible={showNotifications}
-        onClose={() => setShowNotifications(false)}
-        badgeCount={incompleteUFBCount}
-      />
-
-      {/* Drawer Menu */}
-      <DrawerMenu
-        visible={showDrawer}
-        onClose={() => setShowDrawer(false)}
-        navigation={navigation}
-      />
-    </SafeAreaView>
+        {/* Drawer Menu */}
+        <DrawerMenu
+          visible={showDrawer}
+          onClose={() => setShowDrawer(false)}
+          navigation={navigation}
+        />
+      </SafeAreaView>
   );
 }
 
