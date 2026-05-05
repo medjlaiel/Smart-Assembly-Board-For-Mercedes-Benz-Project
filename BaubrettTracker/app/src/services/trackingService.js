@@ -10,6 +10,7 @@
 import * as FileSystem from 'expo-file-system/legacy';
 import * as Sharing from 'expo-sharing';
 import XLSX from 'xlsx';
+import { restoreBaubrett } from './deletedBaubrettService';
 
 // Path where the tracking workbook lives on the device
 const TRACKING_FILE = FileSystem.documentDirectory + 'baubrett_tracking.xlsx';
@@ -101,6 +102,10 @@ export async function saveTrackingEntry(bbNb, zone, userName, userEmail) {
     await FileSystem.writeAsStringAsync(TRACKING_FILE, base64, {
       encoding: FileSystem.EncodingType.Base64,
     });
+
+    // Remove baubrett from deleted set if it was marked as deleted
+    // (so it no longer appears as "unscanned" in statistics)
+    await restoreBaubrett(bbNb);
 
     return true;
   } catch (err) {
