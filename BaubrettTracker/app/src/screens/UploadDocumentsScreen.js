@@ -2,7 +2,7 @@
  * UploadXlsxScreen.js
  * Screen for uploading, storing, and viewing XLSX files
  */
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import {
   View,
   Text,
@@ -14,7 +14,9 @@ import {
   FlatList,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { useFocusEffect } from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import XLSX from 'xlsx';
 import { COLORS, RADIUS, SHADOW, FONT_SIZES } from '../assets/theme';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import * as DocumentPicker from 'expo-document-picker';
@@ -33,6 +35,13 @@ export default function UploadXlsxScreen({ navigation }) {
   useEffect(() => {
     loadStoredFiles();
   }, []);
+
+  // Reload files whenever screen comes into focus
+  useFocusEffect(
+    useCallback(() => {
+      loadStoredFiles();
+    }, [])
+  );
 
   const loadStoredFiles = async () => {
     try {
@@ -121,37 +130,58 @@ export default function UploadXlsxScreen({ navigation }) {
         copyToCacheDirectory: true,
       });
 
-      if (result.type === 'success') {
-        setLoading(true);
-        const fileUri = result.uri;
-        const fileName = result.name || 'Unnamed File';
-        const fileType = result.mimeType;
-
-        // Read the file as base64
-        const fileContent = await FileSystem.readAsStringAsync(fileUri, {
-          encoding: FileSystem.EncodingType.Base64,
-        });
-
-        let parsedData = null;
-        if (fileType === 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet') {
-          // Parse XLSX
-          parsedData = parseXlsxBase64(fileContent);
-        } else if (fileType === 'application/pdf') {
-          // For PDF, we store the content but don't parse it
-          parsedData = null; // PDFs don't have tabular data
-        }
-
-        setData(parsedData);
-        setViewingFile(null); // Clear viewing file when uploading new one
-
-        // Save raw file content to storage
-        const savedFile = await saveFileToStorage(fileName, fileContent, fileType);
-        if (savedFile) {
-          setViewingFile(savedFile);
-        }
-
-        setLoading(false);
+      // Check if user cancelled or if document was picked (handle both old and new API)
+      if (result.canceled === true || (result.type && result.type !== 'success')) {
+        return;
       }
+
+      // Get file info (handle both old and new API)
+      let fileUri, fileName, fileType;
+      if (result.assets && result.assets.length > 0) {
+        // New API structure
+        fileUri = result.assets[0].uri;
+        fileName = result.assets[0].name || 'Unnamed File';
+        fileType = result.assets[0].mimeType || 'application/octet-stream';
+      } else if (result.uri) {
+        // Old API structure
+        fileUri = result.uri;
+        fileName = result.name || 'Unnamed File';
+        fileType = result.mimeType || 'application/octet-stream';
+      } else {
+        Alert.alert('Error', 'Could not read file information.');
+        return;
+      }
+
+      setLoading(true);
+
+      // Read the file as base64
+      const fileContent = await FileSystem.readAsStringAsync(fileUri, {
+        encoding: FileSystem.EncodingType.Base64,
+      });
+
+      let parsedData = null;
+      if (fileType === 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet') {
+        // Parse XLSX
+        try {
+          parsedData = parseXlsxBase64(fileContent);
+        } catch (parseError) {
+          console.error('Error parsing XLSX:', parseError);
+        }
+      } else if (fileType === 'application/pdf') {
+        // For PDF, we store the content but don't parse it
+        parsedData = null; // PDFs don't have tabular data
+      }
+
+      setData(parsedData);
+      setViewingFile(null); // Clear viewing file when uploading new one
+
+      // Save raw file content to storage
+      const savedFile = await saveFileToStorage(fileName, fileContent, fileType);
+      if (savedFile) {
+        setViewingFile(savedFile);
+      }
+
+      setLoading(false);
     } catch (error) {
       console.error('Error picking document:', error);
       Alert.alert('Error', 'Failed to pick or read the file.');
