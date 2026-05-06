@@ -19,8 +19,9 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import XLSX from 'xlsx';
 import { COLORS, RADIUS, SHADOW, FONT_SIZES } from '../assets/theme';
 import Icon from 'react-native-vector-icons/MaterialIcons';
+import { Table, Row, Rows } from 'react-native-table-component';
 import * as DocumentPicker from 'expo-document-picker';
-import * as FileSystem from 'expo-file-system';
+import * as FileSystem from 'expo-file-system/legacy';
 import * as Sharing from 'expo-sharing';
 
 const STORAGE_KEY = 'uploaded_xlsx_files';
