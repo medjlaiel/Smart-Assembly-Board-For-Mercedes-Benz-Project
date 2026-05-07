@@ -31,6 +31,7 @@ import MeasurementProtocolsScreen from '../screens/MeasurementProtocolsScreen';
 import ForgotPasswordScreen from '../screens/ForgotPasswordScreen';
 import ZoneResultsScreen from '../screens/ZoneResultsScreen';
 import ChatbotScreen from '../screens/ChatbotScreen';
+import ZonesListScreen from '../screens/ZonesListScreen';
 
 const Stack = createStackNavigator();
 
@@ -225,6 +226,14 @@ export default function AppNavigator() {
         component={UploadDocumentsScreen}
         options={{ 
           title: 'Upload Documents',
+          cardStyleInterpolator: CardStyleInterpolators.forFadeFromBottomAndroid,
+        }}
+      />
+      <Stack.Screen
+        name="ZonesList"
+        component={ZonesListScreen}
+        options={{ 
+          title: 'Zones',
           cardStyleInterpolator: CardStyleInterpolators.forFadeFromBottomAndroid,
         }}
       />

@@ -167,3 +167,53 @@ export function searchDatabaseFuzzy(query, limit = 10) {
   
   return suggestions.slice(0, limit);
 }
+
+/**
+ * Get all zones with their Baubrett count from zoneAssignments.json
+ * @returns {Promise<Array>} Array of zones with {key, label, count}
+ */
+export async function getZonesWithBaubrettCount() {
+  try {
+    // This would ideally come from an API, but we're using local JSON
+    const zones = require('../data/zones').default;
+    const zoneAssignments = require('../data/zoneAssignments.json');
+    
+    return zones.map((zone) => ({
+      key: zone.key,
+      label: zone.label,
+      count: zoneAssignments[zone.key] ? zoneAssignments[zone.key].length : 0,
+    }));
+  } catch (err) {
+    console.error('getZonesWithBaubrettCount error:', err);
+    throw new Error('Failed to load zones: ' + err.message);
+  }
+}
+
+/**
+ * Get all Baubrett records assigned to a specific zone
+ * @param {string} zoneKey - The zone key (e.g., 'ZONE_A', 'UFB01')
+ * @returns {Promise<Array>} Array of Baubrett records
+ */
+export async function getBaubrettsByZone(zoneKey) {
+  try {
+    const zoneAssignments = require('../data/zoneAssignments.json');
+    const baubrettNumbers = zoneAssignments[zoneKey] || [];
+    
+    if (baubrettNumbers.length === 0) {
+      return [];
+    }
+    
+    // Get full records from database
+    const records = getAll();
+    
+    // Filter records that match the baubrett numbers in this zone
+    const zoneBaubretts = records.filter((record) => 
+      baubrettNumbers.includes(String(record.BB_Nb).trim())
+    );
+    
+    return zoneBaubretts;
+  } catch (err) {
+    console.error('getBaubrettsByZone error:', err);
+    throw new Error('Failed to load baubretts for zone: ' + err.message);
+  }
+}

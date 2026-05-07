@@ -54,16 +54,19 @@
     "ok": "OK",
     "cancel": "Cancel",
     "delete": "Delete",
-    "close": "Close"
+    "close": "Close",
+    "loading": "Loading...",
+    "retry": "Retry"
   },
-  "baubrettList": {
-    "title": "All Baubretts",
-    "subtitle": "{{count}} Baubretts in database",
-    "empty": "No baubrett numbers found",
-    "deleteConfirmTitle": "Remove Baubrett",
-    "deleteConfirmMessage": "Are you sure you want to remove Baubrett #{{bbNb}} from the active list? It will be moved to the unscanned list in Statistics.",
-    "deleteError": "Failed to delete Baubrett. Please try again."
-  },
+   "baubrettList": {
+      "title": "All Baubretts",
+      "subtitle": "{{count}} Baubretts in database",
+      "empty": "No baubrett numbers found",
+      "deleteConfirmTitle": "Remove Baubrett",
+      "deleteConfirmMessage": "Are you sure you want to remove Baubrett #{{bbNb}} from the active list? It will be moved to the unscanned list in Statistics.",
+      "deleteError": "Failed to delete Baubrett. Please try again.",
+      "qrTitle": "Baubrett"
+    },
   "auth": {
     "invalidCredentials": "Invalid email or password",
     "signUpError": "An error occurred during sign up. Please try again.",
@@ -99,6 +102,10 @@
     },
     "statistics": {
       "subtitle": "View scans and location statistics"
+    },
+    "zones": {
+      "title": "Zones",
+      "subtitle": "Browse all zones and their tables"
     },
     "logout": "Log Out"
   },
@@ -265,5 +272,15 @@
       "networkError": "Network error. Please check your connection and try again.",
       "genericError": "Sorry, I encountered an error. Please try again."
     }
+  },
+  "zones": {
+    "title": "Zones",
+    "emptyTitle": "No Zones Found",
+    "emptyText": "No zones are currently configured.",
+    "retry": "Retry"
+  },
+  "zoneContents": {
+    "title": "Zone Contents",
+    "empty": "No tables scanned into this zone yet."
   }
 }

@@ -168,6 +168,13 @@ export default function HomeScreen({ navigation }) {
       onPress: () => navigation.navigate('TechChanges'),
     },
     {
+      id: 'zones',
+      icon: 'location-city',
+      title: t('home.zones.title'),
+      color: COLORS.success,
+      onPress: () => navigation.navigate('ZonesList'),
+    },
+    {
       id: 'protocols',
       icon: 'description',
       title: 'Measurement Protocols',
@@ -270,11 +277,13 @@ export default function HomeScreen({ navigation }) {
     });
   }, [navigation, incompleteUFBCount]);
 
-  // Prepare bento items for layout
-  const bentoWide1 = bentoActions[0];
-  const bentoSmall1 = bentoActions[1];
-  const bentoSmall2 = bentoActions[2];
-  const bentoWide2 = bentoActions[3];
+  // Prepare bento items for layout (now we have 5 items in bentoActions)
+  // Layout: wide1, small1+small2, wide2, wide3 (upload as third wide)
+  const bentoWide1 = bentoActions[0]; // approval
+  const bentoSmall1 = bentoActions[1]; // zones
+  const bentoSmall2 = bentoActions[2]; // protocols
+  const bentoWide2 = bentoActions[3]; // statistics
+  const bentoWide3 = bentoActions[4]; // upload
 
   return (
     <SafeAreaView style={styles.safe}>
@@ -315,7 +324,7 @@ export default function HomeScreen({ navigation }) {
             <Text style={styles.sectionHeader}>Explore</Text>
           </View>
 
-          {/* Bento Grid */}
+          {/* Bento Grid - now supports 5+ items */}
           <View style={styles.bentoGrid}>
             {bentoWide1 && (
               <View style={styles.bentoRow}>
@@ -344,6 +353,15 @@ export default function HomeScreen({ navigation }) {
               <View style={styles.bentoRow}>
                 <BentoWideCard
                   item={bentoWide2}
+                  borderColor={bentoBorderColor}
+                  iconBgColor={iconBgColor}
+                />
+              </View>
+            )}
+            {bentoWide3 && (
+              <View style={styles.bentoRow}>
+                <BentoWideCard
+                  item={bentoWide3}
                   borderColor={bentoBorderColor}
                   iconBgColor={iconBgColor}
                 />
