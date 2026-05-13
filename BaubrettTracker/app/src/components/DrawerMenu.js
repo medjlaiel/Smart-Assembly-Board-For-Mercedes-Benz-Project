@@ -120,6 +120,11 @@ export default function DrawerMenu({ visible, onClose, navigation }) {
     navigation.navigate('AdminDashboard');
   };
 
+  const handleAddUser = () => {
+    onClose(); // Close drawer
+    navigation.navigate('AddUserScreen');
+  };
+
   return (
     <Animated.View
       style={[
@@ -221,6 +226,23 @@ export default function DrawerMenu({ visible, onClose, navigation }) {
                 >
                   <Icon name="admin-panel-settings" size={20} color={COLORS.primary} />
                   <Text style={[styles.sectionTitle, styles.adminSectionTitle]}>Admin Dashboard</Text>
+                  <Icon name="chevron-right" size={20} color={COLORS.primary} />
+                </TouchableOpacity>
+              </View>
+            )}
+
+            {/* ── ADD USER SECTION (ADMIN ONLY) ────────────────────── */} 
+            {currentUser?.role === 'admin' && (
+              <View style={styles.sectionContainer}>
+                <TouchableOpacity
+                  style={[styles.sectionHeader, styles.adminSection]}
+                  onPress={handleAddUser}
+                  activeOpacity={0.7}
+                >
+                  <Icon name="person-add" size={20} color={COLORS.primary} />
+                  <Text style={[styles.sectionTitle, styles.adminSectionTitle]}>
+                    {t('admin.addUserAccount', 'Add User Account')}
+                  </Text>
                   <Icon name="chevron-right" size={20} color={COLORS.primary} />
                 </TouchableOpacity>
               </View>
