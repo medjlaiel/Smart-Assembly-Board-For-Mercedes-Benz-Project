@@ -260,13 +260,15 @@ export default function LoginScreen({ navigation }) {
           </TouchableOpacity>
          </View>
 
-          {/* Footer */}
-         <View style={styles.footer}>
-           <Text style={styles.footerText}>{t('login.noAccount')}</Text>
-           <TouchableOpacity onPress={() => navigation.navigate('SignUp')}>
-             <Text style={styles.footerLink}>{t('login.signUpLink')}</Text>
-           </TouchableOpacity>
-          </View>
+          {/* Footer - Only visible for Admin role */}
+          {selectedRole === 'admin' && (
+            <View style={styles.footer}>
+              <Text style={styles.footerText}>{t('login.noAccount')}</Text>
+              <TouchableOpacity onPress={() => navigation.navigate('SignUp')}>
+                <Text style={styles.footerLink}>{t('login.signUpLink')}</Text>
+              </TouchableOpacity>
+            </View>
+          )}
 
           {/* Language Selector - Bottom */}
           <LanguageSelector />
