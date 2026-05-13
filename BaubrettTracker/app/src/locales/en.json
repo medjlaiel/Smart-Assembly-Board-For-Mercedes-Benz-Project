@@ -75,7 +75,8 @@
     "signUpError": "An error occurred during sign up. Please try again.",
     "signInError": "An error occurred during login. Please try again.",
     "accountCreated": "Account created successfully",
-    "welcome": "Welcome"
+    "welcome": "Welcome",
+    "logout": "Logout"
   },
   "home": {
     "title": "Baubrett Tracker",
@@ -285,5 +286,12 @@
   "zoneContents": {
     "title": "Zone Contents",
     "empty": "No tables scanned into this zone yet."
+  },
+  "admin": {
+    "addUserAccount": "Add User Account",
+    "addUserTitle": "Add User Account",
+    "addUserSubtitle": "Create a new user account",
+    "createUserButton": "Create User",
+    "userCreatedSuccess": "User account created successfully"
   }
 }
