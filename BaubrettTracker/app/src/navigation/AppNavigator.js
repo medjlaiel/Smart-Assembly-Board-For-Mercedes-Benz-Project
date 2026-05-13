@@ -32,6 +32,7 @@ import ForgotPasswordScreen from '../screens/ForgotPasswordScreen';
 import ZoneResultsScreen from '../screens/ZoneResultsScreen';
 import ChatbotScreen from '../screens/ChatbotScreen';
 import ZonesListScreen from '../screens/ZonesListScreen';
+import AddUserScreen from '../screens/AddUserScreen';
 
 const Stack = createStackNavigator();
 
@@ -258,6 +259,14 @@ export default function AppNavigator() {
         component={ChatbotScreen}
         options={{
           title: 'Assistant',
+          cardStyleInterpolator: CardStyleInterpolators.forFadeFromBottomAndroid,
+        }}
+      />
+      <Stack.Screen
+        name="AddUserScreen"
+        component={AddUserScreen}
+        options={{
+          title: 'Add User Account',
           cardStyleInterpolator: CardStyleInterpolators.forFadeFromBottomAndroid,
         }}
       />
