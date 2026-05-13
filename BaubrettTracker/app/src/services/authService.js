@@ -51,9 +51,10 @@ export async function emailExists(email) {
  * @param {string} email - User email
  * @param {string} password - User password (plain text, should be hashed in production)
  * @param {string} fullName - User full name
+ * @param {string} matricule - User matricule
  * @returns {Promise<{success: boolean, message: string, user?: object}>}
  */
-export async function signUp(email, password, fullName) {
+export async function signUp(email, password, fullName, matricule) {
   try {
     // Check if email already exists
     const exists = await emailExists(email);
@@ -70,6 +71,7 @@ export async function signUp(email, password, fullName) {
       email: email.toLowerCase().trim(),
       password, // In production, this should be hashed!
       fullName: fullName.trim(),
+      matricule: matricule.trim(),
       createdAt: new Date().toISOString(),
     };
 
@@ -81,7 +83,7 @@ export async function signUp(email, password, fullName) {
     return {
       success: true,
       message: i18n.t('auth.accountCreated'),
-      user: { id: newUser.id, email: newUser.email, fullName: newUser.fullName }
+      user: { id: newUser.id, email: newUser.email, fullName: newUser.fullName, matricule: newUser.matricule }
     };
   } catch (error) {
     console.error('Sign up error:', error);
@@ -115,7 +117,12 @@ export async function signIn(email, password) {
     return {
       success: true,
       message: i18n.t('common.success'),
-      user: { id: user.id, email: user.email, fullName: user.fullName }
+      user: { 
+        id: user.id, 
+        email: user.email, 
+        fullName: user.fullName,
+        matricule: user.matricule || ''
+      }
     };
   } catch (error) {
     console.error('Sign in error:', error);
