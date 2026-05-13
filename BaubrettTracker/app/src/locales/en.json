@@ -20,6 +20,8 @@
     "subtitle": "Join us today, it's free",
     "fullName": "Full Name",
     "fullNamePlaceholder": "Enter your full name",
+    "matricule": "Matricule",
+    "matriculePlaceholder": "Enter your matricule",
     "email": "Email",
     "emailPlaceholder": "Enter your email",
     "password": "Password",
@@ -37,6 +39,7 @@
     "errors": {
       "nameRequired": "Full name is required",
       "nameTooShort": "Name must be at least 2 characters",
+      "matriculeRequired": "Matricule is required",
       "emailRequired": "Email is required",
       "emailInvalid": "Please enter a valid email address",
       "passwordRequired": "Password is required",
