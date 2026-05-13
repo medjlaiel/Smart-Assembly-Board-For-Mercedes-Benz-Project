@@ -1,6 +1,6 @@
 /**
  * DrawerMenu.js
- * Left side drawer with accordion/expandable sections: Profile, Baubrett, Database, About, Logout
+ * Left side drawer with elegantly styled menu items
  */
 import React, { useEffect, useState } from 'react';
 import {
@@ -28,7 +28,7 @@ export default function DrawerMenu({ visible, onClose, navigation }) {
   const { currentUser, logout } = useAuth();
   const translateX = new Animated.Value(-DRAWER_WIDTH);
 
-  // Expanded section state: 'profile' | 'about' | null (only one expanded at a time)
+  // Expanded section state: 'profile' | 'about' | null
   const [expandedSection, setExpandedSection] = useState(null);
 
   // About sub-items expansion state
@@ -101,27 +101,27 @@ export default function DrawerMenu({ visible, onClose, navigation }) {
   };
 
   const handleChangePassword = () => {
-    onClose(); // Close drawer
+    onClose();
     navigation.navigate('ChangePassword');
   };
 
   const handleBaubrettList = () => {
-    onClose(); // Close drawer
+    onClose();
     navigation.navigate('BaubrettList');
   };
 
   const handleDatabase = () => {
-    onClose(); // Close drawer
+    onClose();
     navigation.navigate('DatabasePicker');
   };
 
   const handleAdminDashboard = () => {
-    onClose(); // Close drawer
+    onClose();
     navigation.navigate('AdminDashboard');
   };
 
   const handleAddUser = () => {
-    onClose(); // Close drawer
+    onClose();
     navigation.navigate('AddUserScreen');
   };
 
@@ -164,10 +164,13 @@ export default function DrawerMenu({ visible, onClose, navigation }) {
                 onPress={() => toggleSection('profile')}
                 activeOpacity={0.7}
               >
+                <View style={styles.iconContainer}>
+                  <Icon name="account-circle" size={24} color={COLORS.primary} />
+                </View>
                 <Text style={styles.sectionTitle}>Profile</Text>
                 <Icon
                   name={expandedSection === 'profile' ? 'keyboard-arrow-up' : 'keyboard-arrow-down'}
-                  size={24}
+                  size={20}
                   color={COLORS.text3}
                 />
               </TouchableOpacity>
@@ -184,9 +187,11 @@ export default function DrawerMenu({ visible, onClose, navigation }) {
                       <Text style={styles.userId}>ID: {currentUser?.id || ''}</Text>
                     </View>
                   </View>
-                  <TouchableOpacity style={styles.changePasswordBtn} onPress={handleChangePassword} activeOpacity={0.7}>
-                    <Icon name="lock" size={18} color={COLORS.primary} />
-                    <Text style={styles.changePasswordText}>{t('drawer.changePassword', 'Change Password')}</Text>
+                  <TouchableOpacity style={styles.menuItemButton} onPress={handleChangePassword} activeOpacity={0.7}>
+                    <View style={styles.menuItemIconBox}>
+                      <Icon name="lock" size={18} color={COLORS.primary} />
+                    </View>
+                    <Text style={styles.menuItemText}>{t('drawer.changePassword', 'Change Password')}</Text>
                   </TouchableOpacity>
                 </View>
               )}
@@ -195,11 +200,14 @@ export default function DrawerMenu({ visible, onClose, navigation }) {
             {/* ── BAUBRETT SECTION ─────────────────────────────────── */} 
             <View style={styles.sectionContainer}>
               <TouchableOpacity
-                style={styles.sectionHeader}
+                style={styles.menuItem}
                 onPress={handleBaubrettList}
                 activeOpacity={0.7}
               >
-                <Text style={styles.sectionTitle}>Baubrett</Text>
+                <View style={styles.menuItemIconBox}>
+                  <Icon name="inventory" size={22} color={COLORS.primary} />
+                </View>
+                <Text style={styles.menuItemText}>Baubrett</Text>
                 <Icon name="chevron-right" size={20} color={COLORS.text3} />
               </TouchableOpacity>
             </View>
@@ -207,12 +215,15 @@ export default function DrawerMenu({ visible, onClose, navigation }) {
             {/* ── DATABASE SECTION ─────────────────────────────────── */} 
             <View style={styles.sectionContainer}>
               <TouchableOpacity
-                style={styles.sectionHeader}
+                style={styles.menuItem}
                 onPress={handleDatabase}
                 activeOpacity={0.7}
               >
-                <Text style={styles.sectionTitle}>Database</Text>
-                <Icon name="storage" size={20} color={COLORS.text3} />
+                <View style={styles.menuItemIconBox}>
+                  <Icon name="storage" size={22} color={COLORS.primary} />
+                </View>
+                <Text style={styles.menuItemText}>Database</Text>
+                <Icon name="chevron-right" size={20} color={COLORS.text3} />
               </TouchableOpacity>
             </View>
 
@@ -220,12 +231,14 @@ export default function DrawerMenu({ visible, onClose, navigation }) {
             {currentUser?.role === 'admin' && (
               <View style={styles.sectionContainer}>
                 <TouchableOpacity
-                  style={[styles.sectionHeader, styles.adminSection]}
+                  style={styles.menuItem}
                   onPress={handleAdminDashboard}
                   activeOpacity={0.7}
                 >
-                  <Icon name="admin-panel-settings" size={20} color={COLORS.primary} />
-                  <Text style={[styles.sectionTitle, styles.adminSectionTitle]}>Admin Dashboard</Text>
+                  <View style={[styles.menuItemIconBox, styles.adminIconBox]}>
+                    <Icon name="admin-panel-settings" size={22} color={COLORS.primary} />
+                  </View>
+                  <Text style={styles.menuItemText}>Admin Dashboard</Text>
                   <Icon name="chevron-right" size={20} color={COLORS.primary} />
                 </TouchableOpacity>
               </View>
@@ -235,12 +248,14 @@ export default function DrawerMenu({ visible, onClose, navigation }) {
             {currentUser?.role === 'admin' && (
               <View style={styles.sectionContainer}>
                 <TouchableOpacity
-                  style={[styles.sectionHeader, styles.adminSection]}
+                  style={styles.menuItem}
                   onPress={handleAddUser}
                   activeOpacity={0.7}
                 >
-                  <Icon name="person-add" size={20} color={COLORS.primary} />
-                  <Text style={[styles.sectionTitle, styles.adminSectionTitle]}>
+                  <View style={[styles.menuItemIconBox, styles.adminIconBox]}>
+                    <Icon name="person-add" size={22} color={COLORS.primary} />
+                  </View>
+                  <Text style={styles.menuItemText}>
                     {t('admin.addUserAccount', 'Add User Account')}
                   </Text>
                   <Icon name="chevron-right" size={20} color={COLORS.primary} />
@@ -251,30 +266,36 @@ export default function DrawerMenu({ visible, onClose, navigation }) {
             {/* ── ABOUT SECTION ────────────────────────────────────── */} 
             <View style={styles.sectionContainer}>
               <TouchableOpacity
-                style={styles.sectionHeader}
+                style={styles.menuItem}
                 onPress={() => toggleSection('about')}
                 activeOpacity={0.7}
               >
-                <Text style={styles.sectionTitle}>About</Text>
+                <View style={styles.menuItemIconBox}>
+                  <Icon name="info" size={22} color={COLORS.primary} />
+                </View>
+                <Text style={styles.menuItemText}>About</Text>
                 <Icon
                   name={expandedSection === 'about' ? 'keyboard-arrow-up' : 'keyboard-arrow-down'}
-                  size={24}
+                  size={20}
                   color={COLORS.text3}
                 />
               </TouchableOpacity>
 
               {expandedSection === 'about' && (
-                <View style={[styles.sectionContent, styles.aboutContent]}>
-                  {/* App Version - expandable */} 
+                <View style={styles.sectionContent}>
+                  {/* App Version */}
                   <TouchableOpacity
-                    style={styles.aboutItemHeader}
+                    style={styles.aboutItem}
                     onPress={() => toggleAboutItem('version')}
                     activeOpacity={0.7}
                   >
+                    <View style={styles.aboutItemIconBox}>
+                      <Icon name="apps" size={18} color={COLORS.text2} />
+                    </View>
                     <Text style={styles.aboutItemTitle}>App Version</Text>
                     <Icon
                       name={expandedAboutItem === 'version' ? 'keyboard-arrow-up' : 'keyboard-arrow-down'}
-                      size={20}
+                      size={18}
                       color={COLORS.text3}
                     />
                   </TouchableOpacity>
@@ -286,16 +307,19 @@ export default function DrawerMenu({ visible, onClose, navigation }) {
                     </View>
                   )}
 
-                  {/* Contact - expandable */} 
+                  {/* Contact */}
                   <TouchableOpacity
-                    style={styles.aboutItemHeader}
+                    style={styles.aboutItem}
                     onPress={() => toggleAboutItem('contact')}
                     activeOpacity={0.7}
                   >
+                    <View style={styles.aboutItemIconBox}>
+                      <Icon name="email" size={18} color={COLORS.text2} />
+                    </View>
                     <Text style={styles.aboutItemTitle}>Contact</Text>
                     <Icon
                       name={expandedAboutItem === 'contact' ? 'keyboard-arrow-up' : 'keyboard-arrow-down'}
-                      size={20}
+                      size={18}
                       color={COLORS.text3}
                     />
                   </TouchableOpacity>
@@ -306,18 +330,17 @@ export default function DrawerMenu({ visible, onClose, navigation }) {
                     </View>
                   )}
 
-                  {/* How to Use - navigates to separate screen */} 
+                  {/* How to Use */}
                   <TouchableOpacity
-                    style={styles.aboutItemHeader}
+                    style={styles.aboutItem}
                     onPress={() => toggleAboutItem('howto')}
                     activeOpacity={0.7}
                   >
+                    <View style={styles.aboutItemIconBox}>
+                      <Icon name="help-outline" size={18} color={COLORS.text2} />
+                    </View>
                     <Text style={styles.aboutItemTitle}>How to Use</Text>
-                    <Icon
-                      name="chevron-right"
-                      size={20}
-                      color={COLORS.text3}
-                    />
+                    <Icon name="chevron-right" size={18} color={COLORS.text3} />
                   </TouchableOpacity>
                 </View>
               )}
@@ -326,7 +349,9 @@ export default function DrawerMenu({ visible, onClose, navigation }) {
             {/* ── LOGOUT BUTTON ────────────────────────────────────── */} 
             <View style={styles.logoutSection}>
               <TouchableOpacity style={styles.logoutButton} onPress={handleLogout}>
-                <Icon name="logout" size={20} color={COLORS.error} />
+                <View style={styles.logoutIconBox}>
+                  <Icon name="logout" size={20} color={COLORS.error} />
+                </View>
                 <Text style={styles.logoutText}>{t('auth.logout', 'Logout')}</Text>
               </TouchableOpacity>
             </View>
@@ -370,30 +395,66 @@ const styles = StyleSheet.create({
     height: '100%',
     ...SHADOW.large,
   },
-  // Section (accordion) styles
+  // Section container
   sectionContainer: {
     borderBottomWidth: 1,
-    borderBottomColor: COLORS.border,
+    borderBottomColor: COLORS.border + '40',
   },
-  sectionHeader: {
+  // Menu item (consistent for all main items)
+  menuItem: {
     flexDirection: 'row',
-    justifyContent: 'space-between',
     alignItems: 'center',
     paddingHorizontal: 20,
-    paddingVertical: 18,
+    paddingVertical: 16,
     backgroundColor: COLORS.surface,
+    ...SHADOW.small,
+  },
+  iconContainer: {
+    width: 32,
+    height: 32,
+    borderRadius: 8,
+    backgroundColor: COLORS.primary + '15',
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginRight: 12,
+  },
+  menuItemIconBox: {
+    width: 36,
+    height: 36,
+    borderRadius: 10,
+    backgroundColor: COLORS.primary + '12',
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginRight: 14,
+  },
+  adminIconBox: {
+    backgroundColor: COLORS.primary + '20',
+    borderWidth: 1,
+    borderColor: COLORS.primary + '30',
   },
   sectionTitle: {
     fontSize: 16,
-    fontWeight: '700',
+    fontWeight: '600',
     color: COLORS.text,
+    flex: 1,
+  },
+  menuItemText: {
+    fontSize: 15,
+    fontWeight: '500',
+    color: COLORS.text,
+    flex: 1,
+  },
+  // Section header (for profile and about with expand/collapse)
+  sectionHeader: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingHorizontal: 20,
+    paddingVertical: 16,
+    backgroundColor: COLORS.surface,
   },
   sectionContent: {
     backgroundColor: COLORS.background,
     paddingHorizontal: 16,
-    paddingBottom: 16,
-  },
-  aboutContent: {
     paddingBottom: 8,
   },
   // Profile section
@@ -401,19 +462,22 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     paddingTop: 16,
+    paddingBottom: 16,
+    paddingHorizontal: 4,
   },
   avatarContainer: {
-    width: 64,
-    height: 64,
-    borderRadius: 32,
+    width: 56,
+    height: 56,
+    borderRadius: 28,
     backgroundColor: COLORS.primary,
     alignItems: 'center',
     justifyContent: 'center',
     marginRight: 14,
+    ...SHADOW.small,
   },
   avatarText: {
-    fontSize: 24,
-    fontWeight: '800',
+    fontSize: 20,
+    fontWeight: '700',
     color: COLORS.white,
   },
   profileInfo: {
@@ -421,7 +485,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   userName: {
-    fontSize: 17,
+    fontSize: 16,
     fontWeight: '700',
     color: COLORS.text,
     marginBottom: 2,
@@ -435,41 +499,48 @@ const styles = StyleSheet.create({
     fontSize: 11,
     color: COLORS.text3,
   },
-  changePasswordBtn: {
+  // Change password button (inside profile)
+  menuItemButton: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginTop: 16,
+    marginTop: 8,
     alignSelf: 'flex-start',
-    paddingVertical: 10,
+    paddingVertical: 12,
     paddingHorizontal: 16,
     backgroundColor: COLORS.surface,
-    borderWidth: 1,
-    borderColor: COLORS.primary,
+    borderWidth: 1.5,
+    borderColor: COLORS.primary + '40',
     borderRadius: RADIUS.md,
-    gap: 8,
-  },
-  changePasswordText: {
-    fontSize: 14,
-    fontWeight: '600',
-    color: COLORS.primary,
+    gap: 10,
   },
 
   // About section items
-  aboutItemHeader: {
+  aboutItem: {
     flexDirection: 'row',
-    justifyContent: 'space-between',
     alignItems: 'center',
     paddingVertical: 14,
     paddingHorizontal: 4,
+    borderBottomWidth: 1,
+    borderBottomColor: COLORS.border + '30',
+  },
+  aboutItemIconBox: {
+    width: 32,
+    height: 32,
+    borderRadius: 8,
+    backgroundColor: COLORS.background,
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginRight: 12,
   },
   aboutItemTitle: {
-    fontSize: 15,
-    fontWeight: '600',
+    fontSize: 14,
+    fontWeight: '500',
     color: COLORS.text,
+    flex: 1,
   },
   aboutItemContent: {
     paddingBottom: 16,
-    paddingLeft: 4,
+    paddingLeft: 44,
   },
   aboutText: {
     fontSize: 14,
@@ -487,60 +558,39 @@ const styles = StyleSheet.create({
     fontStyle: 'italic',
     marginTop: 8,
   },
-  stepContainer: {
-    flexDirection: 'row',
-    alignItems: 'flex-start',
-    marginTop: 8,
-  },
-  stepNumber: {
-    fontSize: 13,
-    fontWeight: '700',
-    color: COLORS.primary,
-    marginRight: 8,
-    width: 20,
-  },
-  stepText: {
-    fontSize: 12,
-    color: COLORS.text2,
-    flex: 1,
-    lineHeight: 18,
-  },
 
   // Logout Section
   logoutSection: {
     paddingHorizontal: 16,
-    paddingVertical: 16,
+    paddingVertical: 20,
     borderTopWidth: 1,
-    borderTopColor: COLORS.border,
+    borderTopColor: COLORS.border + '60',
     backgroundColor: COLORS.surface,
+    marginTop: 'auto',
   },
   logoutButton: {
     backgroundColor: COLORS.surface,
     borderWidth: 1.5,
-    borderColor: COLORS.error + '40',
-    borderRadius: RADIUS.md,
+    borderColor: COLORS.error + '50',
+    borderRadius: RADIUS.lg,
     padding: 16,
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
     ...SHADOW.small,
   },
+  logoutIconBox: {
+    width: 36,
+    height: 36,
+    borderRadius: 10,
+    backgroundColor: COLORS.error + '15',
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginRight: 12,
+  },
   logoutText: {
     fontSize: FONT_SIZES.button,
     fontWeight: '600',
     color: COLORS.error,
-    marginLeft: 10,
-  },
-  // Admin section styles
-  adminSection: {
-    backgroundColor: COLORS.primary + '10',
-    borderLeftWidth: 4,
-    borderLeftColor: COLORS.primary,
-    gap: 12,
-  },
-  adminSectionTitle: {
-    color: COLORS.primary,
-    fontWeight: '700',
-    flex: 1,
   },
 });
