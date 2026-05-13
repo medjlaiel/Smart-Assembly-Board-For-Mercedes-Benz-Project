@@ -36,12 +36,14 @@ export default function SignUpScreen({ navigation }) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
+  const [matricule, setMatricule] = useState('');
   const [agreeToTerms, setAgreeToTerms] = useState(false);
 
   const [nameError, setNameError] = useState('');
   const [emailError, setEmailError] = useState('');
   const [passwordError, setPasswordError] = useState('');
   const [confirmPasswordError, setConfirmPasswordError] = useState('');
+  const [matriculeError, setMatriculeError] = useState('');
   const [termsError, setTermsError] = useState('');
 
   const [isLoading, setIsLoading] = useState(false);
@@ -72,6 +74,14 @@ export default function SignUpScreen({ navigation }) {
       valid = false;
     } else {
       setNameError('');
+    }
+
+    // Matricule validation (required)
+    if (!matricule.trim()) {
+      setMatriculeError(t('signup.errors.matriculeRequired'));
+      valid = false;
+    } else {
+      setMatriculeError('');
     }
 
     // Email validation
@@ -123,12 +133,12 @@ export default function SignUpScreen({ navigation }) {
 
   const handleCreateAccount = async () => {
     if (!validateForm()) return;
- 
+
     setIsLoading(true);
- 
+
     try {
-      const result = await signUpUser(email, password, fullName);
- 
+      const result = await signUpUser(email, password, fullName, matricule);
+
       if (result.success) {
         // Do NOT auto-login after signup, navigate to login instead
         // User must log in with credentials
@@ -150,7 +160,7 @@ export default function SignUpScreen({ navigation }) {
       setIsLoading(false);
       Alert.alert('Error', 'An unexpected error occurred. Please try again.');
     }
-   };
+  };
 
   return (
     <KeyboardAvoidingView
@@ -190,6 +200,18 @@ export default function SignUpScreen({ navigation }) {
             placeholder={t('signup.fullNamePlaceholder')}
             autoCapitalize="words"
             autoComplete="name"
+          />
+
+          <AuthInput
+            label={t('signup.matricule')}
+            iconName="id-card"
+            iconType="ionic"
+            value={matricule}
+            onChangeText={setMatricule}
+            error={matriculeError}
+            placeholder={t('signup.matriculePlaceholder')}
+            autoCapitalize="none"
+            autoComplete="off"
           />
 
           <AuthInput
