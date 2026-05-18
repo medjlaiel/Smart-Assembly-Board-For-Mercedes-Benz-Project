@@ -1,6 +1,6 @@
 /**
  * BottomTabNavigator.js
- * Bottom tab bar with animated custom tab bar for smooth press feedback.
+ * Bottom tab bar with animated tab bar - header is in AppNavigator
  */
 import React from 'react';
 import { Image, StyleSheet } from 'react-native';
@@ -74,11 +74,7 @@ export default function BottomTabNavigator() {
               source={require('../assets/ai-assistant.png')}
               style={[
                 styles.assistantIcon,
-                focused && {
-                  borderColor: theme.primary,
-                  borderWidth: 2,
-                  opacity: 1,
-                },
+                focused && { borderColor: theme.primary, borderWidth: 2, opacity: 1 },
                 !focused && { opacity: 0.6 },
               ]}
             />
