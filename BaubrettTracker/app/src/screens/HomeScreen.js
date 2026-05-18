@@ -1,6 +1,7 @@
 /**
  * HomeScreen.js
- * Modernized landing screen with improved design and organization
+ * Modernized landing screen with fixed sticky header
+ * (burger menu, notification bell, stats icon remain visible on scroll)
  */
 import React, { useEffect, useRef, useState, useMemo } from 'react';
 import {
@@ -9,7 +10,6 @@ import {
   StyleSheet,
   TouchableOpacity,
   ScrollView,
-  Animated,
   Dimensions,
   useColorScheme,
 } from 'react-native';
@@ -29,17 +29,12 @@ const COLOR_CARD_WIDTH = 200;
 const COLOR_CARD_HEIGHT = 130;
 const COLOR_CARD_GAP = 12;
 const CAROUSEL_SNAP_INTERVAL = COLOR_CARD_WIDTH + COLOR_CARD_GAP;
+const HEADER_HEIGHT = 100;
 
-// ── Animated Header Component ──────────────────────────────────────
-function Header({ scrollY, onMenuPress, onNotificationsPress, badgeCount, onStatsPress }) {
-  const headerOpacity = scrollY.interpolate({
-    inputRange: [0, 100],
-    outputRange: [1, 0.95],
-    extrapolate: 'clamp',
-  });
-
+// ── Fixed Header Component ─────────────────────────────────────────
+function FixedHeader({ onMenuPress, onNotificationsPress, badgeCount, onStatsPress }) {
   return (
-    <Animated.View style={[styles.header, { opacity: headerOpacity }]}>
+    <View style={styles.header}>
       <View style={styles.headerContent}>
         <View style={styles.logoContainer}>
           <TouchableOpacity style={styles.headerActionBtn} onPress={onMenuPress}>
@@ -73,7 +68,7 @@ function Header({ scrollY, onMenuPress, onNotificationsPress, badgeCount, onStat
           </TouchableOpacity>
         </View>
       </View>
-    </Animated.View>
+    </View>
   );
 }
 
@@ -146,7 +141,6 @@ export default function HomeScreen({ navigation }) {
   const { t } = useTranslation();
   const colorScheme = useColorScheme();
   const isDark = colorScheme === 'dark';
-  const scrollY = useRef(new Animated.Value(0)).current;
   const [showNotifications, setShowNotifications] = useState(false);
   const [showDrawer, setShowDrawer] = useState(false);
   const [allRecords, setAllRecords] = useState([]);
@@ -267,8 +261,7 @@ export default function HomeScreen({ navigation }) {
     return incomplete;
   }, [allRecords]);
 
-  // Prepare bento items for layout (now we have 5 items in bentoActions)
-  // Layout: wide1, small1+small2, wide2, wide3 (upload as third wide)
+  // Prepare bento items for layout
   const bentoWide1 = bentoActions[0]; // approval
   const bentoSmall1 = bentoActions[1]; // zones
   const bentoSmall2 = bentoActions[2]; // protocols
@@ -278,23 +271,19 @@ export default function HomeScreen({ navigation }) {
   return (
     <SafeAreaView style={styles.safe}>
       <View style={styles.container}>
-        <Animated.ScrollView
+        {/* ═══ FIXED HEADER — always visible ═══ */}
+        <FixedHeader
+          onMenuPress={() => setShowDrawer(true)}
+          onNotificationsPress={() => setShowNotifications(true)}
+          badgeCount={incompleteUFBCount}
+          onStatsPress={() => navigation.navigate('Statistics')}
+        />
+
+        {/* ═══ SCROLLABLE CONTENT ═══ */}
+        <ScrollView
           contentContainerStyle={styles.scrollContent}
           showsVerticalScrollIndicator={false}
-          onScroll={Animated.event(
-            [{ nativeEvent: { contentOffset: { y: scrollY } } }],
-            { useNativeDriver: false }
-          )}
-          scrollEventThrottle={16}
         >
-          <Header
-            scrollY={scrollY}
-            onMenuPress={() => setShowDrawer(true)}
-            onNotificationsPress={() => setShowNotifications(true)}
-            badgeCount={incompleteUFBCount}
-            onStatsPress={() => navigation.navigate('Statistics')}
-          />
-
           {/* Section 1: Quick Actions */}
           <View style={styles.section}>
             <Text style={styles.sectionHeader}>Quick Actions</Text>
@@ -320,7 +309,7 @@ export default function HomeScreen({ navigation }) {
             <Text style={styles.sectionHeader}>Explore</Text>
           </View>
 
-          {/* Bento Grid - now supports 5+ items */}
+          {/* Bento Grid */}
           <View style={styles.bentoGrid}>
             {bentoWide1 && (
               <View style={styles.bentoRow}>
@@ -369,7 +358,7 @@ export default function HomeScreen({ navigation }) {
             <Text style={styles.footerText}>© 2025 Baubrett Tracker</Text>
             <Text style={styles.footerVersion}>Version 1.0.0</Text>
           </View>
-        </Animated.ScrollView>
+        </ScrollView>
 
         {/* Notification Center Modal */}
         <NotificationCenter
@@ -393,22 +382,29 @@ export default function HomeScreen({ navigation }) {
 const styles = StyleSheet.create({
   safe: { flex: 1, backgroundColor: COLORS.background },
   container: { flex: 1, position: 'relative' },
-  scrollContent: { paddingBottom: 40 },
+  scrollContent: { paddingTop: HEADER_HEIGHT, paddingBottom: 40 },
 
-  // Header
+  // Fixed Header
   header: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    zIndex: 100,
     backgroundColor: COLORS.primary,
     paddingHorizontal: 20,
-    paddingTop: 16,
-    paddingBottom: 20,
+    paddingTop: 12,
+    paddingBottom: 16,
     borderBottomLeftRadius: RADIUS.xl,
     borderBottomRightRadius: RADIUS.xl,
     ...SHADOW.medium,
+    height: HEADER_HEIGHT,
   },
   headerContent: {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
+    flex: 1,
   },
   headerActionsContainer: {
     flexDirection: 'row',
