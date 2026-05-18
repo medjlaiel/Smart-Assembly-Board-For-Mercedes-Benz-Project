@@ -11,6 +11,7 @@ import LoginScreen from '../screens/LoginScreen';
 import SignUpScreen from '../screens/SignUpScreen';
 import AdminDashboard from '../screens/AdminDashboard';
 import HomeScreen from '../screens/HomeScreen';
+import BottomTabNavigator from './BottomTabNavigator';
 import StatisticsScreen from '../screens/StatisticsScreen';
 import SaveScanBaubrettScreen from '../screens/SaveScanBaubrettScreen';
 import SaveScanZoneScreen from '../screens/SaveScanZoneScreen';
@@ -88,10 +89,10 @@ export default function AppNavigator() {
       />
       <Stack.Screen
         name="Home"
-        component={HomeScreen}
+        component={BottomTabNavigator}
         options={({ navigation }) => ({
           title: 'Baubrett Tracker',
-          headerLeft: null,
+          headerLeft: () => null,
           headerRight: () => (
             <TouchableOpacity
               onPress={() => navigation.navigate('Statistics')}
@@ -100,6 +101,7 @@ export default function AppNavigator() {
               <Text style={styles.headerButtonIcon}>📊</Text>
             </TouchableOpacity>
           ),
+          cardStyleInterpolator: CardStyleInterpolators.forFadeFromBottomAndroid,
         })}
       />
       <Stack.Screen
