@@ -13,6 +13,7 @@ import {
   Modal,
   Dimensions,
   ActivityIndicator,
+  RefreshControl,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import QRCode from 'react-native-qrcode-svg';
@@ -75,11 +76,12 @@ function SectionHeader({ title, count }) {
 export default function QRLibraryScreen() {
   const [baubretts, setBaubretts] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [refreshing, setRefreshing] = useState(false);
   const [selectedItem, setSelectedItem] = useState(null);
   const [modalVisible, setModalVisible] = useState(false);
 
   // Load Baubrett BB_Nb values from database
-  useEffect(() => {
+  const loadBaubretts = useCallback(() => {
     try {
       const records = getAll();
       const bbNbs = records
@@ -90,10 +92,19 @@ export default function QRLibraryScreen() {
       setBaubretts(unique);
     } catch (err) {
       console.error('Failed to load Baubrett data:', err);
-    } finally {
-      setLoading(false);
     }
   }, []);
+
+  useEffect(() => {
+    loadBaubretts();
+    setLoading(false);
+  }, [loadBaubretts]);
+
+  const onRefresh = useCallback(() => {
+    setRefreshing(true);
+    loadBaubretts();
+    setRefreshing(false);
+  }, [loadBaubretts]);
 
   const zones = useMemo(() => ZONES, []);
 
@@ -120,7 +131,13 @@ export default function QRLibraryScreen() {
 
   return (
     <SafeAreaView style={styles.safe}>
-      <ScrollView contentContainerStyle={styles.scrollContent} showsVerticalScrollIndicator={false}>
+      <ScrollView
+        contentContainerStyle={styles.scrollContent}
+        showsVerticalScrollIndicator={false}
+        refreshControl={
+          <RefreshControl refreshing={refreshing} onRefresh={onRefresh} colors={[COLORS.primary]} tintColor={COLORS.primary} />
+        }
+      >
         {/* Baubretts Section */}
         <SectionHeader title="Baubretts" count={baubretts.length} />
         <View style={styles.grid}>
