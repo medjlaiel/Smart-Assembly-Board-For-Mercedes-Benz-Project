@@ -9,6 +9,7 @@ import { Ionicons } from '@expo/vector-icons';
 import HomeScreen from '../screens/HomeScreen';
 import QRLibraryScreen from '../screens/QRLibraryScreen';
 import ChatbotScreen from '../screens/ChatbotScreen';
+import SettingsScreen from '../screens/SettingsScreen';
 import { COLORS } from '../assets/theme';
 
 const Tab = createBottomTabNavigator();
@@ -78,6 +79,16 @@ export default function BottomTabNavigator() {
                 focused && { borderColor: COLORS.primary, borderWidth: 2 },
               ]}
             />
+          ),
+        }}
+      />
+      <Tab.Screen
+        name="Settings"
+        component={SettingsScreen}
+        options={{
+          tabBarLabel: 'Settings',
+          tabBarIcon: ({ color, size }) => (
+            <Ionicons name="settings-outline" size={size} color={color} />
           ),
         }}
       />

@@ -187,12 +187,6 @@ export default function DrawerMenu({ visible, onClose, navigation }) {
                       <Text style={styles.userId}>ID: {currentUser?.id || ''}</Text>
                     </View>
                   </View>
-                  <TouchableOpacity style={styles.menuItemButton} onPress={handleChangePassword} activeOpacity={0.7}>
-                    <View style={styles.menuItemIconBox}>
-                      <Icon name="lock" size={18} color={COLORS.primary} />
-                    </View>
-                    <Text style={styles.menuItemText}>{t('drawer.changePassword', 'Change Password')}</Text>
-                  </TouchableOpacity>
                 </View>
               )}
             </View>
