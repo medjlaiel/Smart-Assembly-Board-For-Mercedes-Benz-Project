@@ -194,19 +194,20 @@ const styles = StyleSheet.create({
   container: {
     height: TAB_BAR_HEIGHT,
     borderTopWidth: 0,
-    borderTopLeftRadius: 24,
-    borderTopRightRadius: 24,
+    borderRadius: 28,
+    marginHorizontal: 16,
+    marginBottom: Platform.OS === 'ios' ? 16 : 12,
     paddingBottom: Platform.OS === 'ios' ? 8 : 4,
     paddingTop: 6,
     position: 'relative',
     ...Platform.select({
       ios: {
         shadowOffset: { width: 0, height: -4 },
-        shadowOpacity: 0.12,
-        shadowRadius: 12,
+        shadowOpacity: 0.15,
+        shadowRadius: 16,
       },
       android: {
-        elevation: 16,
+        elevation: 20,
       },
     }),
   },
