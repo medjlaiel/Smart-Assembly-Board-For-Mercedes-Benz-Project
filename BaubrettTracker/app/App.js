@@ -9,18 +9,21 @@ import { StatusBar } from 'expo-status-bar';
 import AppNavigator from './src/navigation/AppNavigator';
 import { LanguageProvider } from './src/contexts/LanguageContext';
 import { AuthProvider } from './src/contexts/AuthContext';
+import { AppContextProvider } from './src/contexts/AppContext';
 
 export default function App() {
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
-      <LanguageProvider>
-        <AuthProvider>
-          <NavigationContainer>
-            <StatusBar style="light" backgroundColor="#0A5FBF" />
-            <AppNavigator />
-          </NavigationContainer>
-        </AuthProvider>
-      </LanguageProvider>
+      <AppContextProvider>
+        <LanguageProvider>
+          <AuthProvider>
+            <NavigationContainer>
+              <StatusBar style="light" backgroundColor="#0A5FBF" />
+              <AppNavigator />
+            </NavigationContainer>
+          </AuthProvider>
+        </LanguageProvider>
+      </AppContextProvider>
     </GestureHandlerRootView>
   );
 }

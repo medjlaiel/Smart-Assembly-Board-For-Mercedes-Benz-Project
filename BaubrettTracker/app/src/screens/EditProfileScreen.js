@@ -1,7 +1,7 @@
 /**
  * EditProfileScreen.js
  * Editable profile fields: Name, Employee ID, and Role selector.
- * Saves to AsyncStorage and navigates back to MyInformationScreen.
+ * Uses AppContext for theme and translations.
  */
 import React, { useState, useEffect, useCallback } from 'react';
 import {
@@ -19,16 +19,16 @@ import {
 import { SafeAreaView } from 'react-native-safe-area-context';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Ionicons } from '@expo/vector-icons';
-import { COLORS, RADIUS, SHADOW, FONT_SIZES } from '../assets/theme';
-import { useAuth } from '../contexts/AuthContext';
+import { useApp } from '../contexts/AppContext';
 
-const PROFILE_KEYS = {
-  name: 'user_name',
-  employeeId: 'employee_id',
-  role: 'user_role',
-};
+const PROFILE_KEYS = { name: 'user_name', employeeId: 'employee_id', role: 'user_role' };
 
-function RoleSelector({ value, onSelect }) {
+function getInitials(name) {
+  if (!name) return '?';
+  return name.split(' ').map((n) => n[0]).join('').toUpperCase().slice(0, 2);
+}
+
+function RoleSelector({ value, onSelect, theme }) {
   const roles = ['Operator', 'Admin (PNAV)'];
   return (
     <View style={styles.roleRow}>
@@ -37,11 +37,21 @@ function RoleSelector({ value, onSelect }) {
         return (
           <TouchableOpacity
             key={role}
-            style={[styles.rolePill, active && styles.rolePillActive]}
+            style={[
+              styles.rolePill,
+              active
+                ? { backgroundColor: theme.primary }
+                : { backgroundColor: theme.border },
+            ]}
             onPress={() => onSelect(role)}
             activeOpacity={0.7}
           >
-            <Text style={[styles.rolePillText, active && styles.rolePillTextActive]}>
+            <Text
+              style={[
+                styles.rolePillText,
+                { color: active ? '#FFFFFF' : theme.subtext },
+              ]}
+            >
               {role}
             </Text>
           </TouchableOpacity>
@@ -52,7 +62,7 @@ function RoleSelector({ value, onSelect }) {
 }
 
 export default function EditProfileScreen({ navigation }) {
-  const { currentUser } = useAuth();
+  const { theme, t, language } = useApp();
   const [name, setName] = useState('');
   const [employeeId, setEmployeeId] = useState('');
   const [role, setRole] = useState('Operator');
@@ -77,7 +87,7 @@ export default function EditProfileScreen({ navigation }) {
       }
     };
     load();
-  }, []);
+  }, [language]);
 
   const handleSave = useCallback(async () => {
     setSaving(true);
@@ -87,7 +97,7 @@ export default function EditProfileScreen({ navigation }) {
         AsyncStorage.setItem(PROFILE_KEYS.employeeId, employeeId),
         AsyncStorage.setItem(PROFILE_KEYS.role, role),
       ]);
-      Alert.alert('Success', 'Profile saved successfully', [
+      Alert.alert('Success', t('profileSaved'), [
         { text: 'OK', onPress: () => navigation.goBack() },
       ]);
     } catch (err) {
@@ -96,78 +106,58 @@ export default function EditProfileScreen({ navigation }) {
     } finally {
       setSaving(false);
     }
-  }, [name, employeeId, role, navigation]);
+  }, [name, employeeId, role, navigation, t]);
 
   if (loading) {
     return (
-      <SafeAreaView style={styles.safe} edges={['top']}>
+      <SafeAreaView style={[styles.safe, { backgroundColor: theme.background }]} edges={['top']}>
         <View style={styles.centered}>
-          <ActivityIndicator size="large" color={COLORS.primary} />
+          <ActivityIndicator size="large" color={theme.primary} />
         </View>
       </SafeAreaView>
     );
   }
 
   return (
-    <SafeAreaView style={styles.safe} edges={['top']}>
-      <KeyboardAvoidingView
-        style={styles.flex}
-        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-      >
-        <ScrollView
-          contentContainerStyle={styles.scrollContent}
-          showsVerticalScrollIndicator={false}
-          keyboardShouldPersistTaps="handled"
-        >
-          <View style={styles.card}>
-            {/* Avatar */}
+    <SafeAreaView style={[styles.safe, { backgroundColor: theme.background }]} edges={['top']}>
+      <KeyboardAvoidingView style={styles.flex} behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
+        <ScrollView contentContainerStyle={styles.scrollContent} showsVerticalScrollIndicator={false} keyboardShouldPersistTaps="handled">
+          <View style={[styles.card, { backgroundColor: theme.card, borderColor: theme.border }]}>
             <View style={styles.avatarContainer}>
-              <View style={styles.avatarCircle}>
-                <Text style={styles.avatarText}>
-                  {name
-                    ? name.split(' ').map((n) => n[0]).join('').toUpperCase().slice(0, 2)
-                    : '?'}
-                </Text>
+              <View style={[styles.avatarCircle, { backgroundColor: theme.primary }]}>
+                <Text style={styles.avatarText}>{getInitials(name)}</Text>
               </View>
             </View>
-
-            {/* Name */}
-            <Text style={styles.fieldLabel}>Name</Text>
+            <Text style={[styles.fieldLabel, { color: theme.subtext }]}>{t('name')}</Text>
             <TextInput
-              style={styles.input}
+              style={[styles.input, { backgroundColor: theme.inputBg, color: theme.inputText, borderColor: theme.border }]}
               value={name}
               onChangeText={setName}
               placeholder="Enter your name"
-              placeholderTextColor={COLORS.text3}
+              placeholderTextColor={theme.subtext}
             />
-
-            {/* Employee ID */}
-            <Text style={styles.fieldLabel}>Employee ID</Text>
+            <Text style={[styles.fieldLabel, { color: theme.subtext }]}>{t('employeeId')}</Text>
             <TextInput
-              style={styles.input}
+              style={[styles.input, { backgroundColor: theme.inputBg, color: theme.inputText, borderColor: theme.border }]}
               value={employeeId}
               onChangeText={setEmployeeId}
               placeholder="Enter employee ID"
-              placeholderTextColor={COLORS.text3}
+              placeholderTextColor={theme.subtext}
             />
-
-            {/* Role */}
-            <Text style={styles.fieldLabel}>Role</Text>
-            <RoleSelector value={role} onSelect={setRole} />
-
-            {/* Save Button */}
+            <Text style={[styles.fieldLabel, { color: theme.subtext }]}>{t('role')}</Text>
+            <RoleSelector value={role} onSelect={setRole} theme={theme} />
             <TouchableOpacity
-              style={[styles.saveButton, saving && styles.buttonDisabled]}
+              style={[styles.saveButton, { backgroundColor: theme.primary }, saving && { opacity: 0.6 }]}
               onPress={handleSave}
               disabled={saving}
               activeOpacity={0.8}
             >
               {saving ? (
-                <ActivityIndicator color={COLORS.white} />
+                <ActivityIndicator color="#FFFFFF" />
               ) : (
                 <>
-                  <Ionicons name="save-outline" size={20} color={COLORS.white} />
-                  <Text style={styles.saveButtonText}>Save</Text>
+                  <Ionicons name="save-outline" size={20} color="#FFFFFF" />
+                  <Text style={styles.saveButtonText}>{t('saveProfile')}</Text>
                 </>
               )}
             </TouchableOpacity>
@@ -179,73 +169,19 @@ export default function EditProfileScreen({ navigation }) {
 }
 
 const styles = StyleSheet.create({
-  safe: { flex: 1, backgroundColor: COLORS.background },
+  safe: { flex: 1 },
   flex: { flex: 1 },
   centered: { flex: 1, alignItems: 'center', justifyContent: 'center' },
   scrollContent: { paddingHorizontal: 16, paddingTop: 24, paddingBottom: 40 },
-  card: {
-    backgroundColor: COLORS.surface,
-    borderRadius: RADIUS.lg,
-    borderWidth: 1,
-    borderColor: COLORS.border,
-    padding: 20,
-    ...SHADOW.small,
-  },
+  card: { borderRadius: 16, borderWidth: 1, padding: 20 },
   avatarContainer: { alignItems: 'center', marginBottom: 24 },
-  avatarCircle: {
-    width: 80,
-    height: 80,
-    borderRadius: 40,
-    backgroundColor: COLORS.primary,
-    alignItems: 'center',
-    justifyContent: 'center',
-    ...SHADOW.small,
-  },
-  avatarText: { fontSize: 32, fontWeight: '700', color: COLORS.white },
-  fieldLabel: {
-    fontSize: 13,
-    fontWeight: '600',
-    color: COLORS.text2,
-    marginBottom: 6,
-    marginTop: 12,
-  },
-  input: {
-    backgroundColor: COLORS.background,
-    borderWidth: 1.5,
-    borderColor: COLORS.border,
-    borderRadius: RADIUS.md,
-    paddingHorizontal: 16,
-    paddingVertical: 12,
-    fontSize: 15,
-    color: COLORS.text,
-  },
+  avatarCircle: { width: 80, height: 80, borderRadius: 40, alignItems: 'center', justifyContent: 'center' },
+  avatarText: { fontSize: 32, fontWeight: '700', color: '#FFFFFF' },
+  fieldLabel: { fontSize: 13, fontWeight: '600', marginBottom: 6, marginTop: 12 },
+  input: { borderWidth: 1.5, borderRadius: 14, paddingHorizontal: 16, paddingVertical: 12, fontSize: 15 },
   roleRow: { flexDirection: 'row', gap: 10, marginTop: 4 },
-  rolePill: {
-    flex: 1,
-    paddingVertical: 12,
-    borderRadius: RADIUS.md,
-    backgroundColor: COLORS.border + '80',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  rolePillActive: { backgroundColor: COLORS.primary },
-  rolePillText: { fontSize: 14, fontWeight: '600', color: COLORS.text2 },
-  rolePillTextActive: { color: COLORS.white },
-  saveButton: {
-    backgroundColor: COLORS.primary,
-    borderRadius: RADIUS.lg,
-    paddingVertical: 14,
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
-    gap: 8,
-    marginTop: 24,
-    ...SHADOW.medium,
-  },
-  saveButtonText: {
-    color: COLORS.white,
-    fontSize: FONT_SIZES.button,
-    fontWeight: '700',
-  },
-  buttonDisabled: { opacity: 0.6 },
+  rolePill: { flex: 1, paddingVertical: 12, borderRadius: 14, alignItems: 'center', justifyContent: 'center' },
+  rolePillText: { fontSize: 14, fontWeight: '600' },
+  saveButton: { borderRadius: 16, paddingVertical: 14, flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: 8, marginTop: 24 },
+  saveButtonText: { color: '#FFFFFF', fontSize: 16, fontWeight: '700' },
 });

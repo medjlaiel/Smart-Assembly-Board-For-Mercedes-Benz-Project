@@ -1,6 +1,6 @@
 /**
  * SettingsStackNavigator.js
- * Stack navigator for the Settings tab containing profile, my info, edit profile, and change password screens.
+ * Stack navigator for the Settings tab containing profile, language, about, and profile screens.
  */
 import React from 'react';
 import { createStackNavigator, CardStyleInterpolators } from '@react-navigation/stack';
@@ -11,6 +11,8 @@ import ProfileOptionsScreen from '../screens/ProfileOptionsScreen';
 import MyInformationScreen from '../screens/MyInformationScreen';
 import EditProfileScreen from '../screens/EditProfileScreen';
 import ChangePasswordScreen from '../screens/ChangePasswordScreen';
+import LanguageScreen from '../screens/LanguageScreen';
+import AboutScreen from '../screens/AboutScreen';
 
 const Stack = createStackNavigator();
 
@@ -54,6 +56,16 @@ export default function SettingsStackNavigator() {
         name="ChangePassword"
         component={ChangePasswordScreen}
         options={{ title: 'Change Password' }}
+      />
+      <Stack.Screen
+        name="Language"
+        component={LanguageScreen}
+        options={{ title: 'Language' }}
+      />
+      <Stack.Screen
+        name="About"
+        component={AboutScreen}
+        options={{ title: 'About' }}
       />
     </Stack.Navigator>
   );

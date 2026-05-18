@@ -1,6 +1,6 @@
 /**
  * BottomTabNavigator.js
- * Bottom tab bar with a Home tab using Ionicons from @expo/vector-icons.
+ * Bottom tab bar with theme support from AppContext.
  */
 import React from 'react';
 import { Image, StyleSheet } from 'react-native';
@@ -10,7 +10,7 @@ import HomeScreen from '../screens/HomeScreen';
 import QRLibraryScreen from '../screens/QRLibraryScreen';
 import ChatbotScreen from '../screens/ChatbotScreen';
 import SettingsStackNavigator from './SettingsStackNavigator';
-import { COLORS } from '../assets/theme';
+import { useApp } from '../contexts/AppContext';
 
 const Tab = createBottomTabNavigator();
 
@@ -26,15 +26,17 @@ const styles = StyleSheet.create({
 });
 
 export default function BottomTabNavigator() {
+  const { theme, t } = useApp();
+
   return (
     <Tab.Navigator
       screenOptions={{
         headerShown: false,
-        tabBarActiveTintColor: COLORS.primary,
-        tabBarInactiveTintColor: COLORS.text3,
+        tabBarActiveTintColor: theme.tabBarActive,
+        tabBarInactiveTintColor: theme.subtext,
         tabBarStyle: {
-          backgroundColor: COLORS.surface,
-          borderTopColor: COLORS.border,
+          backgroundColor: theme.tabBar,
+          borderTopColor: theme.border,
           borderTopWidth: 1,
           paddingBottom: 6,
           paddingTop: 6,
@@ -50,7 +52,7 @@ export default function BottomTabNavigator() {
         name="HomeTab"
         component={HomeScreen}
         options={{
-          tabBarLabel: 'Home',
+          tabBarLabel: t('home'),
           tabBarIcon: ({ color, size }) => (
             <Ionicons name="home" size={size} color={color} />
           ),
@@ -60,7 +62,7 @@ export default function BottomTabNavigator() {
         name="QRLibrary"
         component={QRLibraryScreen}
         options={{
-          tabBarLabel: 'QR Codes',
+          tabBarLabel: t('qrCodes'),
           tabBarIcon: ({ color, size }) => (
             <Ionicons name="qr-code-outline" size={size} color={color} />
           ),
@@ -70,13 +72,13 @@ export default function BottomTabNavigator() {
         name="Chatbot"
         component={ChatbotScreen}
         options={{
-          tabBarLabel: 'Assistant',
+          tabBarLabel: t('assistant'),
           tabBarIcon: ({ focused }) => (
             <Image
               source={require('../assets/ai-assistant.png')}
               style={[
                 styles.assistantIcon,
-                focused && { borderColor: COLORS.primary, borderWidth: 2 },
+                focused && { borderColor: theme.primary, borderWidth: 2 },
               ]}
             />
           ),
@@ -86,7 +88,7 @@ export default function BottomTabNavigator() {
         name="Settings"
         component={SettingsStackNavigator}
         options={{
-          tabBarLabel: 'Settings',
+          tabBarLabel: t('settings'),
           tabBarIcon: ({ color, size }) => (
             <Ionicons name="settings-outline" size={size} color={color} />
           ),
