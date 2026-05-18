@@ -31,7 +31,7 @@ const COLOR_CARD_GAP = 12;
 const CAROUSEL_SNAP_INTERVAL = COLOR_CARD_WIDTH + COLOR_CARD_GAP;
 
 // ── Animated Header Component ──────────────────────────────────────
-function Header({ scrollY }) {
+function Header({ scrollY, onMenuPress, onNotificationsPress, badgeCount, onStatsPress }) {
   const headerOpacity = scrollY.interpolate({
     inputRange: [0, 100],
     outputRange: [1, 0.95],
@@ -42,6 +42,9 @@ function Header({ scrollY }) {
     <Animated.View style={[styles.header, { opacity: headerOpacity }]}>
       <View style={styles.headerContent}>
         <View style={styles.logoContainer}>
+          <TouchableOpacity style={styles.headerActionBtn} onPress={onMenuPress}>
+            <Icon name="menu" size={24} color={COLORS.white} />
+          </TouchableOpacity>
           <View style={styles.logoIcon}>
             <Icon name="inventory" size={32} color={COLORS.white} />
           </View>
@@ -49,6 +52,25 @@ function Header({ scrollY }) {
             <Text style={styles.appName}>Baubrett Tracker</Text>
             <Text style={styles.appVersion}>v1.0.0</Text>
           </View>
+        </View>
+        <View style={styles.headerActionsContainer}>
+          <TouchableOpacity
+            style={styles.headerActionBtn}
+            onPress={onNotificationsPress}
+          >
+            <Icon name="notifications" size={24} color={COLORS.white} />
+            {badgeCount > 0 && (
+              <View style={styles.notifBadge}>
+                <Text style={styles.notifBadgeText}>{badgeCount}</Text>
+              </View>
+            )}
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.headerActionBtn}
+            onPress={onStatsPress}
+          >
+            <Icon name="bar-chart" size={24} color={COLORS.white} />
+          </TouchableOpacity>
         </View>
       </View>
     </Animated.View>
@@ -245,38 +267,6 @@ export default function HomeScreen({ navigation }) {
     return incomplete;
   }, [allRecords]);
 
-  // Set header options
-  useEffect(() => {
-    navigation.setOptions({
-      headerLeft: () => (
-        <TouchableOpacity style={styles.headerActionBtn} onPress={() => setShowDrawer(true)}>
-          <Icon name="menu" size={24} color={COLORS.white} />
-        </TouchableOpacity>
-      ),
-      headerRight: () => (
-        <View style={styles.headerActionsContainer}>
-          <TouchableOpacity
-            style={styles.headerActionBtn}
-            onPress={() => setShowNotifications(true)}
-          >
-            <Icon name="notifications" size={24} color={COLORS.white} />
-            {incompleteUFBCount > 0 && (
-              <View style={styles.notifBadge}>
-                <Text style={styles.notifBadgeText}>{incompleteUFBCount}</Text>
-              </View>
-            )}
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={styles.headerActionBtn}
-            onPress={() => navigation.navigate('Statistics')}
-          >
-            <Icon name="bar-chart" size={24} color={COLORS.white} />
-          </TouchableOpacity>
-        </View>
-      ),
-    });
-  }, [navigation, incompleteUFBCount]);
-
   // Prepare bento items for layout (now we have 5 items in bentoActions)
   // Layout: wide1, small1+small2, wide2, wide3 (upload as third wide)
   const bentoWide1 = bentoActions[0]; // approval
@@ -297,7 +287,13 @@ export default function HomeScreen({ navigation }) {
           )}
           scrollEventThrottle={16}
         >
-          <Header scrollY={scrollY} />
+          <Header
+            scrollY={scrollY}
+            onMenuPress={() => setShowDrawer(true)}
+            onNotificationsPress={() => setShowNotifications(true)}
+            badgeCount={incompleteUFBCount}
+            onStatsPress={() => navigation.navigate('Statistics')}
+          />
 
           {/* Section 1: Quick Actions */}
           <View style={styles.section}>
