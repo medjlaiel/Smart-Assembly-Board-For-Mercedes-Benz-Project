@@ -9,7 +9,7 @@ import { Ionicons } from '@expo/vector-icons';
 import HomeScreen from '../screens/HomeScreen';
 import QRLibraryScreen from '../screens/QRLibraryScreen';
 import ChatbotScreen from '../screens/ChatbotScreen';
-import SettingsScreen from '../screens/SettingsScreen';
+import SettingsStackNavigator from './SettingsStackNavigator';
 import { COLORS } from '../assets/theme';
 
 const Tab = createBottomTabNavigator();
@@ -84,7 +84,7 @@ export default function BottomTabNavigator() {
       />
       <Tab.Screen
         name="Settings"
-        component={SettingsScreen}
+        component={SettingsStackNavigator}
         options={{
           tabBarLabel: 'Settings',
           tabBarIcon: ({ color, size }) => (
