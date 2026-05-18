@@ -3,13 +3,26 @@
  * Bottom tab bar with a Home tab using Ionicons from @expo/vector-icons.
  */
 import React from 'react';
+import { Image, StyleSheet } from 'react-native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Ionicons } from '@expo/vector-icons';
 import HomeScreen from '../screens/HomeScreen';
 import QRLibraryScreen from '../screens/QRLibraryScreen';
+import ChatbotScreen from '../screens/ChatbotScreen';
 import { COLORS } from '../assets/theme';
 
 const Tab = createBottomTabNavigator();
+
+const styles = StyleSheet.create({
+  assistantIcon: {
+    width: 36,
+    height: 36,
+    borderRadius: 50,
+    overflow: 'hidden',
+    borderWidth: 0,
+    borderColor: 'transparent',
+  },
+});
 
 export default function BottomTabNavigator() {
   return (
@@ -49,6 +62,22 @@ export default function BottomTabNavigator() {
           tabBarLabel: 'QR Codes',
           tabBarIcon: ({ color, size }) => (
             <Ionicons name="qr-code-outline" size={size} color={color} />
+          ),
+        }}
+      />
+      <Tab.Screen
+        name="Chatbot"
+        component={ChatbotScreen}
+        options={{
+          tabBarLabel: 'Assistant',
+          tabBarIcon: ({ focused }) => (
+            <Image
+              source={require('../assets/ai-assistant.png')}
+              style={[
+                styles.assistantIcon,
+                focused && { borderColor: COLORS.primary, borderWidth: 2 },
+              ]}
+            />
           ),
         }}
       />
