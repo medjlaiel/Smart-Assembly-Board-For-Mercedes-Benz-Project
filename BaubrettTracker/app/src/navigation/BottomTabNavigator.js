@@ -1,6 +1,6 @@
 /**
  * BottomTabNavigator.js
- * Bottom tab bar with theme support from AppContext.
+ * Bottom tab bar with animated custom tab bar for smooth press feedback.
  */
 import React from 'react';
 import { Image, StyleSheet } from 'react-native';
@@ -10,14 +10,15 @@ import HomeScreen from '../screens/HomeScreen';
 import QRLibraryScreen from '../screens/QRLibraryScreen';
 import ChatbotScreen from '../screens/ChatbotScreen';
 import SettingsStackNavigator from './SettingsStackNavigator';
+import AnimatedTabBar from '../components/AnimatedTabBar';
 import { useApp } from '../contexts/AppContext';
 
 const Tab = createBottomTabNavigator();
 
 const styles = StyleSheet.create({
   assistantIcon: {
-    width: 36,
-    height: 36,
+    width: 32,
+    height: 32,
     borderRadius: 50,
     overflow: 'hidden',
     borderWidth: 0,
@@ -30,22 +31,9 @@ export default function BottomTabNavigator() {
 
   return (
     <Tab.Navigator
+      tabBar={(props) => <AnimatedTabBar {...props} />}
       screenOptions={{
         headerShown: false,
-        tabBarActiveTintColor: theme.tabBarActive,
-        tabBarInactiveTintColor: theme.subtext,
-        tabBarStyle: {
-          backgroundColor: theme.tabBar,
-          borderTopColor: theme.border,
-          borderTopWidth: 1,
-          paddingBottom: 6,
-          paddingTop: 6,
-          height: 60,
-        },
-        tabBarLabelStyle: {
-          fontSize: 12,
-          fontWeight: '600',
-        },
       }}
     >
       <Tab.Screen
@@ -53,8 +41,12 @@ export default function BottomTabNavigator() {
         component={HomeScreen}
         options={{
           tabBarLabel: t('home'),
-          tabBarIcon: ({ color, size }) => (
-            <Ionicons name="home" size={size} color={color} />
+          tabBarIcon: ({ focused, color, size }) => (
+            <Ionicons
+              name={focused ? 'home' : 'home-outline'}
+              size={size}
+              color={color}
+            />
           ),
         }}
       />
@@ -63,8 +55,12 @@ export default function BottomTabNavigator() {
         component={QRLibraryScreen}
         options={{
           tabBarLabel: t('qrCodes'),
-          tabBarIcon: ({ color, size }) => (
-            <Ionicons name="qr-code-outline" size={size} color={color} />
+          tabBarIcon: ({ focused, color, size }) => (
+            <Ionicons
+              name={focused ? 'qr-code' : 'qr-code-outline'}
+              size={size}
+              color={color}
+            />
           ),
         }}
       />
@@ -78,7 +74,12 @@ export default function BottomTabNavigator() {
               source={require('../assets/ai-assistant.png')}
               style={[
                 styles.assistantIcon,
-                focused && { borderColor: theme.primary, borderWidth: 2 },
+                focused && {
+                  borderColor: theme.primary,
+                  borderWidth: 2,
+                  opacity: 1,
+                },
+                !focused && { opacity: 0.6 },
               ]}
             />
           ),
@@ -89,8 +90,12 @@ export default function BottomTabNavigator() {
         component={SettingsStackNavigator}
         options={{
           tabBarLabel: t('settings'),
-          tabBarIcon: ({ color, size }) => (
-            <Ionicons name="settings-outline" size={size} color={color} />
+          tabBarIcon: ({ focused, color, size }) => (
+            <Ionicons
+              name={focused ? 'settings' : 'settings-outline'}
+              size={size}
+              color={color}
+            />
           ),
         }}
       />
